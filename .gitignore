@@ -1,0 +1,8 @@
+venv/
+htmlcov/
+.coverage
+.idea/*
+**/__pycache__/*
+plaid_credentials.py
+database_credentials.py
+sendgrid_credentials.py
