@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import Optional, Any
+from typing import Any, Optional
 
 from finicity.models.account.account_detail import AccountDetail
 
 
-# https://community.finicity.com/s/article/Account-Details-Credit-Card-Line-of-Credit
+# https://community.finicity.com/s/article/Account-Details-Investment
 @dataclass
-class CreditLineAccountDetail(AccountDetail):
+class InvestmentAccountDetail(AccountDetail):
     interestMarginBalance: Optional[Any]  # Net interest earned after deducting interest paid out
     shortBalance: Optional[Any]  # Sum of short balance
     availableCashBalance: Optional[Any]  # Amount available for cash withdrawal
