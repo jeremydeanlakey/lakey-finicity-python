@@ -1,6 +1,7 @@
 from .account import *
 from .customer import *
 from .institution import *
+from .connect import *
 from .report import *
 from .response import *
 from .transaction import *
