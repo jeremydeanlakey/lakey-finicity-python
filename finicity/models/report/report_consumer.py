@@ -17,3 +17,35 @@ class ReportConsumer(object):
     birthday: BirthDate  # The consumer's birth date
     email: str  # The consumer's email address
     createdDate: int  # A timestamp of when the consumer was created
+    unused_fields: dict  # this is for forward compatibility and should be empty
+
+    @staticmethod
+    def from_dict(data: dict):
+        data = dict(data)  # don't mutate the original
+        id = data.pop('id')
+        firstName = data.pop('firstName')
+        lastName = data.pop('lastName')
+        address = data.pop('address')
+        city = data.pop('city')
+        state = data.pop('state')
+        zip = data.pop('zip')
+        phone = data.pop('phone')
+        ssn = data.pop('ssn')
+        birthday = data.pop('birthday')
+        email = data.pop('email')
+        createdDate = data.pop('createdDate')
+        return ReportConsumer(
+            id=id,
+            firstName=firstName,
+            lastName=lastName,
+            address=address,
+            city=city,
+            state=state,
+            zip=zip,
+            phone=phone,
+            ssn=ssn,
+            birthday=birthday,
+            email=email,
+            createdDate=createdDate,
+            unused_fields=data,
+        )

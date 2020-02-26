@@ -1,4 +1,7 @@
+import json
 import unittest
+
+from finicity.models.response.accounts_response import AccountsResponse
 
 
 EXAMPLE_REFRESH_ACCOUNTS_RESPONSE = '''
@@ -40,5 +43,13 @@ EXAMPLE_REFRESH_ACCOUNTS_RESPONSE = '''
 '''
 
 
-class TestAccountsResponse(unittest.TestCase):
-    pass
+class TestAccountsListResponse(unittest.TestCase):
+
+    def test_accounts_response(self):
+        response_dict = json.loads(EXAMPLE_REFRESH_ACCOUNTS_RESPONSE)
+        response = AccountsResponse.from_dict(response_dict)
+        self.assertEqual({}, response.unused_fields)
+        for account in response.accounts:
+            self.assertEqual({}, account.unused_fields)
+            if account.detail:
+                self.assertEqual({}, account.detail.unused_fields)

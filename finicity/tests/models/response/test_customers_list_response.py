@@ -1,7 +1,9 @@
+import json
 import unittest
 
+from finicity.models import CustomersListResponse
 
-SAMPLE_CUSTOMERS_RESPONSE = '''
+EXAMPLE_CUSTOMERS_RESPONSE = '''
 {
   "found": 7,
   "displaying": 2,
@@ -29,4 +31,9 @@ SAMPLE_CUSTOMERS_RESPONSE = '''
 
 
 class TestCustomersResponse(unittest.TestCase):
-    pass
+    def test_account_detail_response(self):
+        response_dict = json.loads(EXAMPLE_CUSTOMERS_RESPONSE)
+        response = CustomersListResponse.from_dict(response_dict)
+        self.assertEqual({}, response.unused_fields)
+        for customer in response.customers:
+            self.assertEqual({}, customer.unused_fields)

@@ -30,3 +30,53 @@ class Transaction(object):
     unitQuantity: Optional[int]  # The number of units (e.g. individual shares) in the transaction, if available
     unitValue: Optional[float]  # The value of each unit in the transaction, if available
     categorization: Optional[TransactionCategorization]
+    unused_fields: dict  # this is for forward compatibility and should be empty
+
+    @staticmethod
+    def from_dict(data: dict):
+        data = dict(data)  # don't mutate the original
+        accountId = data.pop('accountId')
+        amount = data.pop('amount')
+        createdDate = data.pop('createdDate')
+        customerId = data.pop('customerId')
+        description = data.pop('description')
+        id = data.pop('id')
+        postedDate = data.pop('postedDate')
+        status = data.pop('status')
+        bonusAmount = data.pop('bonusAmount', None)
+        checkNum = data.pop('checkNum', None)
+        escrowAmount = data.pop('escrowAmount', None)
+        feeAmount = data.pop('feeAmount', None)
+        interestAmount = data.pop('interestAmount', None)
+        memo = data.pop('memo', None)
+        principalAmount = data.pop('principalAmount', None)
+        transactionDate = data.pop('transactionDate', None)
+        type_str = data.pop('type', None)
+        type = TransactionType.from_description(type_str)
+        unitQuantity = data.pop('unitQuantity', None)
+        unitValue = data.pop('unitValue', None)
+        categorization_raw = data.pop('categorization', None)
+        categorization = TransactionCategorization.from_dict(categorization_raw) if categorization_raw else None
+        return Transaction(
+            accountId=accountId,
+            amount=amount,
+            createdDate=createdDate,
+            customerId=customerId,
+            description=description,
+            id=id,
+            postedDate=postedDate,
+            status=status,
+            bonusAmount=bonusAmount,
+            checkNum=checkNum,
+            escrowAmount=escrowAmount,
+            feeAmount=feeAmount,
+            interestAmount=interestAmount,
+            memo=memo,
+            principalAmount=principalAmount,
+            transactionDate=transactionDate,
+            type=type,
+            unitQuantity=unitQuantity,
+            unitValue=unitValue,
+            categorization=categorization,
+            unused_fields=data,
+        )

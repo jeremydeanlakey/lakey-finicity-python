@@ -1,4 +1,3 @@
-from .customers_response import CustomersListResponse
-from .institutions_response import InstitutionsListResponse
-from .report_response import ReportResponse, VoaReportResponse, VoiReportResponse
-from .transactions_response import TransactionsListResponse
+from .customers_list_response import CustomersListResponse
+from .institutions_list_response import InstitutionsListResponse
+from .transactions_list_response import TransactionsListResponse

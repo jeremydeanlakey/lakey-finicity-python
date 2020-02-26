@@ -1,7 +1,10 @@
+import json
 import unittest
 
+from finicity.models import InstitutionsListResponse
 
-SAMPLE_INSTITUTIONS_RESPONSE = '''
+
+EXAMPLE_INSTITUTIONS_RESPONSE = '''
 {
   "found": 28,
   "displaying": 3,
@@ -12,8 +15,8 @@ SAMPLE_INSTITUTIONS_RESPONSE = '''
     "id": 101065,
     "name": "New York College Savings Program 529",
     "accountTypeDescription": "Banking",
-    "urlHomeApp": "http://www.ny529advisor.com/""",
-    "urlLogonApp": "https://ny529advisor.org/nyatpl/auth/loginFormAction.do""",
+    "urlHomeApp": "http://www.ny529advisor.com/",
+    "urlLogonApp": "https://ny529advisor.org/nyatpl/auth/loginFormAction.do",
     "urlProductApp": "",
     "specialText": "Please enter your New York College Savings Program User name and Password.",
     "address": {
@@ -32,8 +35,8 @@ SAMPLE_INSTITUTIONS_RESPONSE = '''
     "id": 8584,
     "name": "New York Community Bank Credit Card",
     "accountTypeDescription": "Credit Cards/Accounts",
-    "urlHomeApp": "http://www.qcsb.com/index.asp?divID=1""",
-    "urlLogonApp": "https://global1.onlinebank.com/cgi-forte/forteisapi.dll?BankTag=1382nycb&ServiceName=WebTeller&TemplateName=Login.htm""",
+    "urlHomeApp": "http://www.qcsb.com/index.asp?divID=1",
+    "urlLogonApp": "https://global1.onlinebank.com/cgi-forte/forteisapi.dll?BankTag=1382nycb&ServiceName=WebTeller&TemplateName=Login.htm",
     "urlProductApp": "",
     "specialText": "Please enter your New York Community Bank Credit Card User ID and Password required for login",
     "address": {
@@ -45,15 +48,15 @@ SAMPLE_INSTITUTIONS_RESPONSE = '''
       "country": "USA"
     },
     "phone": "1-609-348-1183",
-    "email": "http://www.qcsb.com/southjersey/welcome.shtml""",
+    "email": "http://www.qcsb.com/southjersey/welcome.shtml",
     "currency": "USD"
   },
   {
     "id": 1668,
     "name": "New York Giants MBNA CC",
     "accountTypeDescription": "Credit Cards/Accounts",
-    "urlHomeApp": "https://www.bankofamerica.com/""",
-    "urlLogonApp": "https://secure.bankofamerica.com/login/sign-in/signOnV2Screen.go""",
+    "urlHomeApp": "https://www.bankofamerica.com/",
+    "urlLogonApp": "https://secure.bankofamerica.com/login/sign-in/signOnV2Screen.go",
     "urlProductApp": "",
     "specialText": "Please enter your MBNA Credit Card Online ID and Online Passcode required for login. ",
     "address": {
@@ -73,5 +76,12 @@ SAMPLE_INSTITUTIONS_RESPONSE = '''
 '''
 
 
-class TestInstitutionsResponse(unittest.TestCase):
-    pass
+class TestInstitutionsListResponse(unittest.TestCase):
+
+    def test_institutions_response(self):
+        response_dict = json.loads(EXAMPLE_INSTITUTIONS_RESPONSE)
+        response = InstitutionsListResponse.from_dict(response_dict)
+        self.assertEqual({}, response.unused_fields)
+        for institution in response.institutions:
+            self.assertEqual({}, institution.unused_fields)
+            self.assertEqual({}, institution.address.unused_fields)

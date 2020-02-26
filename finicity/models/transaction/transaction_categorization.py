@@ -11,3 +11,23 @@ class TransactionCategorization(object):
     country: str  # Country where the transaction occurred
     state: Optional[str]  # State of transaction (if available)
     city: Optional[str]  # City of transaction (if available)
+    unused_fields: dict  # this is for forward compatibility and should be empty
+
+    @staticmethod
+    def from_dict(data: dict):
+        data = dict(data)  # don't mutate the original
+        normalizedPayeeName = data.pop('normalizedPayeeName')
+        category = data.pop('category')
+        bestRepresentation = data.pop('bestRepresentation')
+        country = data.pop('country')
+        state = data.pop('state', None)
+        city = data.pop('city', None)
+        return TransactionCategorization(
+            normalizedPayeeName=normalizedPayeeName,
+            category=category,
+            bestRepresentation=bestRepresentation,
+            country=country,
+            state=state,
+            city=city,
+            unused_fields=data,
+        )

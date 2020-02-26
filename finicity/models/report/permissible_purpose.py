@@ -1,9 +1,7 @@
-
-
-# https://community.finicity.com/s/article/Permissible-Purpose-Codes
 import enum
 
 
+# https://community.finicity.com/s/article/Permissible-Purpose-Codes
 class PermissiblePurpose(enum.Enum):
     CODE_0A = "0A"  # Time share loan
     CODE_0B = "0B"  # Consumer  Written Consent
