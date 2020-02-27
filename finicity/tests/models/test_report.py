@@ -1,9 +1,12 @@
 import json
 import unittest
 
-from finicity.models import Report
+# https://community.finicity.com/s/article/Credit-Decisioning
+from finicity.models.report.voa.voa_report import VoaReport
+from finicity.models.report.voi.voi_report import VoiReport
+from finicity.models.response.new_report_response import NewReportResponse
 
-EXAMPLE_VOI_REPORT_RESPONSE = '''
+EXAMPLE_START_VOI_RESPONSE = '''
 {
     "id": "bx28qwkdbw3u",
     "requestId": "bmg7d3qrmr",
@@ -16,7 +19,8 @@ EXAMPLE_VOI_REPORT_RESPONSE = '''
 '''
 
 
-EXAMPLE_VOA_REPORT_RESPONSE = '''
+# https://community.finicity.com/s/article/Credit-Decisioning
+EXAMPLE_START_VOA_RESPONSE = '''
 {
     "id": "bx28qwkdbw3u",
     "requestId": "bmg7d3qrmr",
@@ -28,8 +32,7 @@ EXAMPLE_VOA_REPORT_RESPONSE = '''
 }
 '''
 
-
-SAMPLE_REPORTS_RESPONSE = '''
+EXAMPLE_REPORTS_LIST_RESPONSE = '''
 {
     "reports": [
         {
@@ -331,8 +334,8 @@ EXAMPLE_VOA_FULL = '''
 class TestReport(unittest.TestCase):
 
     def test_voi_short(self):
-        response_dict = json.loads(EXAMPLE_VOI_REPORT_RESPONSE)
-        response = Report.from_dict(response_dict)
+        response_dict = json.loads(EXAMPLE_START_VOI_RESPONSE)
+        response = NewReportResponse.from_dict(response_dict)
         self.assertEqual({}, response.unused_fields)
         if response.institutions:
             for institution in response.institutions:
@@ -340,20 +343,30 @@ class TestReport(unittest.TestCase):
                 self.assertEqual({}, institution.address.unused_fields)
 
     def test_voa_short(self):
-        response_dict = json.loads(EXAMPLE_VOA_REPORT_RESPONSE)
-        response = Report.from_dict(response_dict)
+        response_dict = json.loads(EXAMPLE_START_VOA_RESPONSE)
+        response = NewReportResponse.from_dict(response_dict)
         self.assertEqual({}, response.unused_fields)
         if response.institutions:
             for institution in response.institutions:
                 self.assertEqual({}, institution.unused_fields)
                 self.assertEqual({}, institution.address.unused_fields)
 
+    def test_voi_full(self):
+        response_dict = json.loads(EXAMPLE_VOI_FULL)
+        response = VoiReport.from_dict(response_dict)
+        self.assertEqual({}, response.unused_fields)
+        if response.institutions:
+            for institution in response.institutions:
+                self.assertEqual({}, institution.unused_fields)
+        if response.constraints:
+            self.assertEqual({}, response.constraints.unused_fields)
+            # for field in response.constraints:
+            #     self.assertEqual({}, field.unused_fields)
 
-    # def test_voi_full(self):
-    #     response_dict = json.loads(EXAMPLE_VOI_FULL)
-    #     response = ReportResponse.from_dict(response_dict)
-    #     self.assertEqual({}, response.unused_fields)
-    #     if response.institutions:
-    #         for institution in response.institutions:
-    #             self.assertEqual({}, institution.unused_fields)
-    #             self.assertEqual({}, institution.address.unused_fields)
+    def test_voa_full(self):
+        response_dict = json.loads(EXAMPLE_VOA_FULL)
+        response = VoaReport.from_dict(response_dict)
+        self.assertEqual({}, response.unused_fields)
+        if response.institutions:
+            for institution in response.institutions:
+                self.assertEqual({}, institution.unused_fields)

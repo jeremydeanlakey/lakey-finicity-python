@@ -51,7 +51,7 @@ EXAMPLE_INSTITUTION_DETAILS = '''
 
 
 class TestInstitutionDetailsResponse(unittest.TestCase):
-    def test_account_detail_response(self):
+    def test_institution_detail_response(self):
         response_dict = json.loads(EXAMPLE_INSTITUTION_DETAILS)
         response = InstitutionDetailResponse.from_dict(response_dict)
         self.assertEqual({}, response.unused_fields)
