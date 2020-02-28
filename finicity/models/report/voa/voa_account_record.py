@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 from finicity.models.report.transaction_record import TransactionRecord
 from finicity.models.report.voa.account_asset_record import AccountAssetRecord
@@ -15,11 +15,11 @@ class VoaAccountRecord(object):
     name: str  # The account name from the institution
     type: str  # VOA: checking / savings / moneyMarket / cd / investment*
     aggregationStatusCode: int  # Finicity aggregation status of the most recent aggregation attempt for this account (non-zero means the account was not accessed successfully for this report, and additional fields for this account may not be reliable)
-    institutionLoginId: str  # The institutionLoginId (represents one set of credentials at a particular institution, together with all accounts accessible using those credentials at that institution)
+    # institutionLoginId: str  # The institutionLoginId (represents one set of credentials at a particular institution, together with all accounts accessible using those credentials at that institution)
     transactions: List[TransactionRecord]  # A list of all transaction records for this account during the report period (VOI report includes deposit transactions only)
     asset: AccountAssetRecord  # An asset record for the account
     details: DetailsRecord  # A details record for the account
-    availableBalance: float  # The available balance for the account
+    availableBalance: Optional[float]  # The available balance for the account
     balance: float  # The cleared balance of the account as-of balanceDate
     balanceDate: int  # A timestamp showing when the balance was captured
     averageMonthlyBalance: float  # The average monthly balance of this account
@@ -35,14 +35,14 @@ class VoaAccountRecord(object):
         name = data.pop('name')
         type = data.pop('type')
         aggregationStatusCode = data.pop('aggregationStatusCode')
-        institutionLoginId = data.pop('institutionLoginId')
+        # institutionLoginId = data.pop('institutionLoginId')
         transactions_raw = data.pop('transactions')
         transactions = [TransactionRecord.from_dict(d) for d in transactions_raw]
         asset_raw = data.pop('asset')
         asset = AccountAssetRecord.from_dict(asset_raw)
         details_raw = data.pop('details')
         details = DetailsRecord.from_dict(details_raw)
-        availableBalance = data.pop('availableBalance')
+        availableBalance = data.pop('availableBalance', None)
         balance = data.pop('balance')
         balanceDate = data.pop('balanceDate')
         averageMonthlyBalance = data.pop('averageMonthlyBalance')
@@ -54,7 +54,7 @@ class VoaAccountRecord(object):
             name=name,
             type=type,
             aggregationStatusCode=aggregationStatusCode,
-            institutionLoginId=institutionLoginId,
+            # institutionLoginId=institutionLoginId,
             transactions=transactions,
             asset=asset,
             details=details,

@@ -15,7 +15,7 @@ class VoiAccountRecord(object):
     name: str  # The account name from the institution
     type: str  # VOI: checking / savings / moneyMarket
     aggregationStatusCode: int  # Finicity aggregation status of the most recent aggregation attempt for this account (non-zero means the account was not accessed successfully for this report, and additional fields for this account may not be reliable)
-    institutionLoginId: str  # The institutionLoginId (represents one set of credentials at a particular institution, together with all accounts accessible using those credentials at that institution)
+    # institutionLoginId: str  # The institutionLoginId (represents one set of credentials at a particular institution, together with all accounts accessible using those credentials at that institution)
     transactions: List[TransactionRecord]  # A list of all transaction records for this account during the report period (VOI report includes deposit transactions only)
     miscDeposits: List[MiscellaneousDepositRecord]  # A list of miscellaneous deposit records
     incomeStreams: List[IncomeStreamRecord]  # A list of income stream records
@@ -31,7 +31,7 @@ class VoiAccountRecord(object):
         name = data.pop('name')
         type = data.pop('type')
         aggregationStatusCode = data.pop('aggregationStatusCode')
-        institutionLoginId = data.pop('institutionLoginId')
+        # institutionLoginId = data.pop('institutionLoginId')
         transactions_raw = data.pop('transactions')
         transactions = [TransactionRecord.from_dict(d) for d in transactions_raw]
         miscDeposits_raw = data.pop('miscDeposits')
@@ -46,7 +46,7 @@ class VoiAccountRecord(object):
             name=name,
             type=type,
             aggregationStatusCode=aggregationStatusCode,
-            institutionLoginId=institutionLoginId,
+            # institutionLoginId=institutionLoginId,
             transactions=transactions,
             miscDeposits=miscDeposits,
             incomeStreams=incomeStreams,

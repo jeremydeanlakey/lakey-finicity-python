@@ -18,7 +18,8 @@ class VoiInstitutionRecord(object):
         id = data.pop('id')
         name = data.pop('name')
         urlHomeApp = data.pop('urlHomeApp', None)
-        accounts = data.pop('accounts')
+        accounts_raw = data.pop('accounts')
+        accounts = [VoiAccountRecord.from_dict(d) for d in accounts_raw]
         return VoiInstitutionRecord(
             id=id,
             name=name,

@@ -358,10 +358,27 @@ class TestReport(unittest.TestCase):
         if response.institutions:
             for institution in response.institutions:
                 self.assertEqual({}, institution.unused_fields)
+                for account in institution.accounts:
+                    self.assertEqual({}, account.unused_fields)
+                    for transaction in account.transactions:
+                        self.assertEqual({}, transaction.unused_fields)
+                    for deposit in account.miscDeposits:
+                        self.assertEqual({}, deposit.unused_fields)
+                    for income in account.incomeStreams:
+                        self.assertEqual({}, income.unused_fields)
+                        for net in income.netMonthly:
+                            self.assertEqual({}, net.unused_fields)
+                        for transaction in income.transactions:
+                            self.assertEqual({}, transaction.unused_fields)
         if response.constraints:
             self.assertEqual({}, response.constraints.unused_fields)
-            # for field in response.constraints:
-            #     self.assertEqual({}, field.unused_fields)
+            for field in response.constraints.reportCustomFields:
+                self.assertEqual({}, field.unused_fields)
+        for income in response.income:
+            self.assertEqual({}, income.unused_fields)
+            self.assertEqual({}, income.incomeEstimate.unused_fields)
+            for net in income.netMonthly:
+                self.assertEqual({}, net.unused_fields)
 
     def test_voa_full(self):
         response_dict = json.loads(EXAMPLE_VOA_FULL)
@@ -370,3 +387,13 @@ class TestReport(unittest.TestCase):
         if response.institutions:
             for institution in response.institutions:
                 self.assertEqual({}, institution.unused_fields)
+                for account in institution.accounts:
+                    self.assertEqual({}, account.unused_fields)
+                    for transaction in account.transactions:
+                        self.assertEqual({}, transaction.unused_fields)
+                    self.assertEqual({}, account.asset.unused_fields)
+                    self.assertEqual({}, account.details.unused_fields)
+        if response.constraints:
+            self.assertEqual({}, response.constraints.unused_fields)
+            for field in response.constraints.reportCustomFields:
+                self.assertEqual({}, field.unused_fields)

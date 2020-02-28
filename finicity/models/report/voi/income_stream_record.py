@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import List
 
 from finicity.models.report.cadence import Cadence
-from finicity.models.report.transaction_record import TransactionRecord
+from finicity.models.report.income_stream_transaction_record import IncomeStreamTransactionRecord
 from finicity.models.report.voi.confidence_type import ConfidenceType
 from finicity.models.report.voi.income_stream_status import IncomeStreamStatus
 from finicity.models.report.voi.net_monthly import NetMonthly
@@ -23,7 +23,7 @@ class IncomeStreamRecord(object):
     estimatedGrossAnnual: float  # Before-tax gross annual income (estimated from netAnnual) across all income stream in the past 12 months
     projectedGrossAnnual: float  # Projected gross income over the next 12 months, across all active income streams, based on projectedNetAnnual
     averageMonthlyIncomeNet: float  # Monthly average amount over the previous 24 months
-    transactions: List[TransactionRecord]  # A list of transaction records
+    transactions: List[IncomeStreamTransactionRecord]  # A list of transaction records
 
     @staticmethod
     def from_dict(data: dict):
@@ -45,7 +45,7 @@ class IncomeStreamRecord(object):
         projectedGrossAnnual = data.pop('projectedGrossAnnual')
         averageMonthlyIncomeNet = data.pop('averageMonthlyIncomeNet')
         transactions_raw = data.pop('transactions')
-        transactions = [TransactionRecord.from_dict(d) for d in transactions_raw]
+        transactions = [IncomeStreamTransactionRecord.from_dict(d) for d in transactions_raw]
         return IncomeStreamRecord(
             id=id,
             name=name,

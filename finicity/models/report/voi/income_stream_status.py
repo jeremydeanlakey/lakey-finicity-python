@@ -3,8 +3,8 @@ import enum
 
 # https://community.finicity.com/s/article/Credit-Decisioning#generate_voi_report
 class IncomeStreamStatus(enum.Enum):
-    active = "active"
-    inactive = "inactive"
+    active = "ACTIVE"
+    inactive = "INACTIVE"
 
     @staticmethod
     def from_description(description):
