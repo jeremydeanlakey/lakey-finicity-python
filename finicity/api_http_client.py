@@ -52,7 +52,7 @@ class ApiHttpClient(object):
         }
         if extra_headers:
             headers.update(extra_headers)
-        self.last_response = requests.post(url, data=data, headers=headers)
+        self.last_response = requests.post(url, data=json.dumps(data), headers=headers)
         return self.last_response
 
     def put(self, path: str, data: dict, extra_headers: Optional[dict] = None) -> Response:
@@ -65,7 +65,20 @@ class ApiHttpClient(object):
         }
         if extra_headers:
             headers.update(extra_headers)
-        self.last_response = requests.put(url, data=data, headers=headers)
+        self.last_response = requests.put(url, data=json.dumps(data), headers=headers)
+        return self.last_response
+
+    def delete(self, path: str, extra_headers: Optional[dict] = None) -> Response:
+        url = _FINICITY_URL_BASE + path
+        token = self.__get_token()
+        headers = {
+            "Finicity-App-Key": self.__app_key,
+            "Content-Type": "application/json",
+            "Finicity-App-Token": token,
+        }
+        if extra_headers:
+            headers.update(extra_headers)
+        self.last_response = requests.delete(url, headers=headers)
         return self.last_response
 
     def __get_token(self) -> str:
@@ -91,13 +104,12 @@ class ApiHttpClient(object):
             "Content-Type": "application/json",
             "Accept": "application/json",
         }
-        body = {
+        data = {
             "partnerId": self.__partner_id,
             "partnerSecret": self.__secret,
         }
         new_token_expiration = time.time() + (2 * 60 * 60) - (10 * 60)  # two hour expiration less ten minute buffer
-        data = json.dumps(body)
-        response = requests.post(url, headers=headers, data=data)
+        response = requests.post(url, headers=headers, data=json.dumps(data))
         if response.status_code == 200:
             self.__token = response.json()['token']
             self.__token_expiration = new_token_expiration

@@ -1,13 +1,15 @@
 from dataclasses import dataclass
 
+from typing import Optional
+
 
 # https://community.finicity.com/s/article/201703219-Customers#customer_record
 @dataclass
 class Customer(object):
     id: int
     username: str
-    firstName: str
-    lastName: str
+    firstName: Optional[str]
+    lastName: Optional[str]
     type: str
     createdDate: int
     unused_fields: dict  # this is for forward compatibility and should be empty
@@ -17,8 +19,8 @@ class Customer(object):
         data = dict(data)  # don't mutate the original
         id = data.pop('id')
         username = data.pop('username')
-        firstName = data.pop('firstName')
-        lastName = data.pop('lastName')
+        firstName = data.pop('firstName', None)
+        lastName = data.pop('lastName', None)
         type = data.pop('type')
         createdDate = data.pop('createdDate')
         return Customer(

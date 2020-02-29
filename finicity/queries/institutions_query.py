@@ -2,7 +2,6 @@ from typing import List, Optional
 
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import InstitutionsListResponse
-from finicity.models.response.account_detail_response import AccountDetailResponse
 
 
 class InstitutionsQuery(object):
@@ -20,8 +19,6 @@ class InstitutionsQuery(object):
             if not batch.moreAvailable:
                 break
 
-    # https://community.finicity.com/s/article/Get-Institutions
-    # GET /institution/v2/institutions?search=[text]&start=[index]&limit=[count]
     def _get_institutions(self, search_term: str = "*", start: int = 1, limit: int = 25) -> InstitutionsListResponse:
         """Use this call to search all Financial Institutions (FI) the Finicity has connections with and supports.
         Return all financial institutions that contain the search text in the institution’s name, urlHomeApp, or urlLogonApp fields.
@@ -34,6 +31,7 @@ class InstitutionsQuery(object):
         :param limit: Maximum number of entries for this page of results
         :return:
         """
+        # https://community.finicity.com/s/article/Get-Institutions
         path = "/institution/v2/institutions"
         params = {
             "start": start,
