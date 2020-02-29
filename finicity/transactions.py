@@ -3,39 +3,14 @@ from typing import Optional, List
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import Institution, TransactionStatus, SortOrder, Transaction
 from finicity.queries.institutions_query import InstitutionsQuery
+from finicity.queries.transaction_query import TransactionsQuery
 
 
 class Transactions(object):
     def __init__(self, http_client: ApiHttpClient):
         self.__http_client = http_client
 
-    # Transactions
-
-    # https://community.finicity.com/s/article/Get-Customer-Transactions
-    # GET /aggregation/v3/customers/{customerId}/transactions?fromDate=[timestamp]&toDate=[timestamp]&start=[index]&limit=[count]&sort=[asc or desc]&includePending=[true or false]
-    def get_customer_transactions(self, customerId: str, fromDate: int, toDate: int, start: int, limit: int, sort: SortOrder, includePending: bool) -> List[Transaction]:
-        """
-        Get all transactions available for this customer within the given date range, across all accounts. This service supports paging and sorting by transactionDate (or postedDate if no transaction date is provided), with a maximum of 1000 transactions per request.
-        Standard consumer aggregation provides up to 180 days of transactions prior to the date each account was added to the Finicity system. To access older transactions, you must first call the Cash Flow Verification service Load Historic Transactions for Account.
-        There is no limit for the size of the window between fromDate and toDate; however, the maximum number of transactions returned in one page is 1000.
-        If the value of moreAvailable in the response is true, you can retrieve the next page of results by increasing the value of the start parameter in your next request:
-          ...&start=6&limit=5
-
-        :param customerId: The ID of the customer whose transactions are to be retrieved
-        :param fromDate: Starting timestamp for the date range (required) (see Handling Dates and Times)
-        :param toDate: Ending timestamp for the date range (required, must be greater than fromDate) (see Handling Dates and Times)
-        :param start: Starting index for this page of results
-        :param limit: Maximum number of entries for this page of results (max is 1000)
-        :param sort: Sort order: asc for ascending order (oldest transactions are on page 1), descfor descending order (newest transactions are on page 1).
-        :param includePending: true to include pending transactions if available.
-        :return:
-        """
-        pass
-        # self._get_with_token()
-
-    # https://community.finicity.com/s/article/Get-Customer-Account-Transactions
-    # GET /aggregation/v3/customers/{customerId}/accounts/{accountId}/transactions?fromDate=[timestamp]&toDate=[timestamp]&start=[index]&limit=[count]&sort=[asc or desc]&includePending=[true or false]
-    def get_customer_account_transactions(self, customerId: str, accountId: str, fromDate: int, toDate: int, sort: SortOrder = SortOrder.desc, includePending: bool = False, start: int = 1, limit: int = 1000, categories: Optional[List[str]] = None) -> List[Transaction]:
+    def query(self, customer_id: int, from_date: int, to_date: int, sort: SortOrder = SortOrder.asc, include_pending: bool = True, account_id: Optional[str] = None) -> TransactionsQuery:
         """
         Get all transactions available for this customer account within the given date range. This service supports paging and sorting by transactionDate (or postedDate if no transaction date is provided), with a maximum of 1000 transactions per request.
         Standard consumer aggregation provides up to 180 days of transactions prior to the date each account was added to the Finicity system. To access older transactions, you must first call the Cash Flow Verification service Load Historic Transactions for Account.
@@ -43,39 +18,23 @@ class Transactions(object):
         If the value of moreAvailable in the response is true, you can retrieve the next page of results by increasing the value of the start parameter in your next request:
           ...&start=6&limit=5
 
-        :param customerId: The ID of the customer whose transactions are to be retrieved
-        :param accountId: The ID of the account whose transactions are to be retrieved
-        :param fromDate: Starting timestamp for the date range (required) (see Handling Dates and Times)
-        :param toDate: Ending timestamp for the date range (required, must be greater than fromDate) (see Handling Dates and Times)
-        :param start: Starting index for this page of results
-        :param limit: Maximum number of entries for this page of results (max is 1000)
+        :param customer_id: The ID of the customer whose transactions are to be retrieved
+        :param account_id: The ID of the account whose transactions are to be retrieved
+        :param from_date: Starting timestamp for the date range (required) (see Handling Dates and Times)
+        :param to_date: Ending timestamp for the date range (required, must be greater than fromDate) (see Handling Dates and Times)
         :param sort: Sort order: asc for ascending order (oldest transactions are on page 1), descfor descending order (newest transactions are on page 1).
-        :param includePending: true to include pending transactions if available.
-        :param categories: Utilities, Mobile Phone, Television (this is an example of a comma delimited list)
+        :param include_pending: true to include pending transactions if available.
         :return:
         """
-        pass
-        # self._get_with_token()
-
-    # https://community.finicity.com/s/article/Get-Customer-Transaction
-    # GET /aggregation/v2/customers/{customerId}/transactions/{transactionId}
-    def get_customer_transaction(self, customerId: str, transactionId: str) -> Transaction:
-        """
-        Get details for the specified transaction.
-
-        :param customerId: The ID of the customer whose transactions are to be retrieved
-        :param transactionId: The ID of the transaction to be retrieved
-        :return:
-        """
-        pass
-        # self._get_with_token()
-
+        return TransactionsQuery(self.__http_client, customer_id, from_date, to_date, sort, include_pending, account_id=account_id)
+        # TODO add categories to query?
+        # :param categories: Utilities, Mobile Phone, Television (this is an example of a comma delimited list)
 
     # TXPush Services
 
     # https://community.finicity.com/s/article/Enable-TxPUSH-Notifications
     # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/txpush
-    def enable_transaction_push_notifications(self, customerId: str, accountId: str, callbackUrl: str):
+    def enable_push_notifications(self, customerId: str, accountId: str, callbackUrl: str):
         """
         TxPUSH services allow an app to register a TxPUSH Listener service to receive notifications whenever a new transaction appears on an account.
 
@@ -89,7 +48,7 @@ class Transactions(object):
 
     # https://community.finicity.com/s/article/Disable-TxPUSH-Notifications
     # DELETE /aggregation/v1/customers/{customerId}/accounts/{accountId}/txpush
-    def disable_transaction_push_notifications(self, customerId: str, accountId: str):
+    def disable_push_notifications(self, customerId: str, accountId: str):
         """
         Disable all TxPUSH notifications for the indicated account. No more notifications will be sent for account or transaction events.
 
@@ -102,7 +61,7 @@ class Transactions(object):
 
     # https://community.finicity.com/s/article/Delete-TxPUSH-Subscription
     # DELETE /aggregation/v1/customers/{customerId}/subscriptions/{subscriptionId}
-    def delete_transaction_push_subscription(self, customerId: str, accountId: str):
+    def delete_push_subscription(self, customerId: str, accountId: str):
         """
         Delete a specific subscription for a class of events (account or transaction events) related to an account. No more notifications will be sent for these events.
 
