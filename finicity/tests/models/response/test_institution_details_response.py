@@ -3,49 +3,34 @@ import unittest
 
 from finicity.models.response.institution_detail_response import InstitutionDetailResponse
 
-# https://community.finicity.com/s/article/202460265-Institutions#get_institution_details
+
 EXAMPLE_INSTITUTION_DETAILS = '''
 {
-  "institution": {
-  "id": 11863,
-  "name": "Clearfield Bank & Trust Co",
-  "accountTypeDescription": "Banking",
-  "urlHomeApp": "https://www.clearfieldbankandtrust.com/",
-  "urlLogonApp": "https://www.netteller.com/clearfieldbankandtrust/login.cfm",
-  "urlProductApp": "",
-  "specialText": "Please enter your Clearfield Bank & Trust Co ONLINE24 Internet Banking ID and ONLINE24 Internet Banking Password required for login.",
-  "address": {
-    "addressLine1": "11 N. Second Street",
-    "addressLine2": "PO Box 171",
-    "city": "Clearfield",
-    "state": "PA",
-    "postalCode": "16830",
-    "country": "USA"
-  },
-  "email": "support@cbtfinancial.com",
-  "phone": "814-765-7551",
-  "currency": "USD"
-  },
-  "loginForm": [
-  {
-    "id": "11863001",
-    "name": "ID",
-    "value": "",
-    "description": "ONLINE24 Internet Banking ID",
-    "displayOrder": 1,
-    "mask": "false",
-    "instructions": ""
-  },
-  {
-    "id": "11863002",
-    "name": "PIN",
-    "value": "",
-    "description": "ONLINE24 Internet Banking Password",
-    "displayOrder": 2,
-    "mask": "true",
-    "instructions": ""
-  }
-  ]
+"institution":{
+"id":15436,
+"name":"Mass Mutual Financial Group(Retirement Access)",
+"aha":false,
+"accountTypeDescription":"Workplace Retirement",
+"phone":"1-866-630-5295",
+"urlHomeApp":"https://www.massmutual.com/",
+"urlLogonApp":"https://retirementsolutions.financialtrans.com/tf/myPLAN/Welcome?cz=d07001719051417031511001318",
+"oauthEnabled":false,
+"urlForgotPassword":"",
+"urlOnlineRegistration":"",
+"class":"retirement",
+"specialText":"Please enter your Mass Mutual Financial Group (Retirement Access) Email Address and Password required for login.",
+"address":{
+"city":"Atlanta",
+"state":"GA",
+"country":"USA",
+"postalCode":"30357-2566",
+"addressLine1":"Post Office Box 78566",
+"addressLine2":""
+},
+"currency":"USD",
+"email":"https://www.amsouthdailyelect.com/contact.asp",
+"oauthInstitutionId":null
+}
 }
 '''
 
@@ -57,5 +42,3 @@ class TestInstitutionDetailsResponse(unittest.TestCase):
         self.assertEqual({}, response.unused_fields)
         self.assertEqual({}, response.institution.unused_fields)
         self.assertEqual({}, response.institution.address.unused_fields)
-        for field in response.loginForm:
-            self.assertEqual({}, field.unused_fields)
