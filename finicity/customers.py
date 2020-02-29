@@ -19,32 +19,6 @@ class Customers(object):
         response_dict = response.json()
         return Customer.from_dict(response_dict)
 
-    def add_testing_customer(self, username: str, first_name: str, last_name: str) -> str:
-        """
-        Enroll a testing customer. A testing customer may only register accounts with FinBank institutions.
-
-        :param username: The customer's username, assigned by the partner (a unique identifier), following these rules:
-            minimum 6 characters
-            maximum 255 characters
-            any mix of uppercase, lowercase, numeric, and non-alphabet special characters ! @ . # $ % & * _ - +
-            the use of email in this field is discouraged
-            it is recommended to use a unique non-email identifier
-            Use of special characters may result in an error (e.g. í, ü, etc.)
-        :param first_name: The customer's first name(s) / given name(s) (optional)
-        :param last_name: The customer's last name(s) / surname(s) (optional)
-        :return: customer id
-        """
-        # TODO explicitly validate username
-        data = {
-            'username': username,
-            'firstName': first_name,
-            'lastName': last_name,
-        }
-        path = f"/aggregation/v1/customers/testing"
-        response = self.__http_client.post(path, data)
-        response_dict = response.json()
-        return CreateCustomerResponse.from_dict(response_dict).id
-
     # https://community.finicity.com/s/article/Add-Customer
     def add(self, username: str, first_name: str, last_name: str):
         """

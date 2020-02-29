@@ -71,31 +71,6 @@ class Transactions(object):
         """
         pass
 
-    # https://community.finicity.com/s/article/Add-Transaction-for-Testing-Account
-    # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/transactions
-    def add_transaction_for_testing_account(self, customerId: str, accountId: str, amount: float, description: str, status: Optional[TransactionStatus] = None, postedDate: Optional[int] = None, transactionDate: Optional[int] = None):
-        """
-        Inject a transaction into the transaction list for a testing account. This allows an app to trigger TxPUSH notifications for the account in order to test the app’s TxPUSH Listener service. This causes the platform to send one transaction event and one account event (showing that the account balance has changed). This service is only supported for testing accounts (accounts on institution 101732).
-
-        :param customerId: The ID of the customer who owns the account
-        :param accountId: The Finicity ID of the account whose events will be sent to the TxPUSH Listener
-        :param amount: The amount of the transaction
-        :param description: The description of the transaction
-        :param status: active or pending (optional)
-        :param postedDate: An optional timestamp for the transaction's posted date value for this transaction (see Handling Dates and Times). Timestamp must be no more than 6 months from the current date.
-        :param transactionDate: An optional timestamp for the transaction's posted date value for this transaction (see Handling Dates and Times)
-        :return:
-        """
-        status = status or TransactionStatus.active
-        # postedDate = postedDate or nowTimestamp()
-        # transactionDate = transactionDate or nowTimestamp()
-        # success = 201 created with
-        # {
-        #   "id": 712054,
-        #   "createdDate": 1444259433
-        # }
-        pass
-
     # Account History Aggregation
 
     # https://community.finicity.com/s/article/Load-Historic-Transactions-for-Account
