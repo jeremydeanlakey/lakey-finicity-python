@@ -103,3 +103,38 @@ class Transactions(object):
     #
     #     pass
 
+
+    # https://community.finicity.com/s/article/Refresh-Customer-Accounts-non-interactive
+    # POST /aggregation/v1/customers/{customerId}/accounts
+    def refresh_customer_accounts(self, customerId: str) -> List[Account]:
+        """
+        Connect to all of the customer's financial institutions and refresh the transaction data for all of the customer's accounts. This is a non-interactive refresh, so any MFA challenge will cause the account to fail with an aggregationStatusCode value of 185 or 187.
+        To recover an account that has state 185 or 187, call Refresh Institution Login Accounts during an interactive session with the customer, prompt the customer with the MFA challenge that is returned from that call, and then send that response to Refresh Institution Login Accounts (with MFA Answers).
+        This service retrieves account data from the institution. This usually returns quickly, but in some scenarios may take a few minutes to complete. See Asynchronous Aggregation.
+        Client apps are not permitted to automate calls to the Refresh services. Active accounts are automatically refreshed by Finicity once per day. Apps may call Refresh services for a specific customer when the customer opens the app, or when the customer directly invokes a Refreshaction from the app.
+        Because many financial institutions only post transactions once per day, calling Refreshrepeatedly is usually a waste of resources and is not recommended.
+        This service requires the HTTP header Content-Length: 0 because it is a POST request with no request body.
+        The recommended timeout setting for this request is 120 seconds.
+
+        :param customerId: The ID of the customer who owns the accounts
+        :return:
+        """
+        pass
+    #     self._post()  # requires Content-Length = 0 and no Content-Type header
+
+
+    # https://community.finicity.com/s/article/Refresh-Institution-Login-Accounts-Non-Interactive
+    # POST /aggregation/v1/customers/{customerId}/institutionLogins/{institutionLoginId}/accounts
+    def refresh_institution_login_accounts(self, customerId: str, institutionLoginId: str) -> List[Account]:
+        """
+        Connect to a financial institution and refresh transaction data for all accounts associated with a given institutionLoginId.
+        Client apps are not permitted to automate calls to the Refresh services. Active accounts are automatically refreshed by Finicity once per day. Apps may call Refresh services for a specific customer when the customer opens the app, or when the customer directly invokes a Refreshaction from the app.
+        Because many financial institutions only post transactions once per day, calling Refreshrepeatedly is usually a waste of resources and is not recommended.
+        The recommended timeout setting for this request is 120 seconds in order to receive a response. However you can terminate the connection after making the call the operation will still complete. You will have to pull the account records to check for an updated aggregation attempt date to know when the refresh is complete.
+
+        :param customerId: The ID of the customer who owns the account
+        :param institutionLoginId: The institution login ID (from the account record)
+        :return:
+        """
+        pass
+        # NEEDS SPECIAL HEADERS
