@@ -1,8 +1,11 @@
 from typing import Optional, List
 
 from finicity.api_http_client import ApiHttpClient
-from finicity.models import Institution, ReportConsumer, BirthDate, PermissiblePurpose
-from finicity.queries.institutions_query import InstitutionsQuery
+from finicity.models import ReportConsumer, BirthDate, PermissiblePurpose
+from finicity.models.response.create_consumer_response import CreateConsumerResponse
+from finicity.models.response.create_report_response import CreateReportResponse
+from finicity.models.response.report_summary import ReportSummary
+from finicity.models.response.reports_response import ReportsResponse
 
 
 class Reports(object):
@@ -13,7 +16,7 @@ class Reports(object):
 
     # https://community.finicity.com/s/article/Create-Consumer
     # POST /decisioning/v1/customers/{customerId}/consumer
-    def create_consumer(self, customerId: str, firstName: str, lastName: str, address: str, city: str, state: str, zip: str, phone: str, ssn: str, birthday: BirthDate, year: str):
+    def create_consumer(self, customerId: str, firstName: str, lastName: str, address: str, city: str, state: str, zip: str, phone: str, ssn: str, birthday: BirthDate, year: str) -> str:
         """
         Create a consumer record associated with the given customer. A consumer persists as the owner of any reports that are generated, even after the original customer is deleted from the system. A consumer must be created for the given customer before calling any of the Generate Report services.
         If a consumer already exists for this customer, this service will return HTTP 409 (Conflict).
@@ -31,13 +34,22 @@ class Reports(object):
         :param year: The consumer's email address
         :return:
         """
-        # example response:
-        # {
-        #   "id": "0h7h3r301md83",
-        #   "createdDate": 1472342400
-        # }
-        pass
-        # self._post()
+        data = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "address": address,
+            "city": city,
+            "state": state,
+            "zip": zip,
+            "phone": phone,
+            "ssn": ssn,
+            "birthday": birthday.to_dict(),
+            "year": year,
+        }
+        path = f"/decisioning/v1/customers/{customerId}/consumer"
+        response = self.__http_client.post(path, data)
+        response_dict = response.json()
+        return CreateConsumerResponse.from_dict(response_dict).id
 
     # https://community.finicity.com/s/article/Report-Consumers#get_consumer_for_customer
     # GET /decisioning/v1/customers/{customerId}/consumer
@@ -49,28 +61,32 @@ class Reports(object):
         :param customerId:
         :return:
         """
-        pass
-        # self._get_with_token()
+        path = f"decisioning/v1/customers/{customerId}/consumer"
+        response = self.__http_client.get(path)
+        response_dict = response.json()
+        return ReportConsumer.from_dict(response_dict)
 
     # https://community.finicity.com/s/article/Report-Consumers#get_consumer
     # GET /decisioning/v1/consumers/{consumerId}
-    def get_consumer(self, customerId) -> ReportConsumer:
+    def get_consumer(self, customer_id: str) -> ReportConsumer:
         """
         Get the details of a consumer record.
 
-        :param customerId: 	ID of the consumer (UUID with max length 32 characters)
+        :param customer_id: 	ID of the consumer (UUID with max length 32 characters)
         :return:
         """
-        pass
-        # self._get_with_token()
+        path = f"/decisioning/v1/consumers/{customer_id}"
+        response = self.__http_client.get(path)
+        response_dict = response.json()
+        return ReportConsumer.from_dict(response_dict)
 
     # https://community.finicity.com/s/article/Report-Consumers#modify_consumer
     # PUT /decisioning/v1/consumers/{consumerId}
-    def modify_consumer(self, customerId: str, firstName: str, lastName: str, address: str, city: str, state: str, zip: str, phone: str, ssn: str, birthday: BirthDate, year: str):
+    def modify_consumer(self, consumer_id: str, firstName: str, lastName: str, address: str, city: str, state: str, zip: str, phone: str, ssn: str, birthday: BirthDate, year: str):
         """
         Modify the details for an existing consumer. All fields are required for a consumer record, but individual fields for this call are optional because fields that are not specified will be left unchanged.
 
-        :param customerId: ID of the consumer (UUID with max length 32 characters)
+        :param consumer_id: ID of the consumer (UUID with max length 32 characters)
         :param firstName: The consumer's first name(s) / given name(s)
         :param lastName: The consumer's last name(s) / surname(s)
         :param address: The consumer's street address
@@ -83,13 +99,26 @@ class Reports(object):
         :param year: The consumer's email address
         :return:
         """
-        pass
+        path = f"/decisioning/v1/consumers/{consumer_id}"
+        data = {
+            "firstName": firstName,
+            "lastName": lastName,
+            "address": address,
+            "city": city,
+            "state": state,
+            "zip": zip,
+            "phone": phone,
+            "ssn": ssn,
+            "birthday": birthday.to_dict(),
+            "year": year,
+        }
+        self.__http_client.put(path, data=data)
 
     # Credit Decisioning
 
     # https://community.finicity.com/s/article/Generate-VOA-Report
     # POST /decisioning/v1/customers/{customerId}/voa
-    def generate_voa_report(self, customerId: str, callbackUrl: str, fromDate: Optional[int] = None, accountIds: Optional[List[str]] = None):
+    def generate_voa_report(self, customerId: str, callbackUrl: str, fromDate: Optional[int] = None, accountIds: Optional[List[str]] = None) -> List[str]:
         """
         Generate a Verification of Assets (VOA) report for all checking, savings, money market, and investment accounts for the given customer. This service retrieves up to six months of transaction history for each account and uses this information to generate the VOA report.
         This is a premium service. The billing rate is the variable rate for Verification of Assets under the current subscription plan. The billable event is the successful generation of a VOA report.
@@ -106,14 +135,24 @@ class Reports(object):
         :param accountIds: Specific accountIds you would like included in the new report. This is used only if you want constraints to only include specific accounts in a report without deleting the other accounts
         :return:
         """
-        pass
+        data = {
+            'accountIds': accountIds,
+        }
+        headers = {
+            "callbackUrl": callbackUrl,
+            "fromDate": fromDate,
+        }
+        path = f"/decisioning/v1/customers/{customerId}/voa"
+        response = self.__http_client.post(path, extra_headers=headers, data=data)
+        response_dict = response.json()
+        return CreateReportResponse.from_dict(response_dict).accountIds
         # accountIds go in body
         # self._post()
         # return 202 accepted with accountIds
 
     # https://community.finicity.com/s/article/Credit-Decisioning#generate_voi_report
     # POST /decisioning/v2/customers/{customerId}/voi
-    def generate_voi_report(self, customerId: str, callbackUrl: str, accountIds: Optional[List[str]] = None):
+    def generate_voi_report(self, customerId: str, callbackUrl: str, accountIds: Optional[List[str]] = None) -> List[str]:
         """
         Generate a Verification of Income (VOI) report for all checking, savings, and money market accounts for the given customer. This service retrieves up to two years of transaction history for each account and uses this information to generate the VOI report.
         This is a premium service. The billing rate is the variable rate for Verification of Income under the current subscription plan. The billable event is the successful generation of a VOI report.
@@ -129,13 +168,22 @@ class Reports(object):
         :param accountIds:
         :return:
         """
-        pass
+        data = {
+            'accountIds': accountIds,
+        }
+        headers = {
+            "callbackUrl": callbackUrl,
+        }
+        path = f"/decisioning/v2/customers/{customerId}/voi"
+        response = self.__http_client.post(path, extra_headers=headers, data=data)
+        response_dict = response.json()
+        return CreateReportResponse.from_dict(response_dict).accountIds
         # accountIds go in body
         # self._post()
 
     # https://community.finicity.com/s/article/Credit-Decisioning#get_report
     # GET /decisioning/v1/customers/{customerId}/reports/{reportId}
-    def get_report_by_customer(self, customerId: str, reportId: str, purpose: PermissiblePurpose):
+    def get_report_by_customer(self, customerId: str, reportId: str, purpose: PermissiblePurpose) -> ReportSummary:
         """
         Get a report that has been generated by calling one of the Generate Report services.
         The report's status field will contain inProgress, failure, or success. If the status shows inProgress, the client app should wait 20 seconds and then call again to see if the report is finished.
@@ -145,12 +193,17 @@ class Reports(object):
         :param purpose: 2-digit code from Permissible Purpose Codes, specifying the reason for retrieving this report.
         :return:
         """
-        pass
-        # self._get_with_token()
+        path = f"/decisioning/v1/customers/{customerId}/reports/{reportId}"
+        params = {
+            'purpose': purpose.value,
+        }
+        response = self.__http_client.get(path, params=params)
+        response_dict = response.json()
+        return ReportSummary.from_dict(response_dict)
 
     # https://community.finicity.com/s/article/Credit-Decisioning#get_report
     # GET /decisioning/v1/consumers/{consumerId}/reports/{reportId}
-    def get_report_by_consumer(self, consumerId: str, reportId: str, purpose: PermissiblePurpose):
+    def get_report_by_consumer(self, consumerId: str, reportId: str, purpose: PermissiblePurpose) -> ReportSummary:
         """
         Get a report that has been generated by calling one of the Generate Report services.
         The report's status field will contain inProgress, failure, or success. If the status shows inProgress, the client app should wait 20 seconds and then call again to see if the report is finished.
@@ -160,12 +213,17 @@ class Reports(object):
         :param purpose: 2-digit code from Permissible Purpose Codes, specifying the reason for retrieving this report.
         :return:
         """
-        pass
-        # self._get_with_token()
+        path = f"/decisioning/v1/consumers/{consumerId}/reports/{reportId}"
+        params = {
+            'purpose': purpose.value,
+        }
+        response = self.__http_client.get(path, params=params)
+        response_dict = response.json()
+        return ReportSummary.from_dict(response_dict)
 
     # https://community.finicity.com/s/article/Credit-Decisioning#get_reports_for_consumer
     # GET /decisioning/v1/consumers/{consumerId}/reports
-    def get_reports_for_consumer(self, consumerId: str):
+    def get_reports_for_consumer(self, consumerId: str) -> List[ReportSummary]:
         """
         Get a list of reports that have been generated for the given consumer.
         The status fields in the returned list will contain 'inProgress', 'failure', or 'success'. If a status shows 'inProgress', wait 20 seconds and then call again.
@@ -173,12 +231,14 @@ class Reports(object):
         :param consumerId: ID of the consumer (UUID with max length 32 characters)
         :return:
         """
-        pass
-        # self._get_with_token()
+        path = f"/decisioning/v1/consumers/{consumerId}/reports"
+        response = self.__http_client.get(path)
+        response_dict = response.json()
+        return ReportsResponse.from_dict(response_dict).reports
 
     # https://community.finicity.com/s/article/Credit-Decisioning#get_reports_for_customer
     # GET /decisioning/v1/customers/{customerId}/reports
-    def get_reports_for_customer(self, customerId: str):
+    def get_reports_for_customer(self, customerId: str) -> List[ReportSummary]:
         """
         Get a list of reports that have been generated for the given consumer.
         The status fields in the returned list will contain 'inProgress', 'failure', or 'success'. If a status shows 'inProgress', wait 20 seconds and then call again.
@@ -186,6 +246,7 @@ class Reports(object):
         :param customerId: ID of the customer
         :return:
         """
-        pass
-        # self._get_with_token()
-
+        path = f"decisioning/v1/customers/{customerId}/consumer"
+        response = self.__http_client.get(path)
+        response_dict = response.json()
+        return ReportsResponse.from_dict(response_dict).reports
