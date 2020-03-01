@@ -41,7 +41,7 @@ class ApiHttpClient(object):
         self.last_response = requests.get(url, headers=headers, params=params)
         return self.last_response
 
-    def post(self, path: str, data: dict, extra_headers: Optional[dict] = None) -> Response:
+    def post(self, path: str, data: Optional[dict], extra_headers: Optional[dict] = None) -> Response:
         url = _FINICITY_URL_BASE + path
         token = self.__get_token()
         headers = {

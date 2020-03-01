@@ -1,8 +1,7 @@
 from typing import Optional, List
 
 from finicity.api_http_client import ApiHttpClient
-from finicity.models import Institution, TransactionStatus, SortOrder, Transaction
-from finicity.queries.institutions_query import InstitutionsQuery
+from finicity.models import SortOrder, AnsweredMfaQuestion
 from finicity.queries.transaction_query import TransactionsQuery
 
 
@@ -43,7 +42,11 @@ class Transactions(object):
         :param callbackUrl: The TxPUSH Listener URL to receive TxPUSH notifications (must use https protocol for any real-world account)
         :return:
         """
-        pass
+        data = {
+            "callbackUrl": callbackUrl,
+        }
+        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/txpush"
+        self.__http_client.post(path, data)
         # 201 created
 
     # https://community.finicity.com/s/article/Disable-TxPUSH-Notifications
@@ -56,20 +59,22 @@ class Transactions(object):
         :param accountId: The Finicity ID of the account whose events will be sent to the TxPUSH Listener
         :return:
         """
-        pass
+        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/txpush"
+        self.__http_client.delete(path)
         # success = 204 no content
 
     # https://community.finicity.com/s/article/Delete-TxPUSH-Subscription
     # DELETE /aggregation/v1/customers/{customerId}/subscriptions/{subscriptionId}
-    def delete_push_subscription(self, customerId: str, accountId: str):
+    def delete_push_subscription(self, customerId: str, subscriptionId: str):
         """
         Delete a specific subscription for a class of events (account or transaction events) related to an account. No more notifications will be sent for these events.
 
         :param customerId: The ID of the customer who owns the account
-        :param accountId: The ID of the specific subscription to be deleted (returned from Enable TxPUSH Notifications
+        :param subscriptionId: The ID of the specific subscription to be deleted (returned from Enable TxPUSH Notifications
         :return:
         """
-        pass
+        path = f"/aggregation/v1/customers/{customerId}/subscriptions/{subscriptionId}"
+        self.__http_client.delete(path)
 
     # Account History Aggregation
 
@@ -94,38 +99,45 @@ class Transactions(object):
         :param accountId: The Finicity ID of the account to be refreshed
         :return:
         """
-        pass
+        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/transactions/historic"
+        self.__http_client.post(path, data={})
 
-    # # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/transactions/historic/mfa
-    # def load_historic_transactions_for_account_with_mfa_answers(self, mfaSession: str, customerId: str, accountId: str, ):
-    #     # TODO
-    #     # http header MFA-Session
-    #
-    #     pass
-
+    # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/transactions/historic/mfa
+    def load_historic_transactions_for_account_with_mfa_answers(self, mfaSession: str, customerId: str, accountId: str, questions: List[AnsweredMfaQuestion]):
+        headers = {
+            'mfaSession': mfaSession
+        }
+        data = {
+            'questions': [q.to_dict() for q in questions],
+        }
+        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/transactions/historic"
+        self.__http_client.post(path, data=data, extra_headers=headers)
 
     # https://community.finicity.com/s/article/Refresh-Customer-Accounts-non-interactive
     # POST /aggregation/v1/customers/{customerId}/accounts
-    def refresh_customer_accounts(self, customerId: str) -> List[Account]:
+    def refresh_customer_accounts(self, customerId: str):
         """
         Connect to all of the customer's financial institutions and refresh the transaction data for all of the customer's accounts. This is a non-interactive refresh, so any MFA challenge will cause the account to fail with an aggregationStatusCode value of 185 or 187.
         To recover an account that has state 185 or 187, call Refresh Institution Login Accounts during an interactive session with the customer, prompt the customer with the MFA challenge that is returned from that call, and then send that response to Refresh Institution Login Accounts (with MFA Answers).
         This service retrieves account data from the institution. This usually returns quickly, but in some scenarios may take a few minutes to complete. See Asynchronous Aggregation.
         Client apps are not permitted to automate calls to the Refresh services. Active accounts are automatically refreshed by Finicity once per day. Apps may call Refresh services for a specific customer when the customer opens the app, or when the customer directly invokes a Refreshaction from the app.
-        Because many financial institutions only post transactions once per day, calling Refreshrepeatedly is usually a waste of resources and is not recommended.
+        Because many financial institutions only post transactions once per day, calling Refresh repeatedly is usually a waste of resources and is not recommended.
         This service requires the HTTP header Content-Length: 0 because it is a POST request with no request body.
         The recommended timeout setting for this request is 120 seconds.
 
         :param customerId: The ID of the customer who owns the accounts
         :return:
         """
-        pass
+        headers = {
+            'Content-Length': 0,
+        }
+        path = f"/aggregation/v1/customers/{customerId}/accounts"
+        self.__http_client.post(path, None, extra_headers=headers)
     #     self._post()  # requires Content-Length = 0 and no Content-Type header
-
 
     # https://community.finicity.com/s/article/Refresh-Institution-Login-Accounts-Non-Interactive
     # POST /aggregation/v1/customers/{customerId}/institutionLogins/{institutionLoginId}/accounts
-    def refresh_institution_login_accounts(self, customerId: str, institutionLoginId: str) -> List[Account]:
+    def refresh_institution_login_accounts(self, customerId: str, institutionLoginId: str):
         """
         Connect to a financial institution and refresh transaction data for all accounts associated with a given institutionLoginId.
         Client apps are not permitted to automate calls to the Refresh services. Active accounts are automatically refreshed by Finicity once per day. Apps may call Refresh services for a specific customer when the customer opens the app, or when the customer directly invokes a Refreshaction from the app.
@@ -136,5 +148,9 @@ class Transactions(object):
         :param institutionLoginId: The institution login ID (from the account record)
         :return:
         """
-        pass
+        headers = {
+            'Content-Length': 0,
+        }
+        path = f"/aggregation/v1/customers/{customerId}/institutionLogins/{institutionLoginId}/accounts"
+        self.__http_client.post(path, None, extra_headers=headers)
         # NEEDS SPECIAL HEADERS
