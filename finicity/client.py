@@ -1,6 +1,7 @@
 from finicity.api_http_client import ApiHttpClient
 from finicity.customers import Customers
 from finicity.institutions import Institutions
+from finicity.testing import Testing
 
 
 class Client(object):
@@ -14,3 +15,4 @@ class Client(object):
         self._http_client = client = ApiHttpClient(app_key=app_key, partner_id=partner_id, partner_secret=partner_secret)
         self.institutions = Institutions(client)
         self.customers = Customers(client)
+        self.testing = Testing(client)
