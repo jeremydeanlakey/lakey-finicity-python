@@ -22,7 +22,7 @@ class InstitutionsQuery(object):
         """Use this call to search all Financial Institutions (FI) the Finicity has connections with and supports.
         Return all financial institutions that contain the search text in the institution’s name, urlHomeApp, or urlLogonApp fields.
         To get a list of all FI’s, leave the search parameter out of the call.  If the search query is left blank, the API will return an error.
-        If the value of moreAvailable in the response is true, you can retrieve the next page of results by increasing the value of the start parameter in your next request:
+        If the value of moreAvailable in the responses is true, you can retrieve the next page of results by increasing the value of the start parameter in your next request:
           ...&start=6&limit=5
 
         :param start: Starting index for this page of results

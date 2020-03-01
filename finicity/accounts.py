@@ -115,10 +115,10 @@ class Accounts(object):
         Connect to the account's financial institution and retrieve the ACH data for the indicated account. This may be an interactive refresh, so MFA challenges may be required.
         This service is supported only for accounts with type checking, savings, or moneyMarket. Calling this service for other account types will return HTTP 400 (Bad Request).
         This is a premium service. The billing rate is the variable rate for ACH Account Verification under the current subscription plan. The billable event is a successful call to this service.
-        HTTP status of 200 means both realAccountNumber and routingNumber were returned successfully in the body of the response.
-        HTTP status of 203 means the response contains an MFA challenge in XML or JSON format. Contact your Account Manager or Systems Engineers to determine the best route to handle this HTTP status code.
+        HTTP status of 200 means both realAccountNumber and routingNumber were returned successfully in the body of the responses.
+        HTTP status of 203 means the responses contains an MFA challenge in XML or JSON format. Contact your Account Manager or Systems Engineers to determine the best route to handle this HTTP status code.
         HTTP status of 404 means that no ACH data is available for this account.
-        The recommended timeout setting for this request is 180 seconds in order to receive a response. However you can terminate the connection after making the call the operation will still complete. You will have to pull the account records to check for an updated aggregation attempt date to know when the refresh is complete.
+        The recommended timeout setting for this request is 180 seconds in order to receive a responses. However you can terminate the connection after making the call the operation will still complete. You will have to pull the account records to check for an updated aggregation attempt date to know when the refresh is complete.
 
         :param customerId: The ID of the customer who owns the account
         :param accountId: The Finicity ID of the account
@@ -134,15 +134,15 @@ class Accounts(object):
     def get_details_with_mfa_answers(self, customerId: str, accountId: str, questions: List[AnsweredMfaQuestion]) -> AccountDetailResponse:
         """
         Send MFA answers for an earlier challenge while getting account details.
-        HTTP status of 200 means both realAccountNumber and routingNumber were returned successfully in the body of the response.
-        HTTP status of 203 means the response contains another MFA challenge. Call Get Customer Account Details (with MFA Answers) again to answer the new challenge.
-        This service is invoked only if a previous call to Get Customer Account Details or Get Customer Account Details (with MFA Answers) has returned HTTP 203. The response from that previous call is referred to as ""the previous response"" below.
+        HTTP status of 200 means both realAccountNumber and routingNumber were returned successfully in the body of the responses.
+        HTTP status of 203 means the responses contains another MFA challenge. Call Get Customer Account Details (with MFA Answers) again to answer the new challenge.
+        This service is invoked only if a previous call to Get Customer Account Details or Get Customer Account Details (with MFA Answers) has returned HTTP 203. The responses from that previous call is referred to as ""the previous responses"" below.
         The call itself is a replay of the previous call, with several changes:
         Change the request method from GET to POST.
         Append /mfa to the path.
         Add a Content-Type header with the value application/json or application/xml
-        Copy the MFA-Session header from the previous response onto this request.
-        Copy the MFA challenge from the previous response into the request body.
+        Copy the MFA-Session header from the previous responses onto this request.
+        Copy the MFA challenge from the previous responses into the request body.
         Add the MFA answer inside the element in the MFA challenge.
         The recommended timeout setting for this request is 120 seconds.
 
@@ -169,9 +169,9 @@ class Accounts(object):
         Return the account owner's name and address. This may require connecting to the institution, so MFA challenges may be required.
         This is a premium service. The billing rate is the variable rate for Account Owner under the current subscription plan. The billable event is a successful call to this service.
         HTTP status of 200 means the account owner's name and address were retrieved successfully.
-        HTTP status of 203 means the response contains an MFA challenge in XML or JSON format. Contact your Account Manager or Systems Engineers to determine the best route to handle this HTTP status code.
+        HTTP status of 203 means the responses contains an MFA challenge in XML or JSON format. Contact your Account Manager or Systems Engineers to determine the best route to handle this HTTP status code.
         This service retrieves account data from the institution. This usually returns quickly, but in some scenarios may take a few minutes to complete. In the event of a timeout condition, please retry the call.
-        The recommended timeout setting for this request is 180 seconds in order to receive a response. However you can terminate the connection after making the call the operation will still complete. You will have to pull the account records to check for an updated aggregation attempt date to know when the refresh is complete.
+        The recommended timeout setting for this request is 180 seconds in order to receive a responses. However you can terminate the connection after making the call the operation will still complete. You will have to pull the account records to check for an updated aggregation attempt date to know when the refresh is complete.
 
         :param customerId: The ID of the customer who owns the account
         :param accountId: The Finicity ID of the account
@@ -188,14 +188,14 @@ class Accounts(object):
         """
         Send MFA answers for an earlier challenge while getting an account statement.
         HTTP status of 200 means the account owner's name and address were retrieved successfully.
-        HTTP status of 203 means the response contains another MFA challenge. Call Get Account Owner (with MFA Answers) again to answer the new challenge.
-        This service is invoked only if a previous call to Get Account Owner or Get Account Owner (with MFA Answers) has returned HTTP 203. The response from that previous call is referred to as "the previous response" below.
+        HTTP status of 203 means the responses contains another MFA challenge. Call Get Account Owner (with MFA Answers) again to answer the new challenge.
+        This service is invoked only if a previous call to Get Account Owner or Get Account Owner (with MFA Answers) has returned HTTP 203. The responses from that previous call is referred to as "the previous responses" below.
         The call itself is a replay of the previous call, with several changes:
         Change the request method from GET to POST.
         Append /mfa to the path.
         Add a Content-Type header with the value application/json or application/xml
-        Copy the MFA-Session header from the previous response onto this request.
-        Copy the MFA challenge from the previous response into the request body.
+        Copy the MFA-Session header from the previous responses onto this request.
+        Copy the MFA challenge from the previous responses into the request body.
         Add the MFA answer inside the element in the MFA challenge.
         The recommended timeout setting for this request is 120 seconds.
 

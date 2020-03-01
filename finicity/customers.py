@@ -70,7 +70,7 @@ class Customers(object):
     def delete(self, customer_id: str):
         """
         Completely remove a customer from the system. This will remove the customer and all associated accounts and transactions.
-        (Note that the request and response is the same for JSON or XML clients.)
+        (Note that the request and responses is the same for JSON or XML clients.)
         Use this service carefully! It will not pause for confirmation before performing the operation!
 
         :param customer_id:  ID of the customer to delete

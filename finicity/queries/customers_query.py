@@ -23,7 +23,7 @@ class CustomersQuery(object):
         """
         Find all customers enrolled by the current partner, where the search text is found in the customer's username or any combination of firstName and lastName fields. If no search text is provided, return all customers.
         Valid values for type are testing, active.
-        If the value of moreAvailable in the response is true, you can retrieve the next page of results by increasing the value of the start parameter in your next request:
+        If the value of moreAvailable in the responses is true, you can retrieve the next page of results by increasing the value of the start parameter in your next request:
         ...&start=6&limit=5
 
         :param start: Starting index for this page of results. The default value is 1.

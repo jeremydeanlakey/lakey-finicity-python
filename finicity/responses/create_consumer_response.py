@@ -16,7 +16,7 @@ class CreateConsumerResponse(object):
             createdDate=createdDate,
         )
 
-# example response:
+# example responses:
 # {
 #   "id": "0h7h3r301md83",
 #   "createdDate": 1472342400

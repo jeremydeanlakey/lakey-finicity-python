@@ -8,11 +8,11 @@ from finicity.models import SortOrder, Transaction
 @dataclass
 class TransactionsListResponse(object):
     found: int  # Total number of records matching search criteria
-    displaying: int  # Number of records in this response
-    moreAvailable: bool  # True if this response does not contain the last record in the result set
-    fromDate: int  # Value of the fromDate request parameter that generated this response
-    toDate: int  # Value of the toDate request parameter that generated this response
-    sort: SortOrder  # Value of the sort request parameter that generated this response
+    displaying: int  # Number of records in this responses
+    moreAvailable: bool  # True if this responses does not contain the last record in the result set
+    fromDate: int  # Value of the fromDate request parameter that generated this responses
+    toDate: int  # Value of the toDate request parameter that generated this responses
+    sort: SortOrder  # Value of the sort request parameter that generated this responses
     transactions: List[Transaction]
     unused_fields: dict  # this is for forward compatibility and should be empty
 
