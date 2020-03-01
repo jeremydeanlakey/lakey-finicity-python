@@ -8,6 +8,12 @@ class AnsweredMfaQuestion(object):
     answer: str  # Added by the partner for calls to the "MFA Answers" services
     unused_fields: dict  # this is for forward compatibility and should be empty
 
+    def to_dict(self):
+        return {
+            'text': self.text,
+            'answer': self.answer,
+        }
+
     @staticmethod
     def from_dict(data: dict):
         data = dict(data)  # don't mutate the original

@@ -1,9 +1,9 @@
 from typing import Optional, List
 
 from finicity.api_http_client import ApiHttpClient
-from finicity.models import Institution, Account, AnsweredMfaQuestion, AccountOwner
+from finicity.models import Account, AnsweredMfaQuestion, AccountOwner
 from finicity.models.response.account_detail_response import AccountDetailResponse
-from finicity.queries.institutions_query import InstitutionsQuery
+from finicity.models.response.accounts_response import AccountsResponse
 
 
 class Accounts(object):
@@ -12,67 +12,80 @@ class Accounts(object):
 
     # https://community.finicity.com/s/article/Get-Customer-Accounts
     # GET /aggregation/v1/customers/{customerId}/accounts
-    def get_customer_accounts(self, customerId: str, status: Optional[str] = None) -> List[Account]:
+    def get_customer_accounts(self, customer_id: str, status: Optional[str] = None) -> List[Account]:
         """
         Get details for all accounts owned by the specified customer.
 
-        :param customerId: The ID of the customer whose accounts are to be retrieved
+        :param customer_id: The ID of the customer whose accounts are to be retrieved
         :param status: append, ?status=pending, to return accounts in active and pending status. Pending accounts were discovered but not activated and will not have transactions or have balance updates
         :return:
         """
-        pass
-        # self._get_with_token()
+        path = f"/aggregation/v1/customers/{customer_id}/accounts"
+        params = {'status': status} if status else {}
+        response = self.__http_client.get(path, params=params)
+        response_dict = response.json()
+        return AccountsResponse.from_dict(response_dict).accounts
 
     # https://community.finicity.com/s/article/202460255-Customer-Accounts
     # GET /aggregation/v1/customers/{customerId}/institutions/{institutionId}/accounts
-    def get_by_institution(self, customerId: str, institutionId: str) -> List[Account]:
+    def get_by_institution(self, customer_id: str, institution_id: str) -> List[Account]:
         """
         Get details for all active accounts owned by the specified customer at the specified institution.
 
-        :param customerId: The ID of the customer who owns the accounts
-        :param institutionId: The ID of the institution
+        :param customer_id: The ID of the customer who owns the accounts
+        :param institution_id: The ID of the institution
         :return:
         """
-        pass
-        # self._get_with_token()
+        path = f"/aggregation/v1/customers/{customer_id}/institutions/{institution_id}/accounts"
+        response = self.__http_client.get(path)
+        response_dict = response.json()
+        return AccountsResponse.from_dict(response_dict).accounts
 
     # https://community.finicity.com/s/article/202460255-Customer-Accounts
     # GET /aggregation/v1/customers/{customerId}/accounts/{accountId}
-    def get(self, customerId: str, accountId: str) -> Account:
+    def get(self, customer_id: str, account_id: str) -> Account:
         """
         Get details for the specified account.
 
-        :param customerId: ID of the customer
-        :param accountId: ID of the account
+        :param customer_id: ID of the customer
+        :param account_id: ID of the account
         :return:
         """
-        pass
-        # self._get_with_token()
+        path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}"
+        response = self.__http_client.get(path)
+        response_dict = response.json()
+        return Account.from_dict(response_dict)
 
     # https://community.finicity.com/s/article/202460255-Customer-Accounts
     # PUT /aggregation/v1/customers/{customerId}/accounts/{accountId}
-    def modify(self, customerId: str, accountId: str, number: str, name: str):
+    def modify(self, customer_id: str, account_id: str, number: Optional[str], name: Optional[str]):
         """
-        :param customerId: The ID of the customer who owns the account
-        :param accountId: The Finicity ID of the account to be modified
+        :param customer_id: The ID of the customer who owns the account
+        :param account_id: The Finicity ID of the account to be modified
         :param name: New value for the account's field (optional)
         :param number: New value for the account's field (optional)
         :return:
         """
-        pass
+        path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}"
+        data = {
+            'name': name,
+            'number': number,
+        }
+        self.__http_client.put(path, data=data)
         # success = no content 204
 
     # https://community.finicity.com/s/article/202460255-Customer-Accounts
     # DELETE /aggregation/v1/customers/{customerId}/accounts/{accountId}
-    def delete(self, customerId: str, accountId: str):
+    def delete(self, customer_id: str, account_id: str):
         """
         Remove the specified account from the Finicity system.
 
-        :param customerId: The ID of the customer whose account are to be deleted
-        :param accountId: The Finicity ID of the account to be deleted
+        :param customer_id: The ID of the customer whose account are to be deleted
+        :param account_id: The Finicity ID of the account to be deleted
         :return:
         """
-        pass
+        path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}"
+        self.__http_client.delete(path)
         # returns no content 204
 
     # Institution Logins
@@ -87,9 +100,10 @@ class Accounts(object):
         :param institutionLoginId: The institution login ID (from the account record)
         :return:
         """
-        pass
-        # self._get_with_token()
-
+        path = f"/aggregation/v1/customers/{customerId}/institutionLogins/{institutionLoginId}/accounts"
+        response = self.__http_client.get(path)
+        response_dict = response.json()
+        return AccountsResponse.from_dict(response_dict).accounts
 
     # ACH Account Verification
 
@@ -110,11 +124,14 @@ class Accounts(object):
         :param accountId: The Finicity ID of the account
         :return:
         """
-        pass
+        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/details"
+        response = self.__http_client.get(path)
+        response_dict = response.json()
+        return AccountDetailResponse.from_dict(response_dict).accounts
 
     # https://community.finicity.com/s/article/211260386-ACH-Account-Verification#get_customer_account_details_mfa
     # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/details/mfa
-    def get_details_with_mfa_answers(self, customerId: str, accountId: str, questions: List[AnsweredMfaQuestion]):
+    def get_details_with_mfa_answers(self, customerId: str, accountId: str, questions: List[AnsweredMfaQuestion]) -> AccountDetailResponse:
         """
         Send MFA answers for an earlier challenge while getting account details.
         HTTP status of 200 means both realAccountNumber and routingNumber were returned successfully in the body of the response.
@@ -134,8 +151,13 @@ class Accounts(object):
         :param questions:
         :return:
         """
-        # note must copy MFA-Session from other call
-        pass
+        data = {
+            'questions': [q.to_dict() for q in questions],
+        }
+        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/details/mfa"
+        response = self.__http_client.post(path, data)
+        response_dict = response.json()
+        return AccountDetailResponse.from_dict(response_dict)
 
     # Account Owner Verification
 
@@ -155,7 +177,10 @@ class Accounts(object):
         :param accountId: The Finicity ID of the account
         :return:
         """
-        pass
+        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/owner"
+        response = self.__http_client.get(path)
+        response_dict = response.json()
+        return AccountOwner.from_dict(response_dict).accounts
         # TODO 203 means MFA needed
 
     # https://community.finicity.com/s/article/Account-Owner-Verification#get_account_owner_mfa
@@ -179,17 +204,32 @@ class Accounts(object):
         :param questions:
         :return:
         """
-        pass
-        # note must copy MFA-Session from other call
+        data = {
+            'questions': [q.to_dict() for q in questions],
+        }
+        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/details/mfa"
+        response = self.__http_client.post(path, data)
+        response_dict = response.json()
+        return AccountOwner.from_dict(response_dict)
+        # TODO must copy MFA-Session from other call
 
     # Statement Aggregation
 
-    def get_statement(self):
-        pass
     # Get Customer Account Statement
     # /aggregation/v1/customers/{customerId}/accounts/{accountId}/statement GET
+    def get_statement(self, customerId: str, accountId: str):
+        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/statement"
+        response = self.__http_client.get(path)
+        return response.content # TODO what does this function actually return?
 
-    def get_statement_with_mfa_answers(self):
-        pass
     # Get Customer Account Statement (with MFA Answers)
     # /aggregation/v1/customers/{customerId}/accounts/{accountId}/statement/mfa POST
+    def get_statement_with_mfa_answers(self, customerId: str, accountId: str, questions: List[AnsweredMfaQuestion]):
+        data = {
+            'questions': [q.to_dict() for q in questions],
+        }
+        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/details/mfa"
+        response = self.__http_client.post(path, data)
+        response_dict = response.json()
+        return response.content # TODO what does this function actually return?
+        # TODO must copy MFA-Session from other call

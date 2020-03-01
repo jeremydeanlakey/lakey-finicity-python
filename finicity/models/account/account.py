@@ -15,8 +15,8 @@ from finicity.models.account.investment_account_detail import InvestmentAccountD
 @dataclass
 class Account(object):
     id: str
-    number: str
-    name: str
+    number: Optional[str]
+    name: Optional[str]
     type: AccountType
     status: str
     balance: str
@@ -38,8 +38,8 @@ class Account(object):
     def from_dict(data: dict):
         data = dict(data)  # don't mutate the original
         id = data.pop('id')
-        number = data.pop('number')
-        name = data.pop('name')
+        number = data.pop('number', None)
+        name = data.pop('name', None)
         type_str: dict = data.pop('type')
         type = AccountType(type_str)
         status = data.pop('status')
