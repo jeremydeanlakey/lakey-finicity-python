@@ -4,7 +4,7 @@ import unittest
 # https://community.finicity.com/s/article/Credit-Decisioning
 from finicity.models.report.voa.voa_report import VoaReport
 from finicity.models.report.voi.voi_report import VoiReport
-from finicity.models.response.new_report_response import NewReportResponse
+from finicity.responses.new_report_response import NewReportResponse
 
 EXAMPLE_START_VOI_RESPONSE = '''
 {

@@ -1,7 +1,8 @@
 from typing import Optional
 
 from finicity.api_http_client import ApiHttpClient
-from finicity.models import SortOrder, TransactionsListResponse
+from finicity.models import SortOrder
+from finicity.responses import TransactionsListResponse
 
 
 class TransactionsQuery(object):

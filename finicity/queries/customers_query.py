@@ -1,5 +1,5 @@
 from finicity.api_http_client import ApiHttpClient
-from finicity.models import CustomersListResponse
+from finicity.responses import CustomersListResponse
 
 
 class CustomersQuery(object):

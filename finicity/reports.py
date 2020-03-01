@@ -2,10 +2,10 @@ from typing import Optional, List
 
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import ReportConsumer, BirthDate, PermissiblePurpose
-from finicity.models.response.create_consumer_response import CreateConsumerResponse
-from finicity.models.response.create_report_response import CreateReportResponse
-from finicity.models.response.report_summary import ReportSummary
-from finicity.models.response.reports_response import ReportsResponse
+from finicity.models.report.report_summary import ReportSummary
+from finicity.responses.create_consumer_response import CreateConsumerResponse
+from finicity.responses.create_report_response import CreateReportResponse
+from finicity.responses.reports_response import ReportsResponse
 
 
 class Reports(object):

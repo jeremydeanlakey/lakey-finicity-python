@@ -3,7 +3,7 @@ import unittest
 
 
 # https://community.finicity.com/s/article/202460265-Institutions#loginfield_record
-from finicity.models.response.institution_login_form_response import InstitutionLoginFormResponse
+from finicity.responses.institution_login_form_response import InstitutionLoginFormResponse
 
 EXAMPLE_LOGIN_FORM_RESPONSE = '''
 {

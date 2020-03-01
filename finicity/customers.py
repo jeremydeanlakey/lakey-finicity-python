@@ -2,7 +2,7 @@ from typing import Optional
 
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import Customer
-from finicity.models.response.create_customer_response import CreateCustomerResponse
+from finicity.responses.create_customer_response import CreateCustomerResponse
 
 
 class Customers(object):

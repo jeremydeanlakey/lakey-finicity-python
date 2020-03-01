@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.models import TransactionsListResponse
+from finicity.responses import TransactionsListResponse
 
 EXAMPLE_TRANSACTIONS_RESPONSE = '''
 {

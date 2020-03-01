@@ -3,8 +3,8 @@ from typing import Optional
 
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import TransactionStatus
-from finicity.models.response.create_customer_response import CreateCustomerResponse
-from finicity.models.response.create_transaction_response import CreateTransactionResponse
+from finicity.responses.create_customer_response import CreateCustomerResponse
+from finicity.responses.create_transaction_response import CreateTransactionResponse
 
 
 class Testing(object):

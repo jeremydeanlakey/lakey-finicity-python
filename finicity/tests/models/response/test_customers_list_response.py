@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.models import CustomersListResponse
+from finicity.responses import CustomersListResponse
 
 EXAMPLE_CUSTOMERS_RESPONSE = '''
 {

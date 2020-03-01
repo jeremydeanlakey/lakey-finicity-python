@@ -2,8 +2,8 @@ from typing import Optional
 
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import Institution
-from finicity.models.response.institution_detail_response import InstitutionDetailResponse
 from finicity.queries.institutions_query import InstitutionsQuery
+from finicity.responses.institution_detail_response import InstitutionDetailResponse
 
 
 class Institutions(object):

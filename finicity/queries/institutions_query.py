@@ -1,7 +1,7 @@
 from typing import Optional
 
 from finicity.api_http_client import ApiHttpClient
-from finicity.models import InstitutionsListResponse
+from finicity.responses import InstitutionsListResponse
 
 
 class InstitutionsQuery(object):

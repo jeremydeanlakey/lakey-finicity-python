@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
-from finicity.models.response.report_summary import ReportSummary
+from finicity.responses.report_summary import ReportSummary
 
 
 @dataclass

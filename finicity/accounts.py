@@ -2,8 +2,8 @@ from typing import Optional, List
 
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import Account, AnsweredMfaQuestion, AccountOwner
-from finicity.models.response.account_detail_response import AccountDetailResponse
-from finicity.models.response.accounts_response import AccountsResponse
+from finicity.responses.account_detail_response import AccountDetailResponse
+from finicity.responses.accounts_response import AccountsResponse
 
 
 class Accounts(object):
