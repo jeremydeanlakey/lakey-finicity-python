@@ -20,7 +20,7 @@ class Customers(object):
         return Customer.from_dict(response_dict)
 
     # https://community.finicity.com/s/article/Add-Customer
-    def add(self, username: str, first_name: str, last_name: str):
+    def add(self, username: str, first_name: str, last_name: str) -> int:
         """
         Enroll an active customer (the actual owner of one or more real-world accounts). The customer's account transactions will be refreshed every night.
         This service is not available from the Test Drive. Calls to this service before enrolling in a paid plan will return HTTP 429 (Too Many Requests).
