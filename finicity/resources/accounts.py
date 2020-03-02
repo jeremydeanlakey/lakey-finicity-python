@@ -92,15 +92,15 @@ class Accounts(object):
 
     # https://community.finicity.com/s/article/Get-Institution-Login-Accounts
     # GET /aggregation/v1/customers/{customerId}/institutionLogins/{institutionLoginId}/accounts
-    def get_accounts(self, customerId: str, institutionLoginId: str) -> List[Account]:
+    def get_accounts(self, customer_id: str, institution_login_id: str) -> List[Account]:
         """
         Get details for all accounts associated with the given institution login. All accounts returned are accessible by a single set of credentials on a single institution.
 
-        :param customerId: The ID of the customer whose accounts are to be retrieved
-        :param institutionLoginId: The institution login ID (from the account record)
+        :param customer_id: The ID of the customer whose accounts are to be retrieved
+        :param institution_login_id: The institution login ID (from the account record)
         :return:
         """
-        path = f"/aggregation/v1/customers/{customerId}/institutionLogins/{institutionLoginId}/accounts"
+        path = f"/aggregation/v1/customers/{customer_id}/institutionLogins/{institution_login_id}/accounts"
         response = self.__http_client.get(path)
         response_dict = response.json()
         return AccountsResponse.from_dict(response_dict).accounts
@@ -110,7 +110,7 @@ class Accounts(object):
     # https://community.finicity.com/s/article/Get-Customer-Account-Details
     # https://community.finicity.com/s/article/211260386-ACH-Account-Verification#get_customer_account_details
     # GET /aggregation/v1/customers/{customerId}/accounts/{accountId}/details
-    def get_details(self, customerId: str, accountId: str) -> AccountDetailResponse:
+    def get_details(self, customer_id: str, account_id: str) -> AccountDetailResponse:
         """
         Connect to the account's financial institution and retrieve the ACH data for the indicated account. This may be an interactive refresh, so MFA challenges may be required.
         This service is supported only for accounts with type checking, savings, or moneyMarket. Calling this service for other account types will return HTTP 400 (Bad Request).
@@ -120,18 +120,18 @@ class Accounts(object):
         HTTP status of 404 means that no ACH data is available for this account.
         The recommended timeout setting for this request is 180 seconds in order to receive a responses. However you can terminate the connection after making the call the operation will still complete. You will have to pull the account records to check for an updated aggregation attempt date to know when the refresh is complete.
 
-        :param customerId: The ID of the customer who owns the account
-        :param accountId: The Finicity ID of the account
+        :param customer_id: The ID of the customer who owns the account
+        :param account_id: The Finicity ID of the account
         :return:
         """
-        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/details"
+        path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/details"
         response = self.__http_client.get(path)
         response_dict = response.json()
         return AccountDetailResponse.from_dict(response_dict).accounts
 
     # https://community.finicity.com/s/article/211260386-ACH-Account-Verification#get_customer_account_details_mfa
     # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/details/mfa
-    def get_details_with_mfa_answers(self, customerId: str, accountId: str, questions: List[AnsweredMfaQuestion]) -> AccountDetailResponse:
+    def get_details_with_mfa_answers(self, customer_id: str, account_id: str, questions: List[AnsweredMfaQuestion]) -> AccountDetailResponse:
         """
         Send MFA answers for an earlier challenge while getting account details.
         HTTP status of 200 means both realAccountNumber and routingNumber were returned successfully in the body of the responses.
@@ -146,15 +146,15 @@ class Accounts(object):
         Add the MFA answer inside the element in the MFA challenge.
         The recommended timeout setting for this request is 120 seconds.
 
-        :param customerId: The ID of the customer who owns the account
-        :param accountId: The Finicity ID of the account
+        :param customer_id: The ID of the customer who owns the account
+        :param account_id: The Finicity ID of the account
         :param questions:
         :return:
         """
         data = {
             'questions': [q.to_dict() for q in questions],
         }
-        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/details/mfa"
+        path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/details/mfa"
         response = self.__http_client.post(path, data)
         response_dict = response.json()
         return AccountDetailResponse.from_dict(response_dict)
@@ -164,7 +164,7 @@ class Accounts(object):
     # https://community.finicity.com/s/article/Get-Account-Owner
     # https://community.finicity.com/s/article/Account-Owner-Verification#get_account_owner
     # GET /aggregation/v1/customers/{customerId}/accounts/{accountId}/owner
-    def get_owner(self, customerId: str, accountId: str) -> AccountOwner:
+    def get_owner(self, customer_id: str, account_id: str) -> AccountOwner:
         """
         Return the account owner's name and address. This may require connecting to the institution, so MFA challenges may be required.
         This is a premium service. The billing rate is the variable rate for Account Owner under the current subscription plan. The billable event is a successful call to this service.
@@ -173,18 +173,18 @@ class Accounts(object):
         This service retrieves account data from the institution. This usually returns quickly, but in some scenarios may take a few minutes to complete. In the event of a timeout condition, please retry the call.
         The recommended timeout setting for this request is 180 seconds in order to receive a responses. However you can terminate the connection after making the call the operation will still complete. You will have to pull the account records to check for an updated aggregation attempt date to know when the refresh is complete.
 
-        :param customerId: The ID of the customer who owns the account
-        :param accountId: The Finicity ID of the account
+        :param customer_id: The ID of the customer who owns the account
+        :param account_id: The Finicity ID of the account
         :return:
         """
-        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/owner"
+        path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/owner"
         response = self.__http_client.get(path)
         response_dict = response.json()
         return AccountOwner.from_dict(response_dict).accounts
         # TODO 203 means MFA needed
 
     # https://community.finicity.com/s/article/Account-Owner-Verification#get_account_owner_mfa
-    def get_owner_with_mfa_answers(self, customerId: str, accountId: str, questions: List[AnsweredMfaQuestion]):
+    def get_owner_with_mfa_answers(self, customer_id: str, account_id: str, questions: List[AnsweredMfaQuestion]):
         """
         Send MFA answers for an earlier challenge while getting an account statement.
         HTTP status of 200 means the account owner's name and address were retrieved successfully.
@@ -199,15 +199,15 @@ class Accounts(object):
         Add the MFA answer inside the element in the MFA challenge.
         The recommended timeout setting for this request is 120 seconds.
 
-        :param customerId: The ID of the customer who owns the account
-        :param accountId: The Finicity ID of the account
+        :param customer_id: The ID of the customer who owns the account
+        :param account_id: The Finicity ID of the account
         :param questions:
         :return:
         """
         data = {
             'questions': [q.to_dict() for q in questions],
         }
-        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/details/mfa"
+        path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/details/mfa"
         response = self.__http_client.post(path, data)
         response_dict = response.json()
         return AccountOwner.from_dict(response_dict)
@@ -217,18 +217,18 @@ class Accounts(object):
 
     # Get Customer Account Statement
     # /aggregation/v1/customers/{customerId}/accounts/{accountId}/statement GET
-    def get_statement(self, customerId: str, accountId: str):
-        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/statement"
+    def get_statement(self, customer_id: str, account_id: str):
+        path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/statement"
         response = self.__http_client.get(path)
         return response.content # TODO what does this function actually return?
 
     # Get Customer Account Statement (with MFA Answers)
     # /aggregation/v1/customers/{customerId}/accounts/{accountId}/statement/mfa POST
-    def get_statement_with_mfa_answers(self, customerId: str, accountId: str, questions: List[AnsweredMfaQuestion]):
+    def get_statement_with_mfa_answers(self, customer_id: str, account_id: str, questions: List[AnsweredMfaQuestion]):
         data = {
             'questions': [q.to_dict() for q in questions],
         }
-        path = f"/aggregation/v1/customers/{customerId}/accounts/{accountId}/details/mfa"
+        path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/details/mfa"
         response = self.__http_client.post(path, data)
         response_dict = response.json()
         return response.content # TODO what does this function actually return?

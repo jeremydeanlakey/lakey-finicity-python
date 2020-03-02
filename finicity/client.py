@@ -1,7 +1,10 @@
 from finicity.api_http_client import ApiHttpClient
-from finicity.customers import Customers
-from finicity.institutions import Institutions
-from finicity.testing import Testing
+from finicity.resources.accounts import Accounts
+from finicity.resources.customers import Customers
+from finicity.resources.institutions import Institutions
+from finicity.resources.reports import Reports
+from finicity.resources.testing import Testing
+from finicity.resources.transactions import Transactions
 
 
 class Client(object):
@@ -16,3 +19,6 @@ class Client(object):
         self.institutions = Institutions(client)
         self.customers = Customers(client)
         self.testing = Testing(client)
+        self.accounts = Accounts(client)
+        self.transactions = Transactions(client)
+        self.reports = Reports(client)
