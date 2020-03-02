@@ -19,6 +19,11 @@ class InstitutionsQuery(object):
             if not batch.moreAvailable:
                 break
 
+    def iter(self) -> Generator[Institution, None, None]:
+        for batch in self.batches():
+            for item in batch:
+                yield item
+
     def __fetch(self, start: int = 1, limit: int = 25) -> InstitutionsListResponse:
         """Use this call to search all Financial Institutions (FI) the Finicity has connections with and supports.
         Return all financial institutions that contain the search text in the institution’s name, urlHomeApp, or urlLogonApp fields.

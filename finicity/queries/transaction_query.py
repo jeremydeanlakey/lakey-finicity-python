@@ -24,6 +24,11 @@ class TransactionsQuery(object):
             if not batch.moreAvailable:
                 break
 
+    def iter(self) -> Generator[Transaction, None, None]:
+        for batch in self.batches():
+            for item in batch:
+                yield item
+
     def __fetch(self, start: int, limit: int) -> TransactionsListResponse:
         if self.__account_id:
             path = f"/aggregation/v3/customers/{self.__customer_id}/accounts/{self.__account_id}/transactions"

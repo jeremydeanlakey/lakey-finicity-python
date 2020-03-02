@@ -20,6 +20,11 @@ class CustomersQuery(object):
             if not batch.moreAvailable:
                 break
 
+    def iter(self) -> Generator[Customer, None, None]:
+        for batch in self.batches():
+            for item in batch:
+                yield item
+
     # https://community.finicity.com/s/article/Get-Customers
     # GET /aggregation/v1/customers?search=[text]&start=[index]&limit=[count]&type=[type]&username=[username]
     def __fetch(self, start: int = 1, limit: int = 25) -> CustomersListResponse:
