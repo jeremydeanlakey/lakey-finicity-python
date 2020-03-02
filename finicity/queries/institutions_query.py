@@ -1,6 +1,7 @@
-from typing import Optional
+from typing import Optional, Generator, List
 
 from finicity.api_http_client import ApiHttpClient
+from finicity.models import Institution
 from finicity.responses import InstitutionsListResponse
 
 
@@ -9,7 +10,7 @@ class InstitutionsQuery(object):
         self.__http_client = http_client
         self.__search_term = search_term
 
-    def batches(self, batch_size: int = 25):
+    def batches(self, batch_size: int = 25) -> Generator[List[Institution], None, None]:
         i = 1
         while 1:
             batch = self.__fetch(start=i, limit=batch_size)

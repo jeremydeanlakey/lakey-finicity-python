@@ -1,4 +1,7 @@
+from typing import Generator, List
+
 from finicity.api_http_client import ApiHttpClient
+from finicity.models import Customer
 from finicity.responses import CustomersListResponse
 
 
@@ -8,7 +11,7 @@ class CustomersQuery(object):
         self.__search_term = search_term
         self.__username = username
 
-    def batches(self, batch_size: int = 25):
+    def batches(self, batch_size: int = 25) -> Generator[List[Customer], None, None]:
         i = 1
         while 1:
             batch = self.__fetch(start=i, limit=batch_size)

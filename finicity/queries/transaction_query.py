@@ -1,7 +1,7 @@
-from typing import Optional
+from typing import Optional, Generator, List
 
 from finicity.api_http_client import ApiHttpClient
-from finicity.models import SortOrder
+from finicity.models import SortOrder, Transaction
 from finicity.responses import TransactionsListResponse
 
 
@@ -15,7 +15,7 @@ class TransactionsQuery(object):
         self.__sort: SortOrder = sort
         self.__include_pending: bool = include_pending
 
-    def batches(self, batch_size: int = 25):
+    def batches(self, batch_size: int = 25) -> Generator[List[Transaction], None, None]:
         i = 1
         while 1:
             batch = self.__fetch(start=i, limit=batch_size)
