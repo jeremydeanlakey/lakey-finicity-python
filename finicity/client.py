@@ -8,7 +8,7 @@ from finicity.resources.transactions import Transactions
 
 
 class Client(object):
-    def __init__(self, app_key: str, partner_id: str, partner_secret: str):
+    def __init__(self, partner_id: str, partner_secret: str, app_key: str):
         """
 
         :param app_key: Finicity-App-Key from Developer Portal
@@ -22,3 +22,6 @@ class Client(object):
         self.accounts = Accounts(client)
         self.transactions = Transactions(client)
         self.reports = Reports(client)
+
+    def authenticate(self):
+        self._http_client.authenticate()

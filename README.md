@@ -7,7 +7,7 @@ This library was not made by Finicity.
 The Client class handles authentication, endpoints, and mapping json responses to models.
 
 ```python
-finicity = Client(APP_KEY, PARTNER_ID, PARTNER_SECRET)
+finicity = Client(PARTNER_ID, PARTNER_SECRET, APP_KEY)
 ```
 
 # Customers
