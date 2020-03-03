@@ -1,8 +1,10 @@
 import json
 import time
 from typing import Optional
-import requests
 from requests import Response
+import requests
+from requests.adapters import HTTPAdapter
+from urllib3 import Retry
 
 from finicity.utils import validate_secret
 
@@ -10,6 +12,21 @@ from finicity.utils import validate_secret
 # https://docs.finicity.com/guide-to-partner-authentication-and-integration/
 _FINICITY_URL_BASE = "https://api.finicity.com"
 _TWO_HOURS_S = 60 * 60
+
+
+def _retry_session(retries=3, backoff_factor=0.5) -> requests.Session:
+    retry = Retry(
+        total=retries,
+        read=retries,
+        connect=retries,
+        backoff_factor=backoff_factor,
+        status_forcelist=(500, 502, 504),
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session = requests.Session()
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+    return session
 
 
 class ApiHttpClient(object):
@@ -38,7 +55,7 @@ class ApiHttpClient(object):
         if extra_headers:
             headers.update(extra_headers)
         params = params or {}
-        self.last_response = requests.get(url, headers=headers, params=params)
+        self.last_response = _retry_session().get(url, headers=headers, params=params)
         return self.last_response
 
     def post(self, path: str, data: Optional[dict], extra_headers: Optional[dict] = None) -> Response:
@@ -52,7 +69,7 @@ class ApiHttpClient(object):
         }
         if extra_headers:
             headers.update(extra_headers)
-        self.last_response = requests.post(url, data=json.dumps(data), headers=headers)
+        self.last_response = _retry_session().post(url, data=json.dumps(data), headers=headers)
         return self.last_response
 
     def put(self, path: str, data: dict, extra_headers: Optional[dict] = None) -> Response:
@@ -65,7 +82,7 @@ class ApiHttpClient(object):
         }
         if extra_headers:
             headers.update(extra_headers)
-        self.last_response = requests.put(url, data=json.dumps(data), headers=headers)
+        self.last_response = _retry_session().put(url, data=json.dumps(data), headers=headers)
         return self.last_response
 
     def delete(self, path: str, extra_headers: Optional[dict] = None) -> Response:
@@ -78,17 +95,17 @@ class ApiHttpClient(object):
         }
         if extra_headers:
             headers.update(extra_headers)
-        self.last_response = requests.delete(url, headers=headers)
+        self.last_response = _retry_session().delete(url, headers=headers)
         return self.last_response
 
     def __get_token(self) -> str:
         if not self.__token or time.time() >= self.__token_expiration:
-            self.__token = self._authenticate()
+            self.authenticate()
         return self.__token
 
     # https://community.finicity.com/s/article/Partner-Authentication
     # POST /aggregation/v2/partners/authentication
-    def _authenticate(self) -> str:
+    def authenticate(self):
         """Validate the partner’s credentials (Finicity-App-Key, Partner ID, and Partner Secret) and return a temporary access token.
         The token must be passed in the HTTP header Finicity-App-Token on all subsequent API requests.
         The token is valid for two hours. You can have multiple active tokens at the same time.
