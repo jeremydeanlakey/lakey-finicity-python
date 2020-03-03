@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class CreateTransactionResponse(object):
-    id: str
+    id: int
     createdDate: int
 
     @staticmethod

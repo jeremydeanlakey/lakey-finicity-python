@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class CreateCustomerResponse(object):
-    id: str
+    id: int
     createdDate: int
 
     @staticmethod
