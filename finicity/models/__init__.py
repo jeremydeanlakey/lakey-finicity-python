@@ -1,4 +1,5 @@
 from .account import *
+from .consumer import *
 from .customer import *
 from .institution import *
 from .connect import *

@@ -1,10 +1,10 @@
 import json
 import unittest
 
-from finicity.models import ReportConsumer
+from finicity.models import Consumer
 
 # https://community.finicity.com/s/article/Report-Consumers
-EXAMPLE_REPORT_CONSUMER_PROPOSED = '''
+EXAMPLE_CONSUMER_PROPOSED = '''
 {
   "firstName": "FIRST_NAME",
   "lastName": "LAST_NAME",
@@ -23,7 +23,7 @@ EXAMPLE_REPORT_CONSUMER_PROPOSED = '''
 }
 '''
 
-EXAMPLE_REPORT_CONSUMER = '''
+EXAMPLE_CONSUMER = '''
 {
   "id": "0h7h3r301md83",
   "firstName": "FIRST_NAME",
@@ -45,8 +45,8 @@ EXAMPLE_REPORT_CONSUMER = '''
 '''
 
 
-class TestReportConsumer(unittest.TestCase):
+class TestConsumer(unittest.TestCase):
     def test_account_detail_response(self):
-        response_dict = json.loads(EXAMPLE_REPORT_CONSUMER)
-        response = ReportConsumer.from_dict(response_dict)
+        response_dict = json.loads(EXAMPLE_CONSUMER)
+        response = Consumer.from_dict(response_dict)
         self.assertEqual({}, response.unused_fields)

@@ -22,6 +22,43 @@ finicity.customers.modify(new_customer_id, first_name="John", last_name="Smith")
 finicity.customers.delete(new_customer_id)
 ```
 
+# Report Consumers
+
+```python
+consumer_id_for_new_customer: str = finicity.consumers.create(
+    customer_id=new_customer_id,
+    firstName="John",
+    lastName="Doe",
+    address="123 Main St",
+    city="Salt Lake City",
+    state="Utah",
+    zip="84000",
+    phone="8012345678",
+    ssn="521-43-6987",
+    birthday=BirthDate(year=1980, month=1, day_of_month=10),
+    email="johndoe@example.com",
+)
+
+consumer: Consumer= finicity.customers.get(consumer_id_for_new_customer)
+
+finicity.consumer.get(consumer_id_for_new_customer)
+
+finicity.consumer.get_for_customer(new_customer_id)
+
+finicity.consumers.modify(
+    consumer_id=consumer_id_for_new_customer,
+    firstName="John",
+    lastName="Doe",
+    address="123 Main St",
+    city="Salt Lake City",
+    state="Utah",
+    zip="84000",
+    phone="8012345678",
+    ssn="521-43-6987",
+    birthday=BirthDate(year=1980, month=1, day_of_month=10),
+)
+```
+
 # Institutions
 
 ```python

@@ -1,5 +1,7 @@
 from finicity.api_http_client import ApiHttpClient
 from finicity.resources.accounts import Accounts
+from finicity.resources.connections import Connections
+from finicity.resources.consumers import Consumers
 from finicity.resources.customers import Customers
 from finicity.resources.institutions import Institutions
 from finicity.resources.reports import Reports
@@ -22,6 +24,8 @@ class Client(object):
         self.accounts = Accounts(client)
         self.transactions = Transactions(client)
         self.reports = Reports(client)
+        self.consumers = Consumers(client)
+        self.connect = Connections(client, partner_id)
 
     def authenticate(self):
         self._http_client.authenticate()

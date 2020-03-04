@@ -4,7 +4,7 @@ from finicity.models.birth_date import BirthDate
 
 # https://community.finicity.com/s/article/Report-Consumers
 @dataclass
-class ReportConsumer(object):
+class Consumer(object):
     id: str  # ID of the consumer (UUID with max length 32 characters)
     firstName: str  # The consumer's first name(s) / given name(s)
     lastName: str  # The consumer's last name(s) / surname(s)
@@ -34,7 +34,7 @@ class ReportConsumer(object):
         birthday = data.pop('birthday')
         email = data.pop('email')
         createdDate = data.pop('createdDate')
-        return ReportConsumer(
+        return Consumer(
             id=id,
             firstName=firstName,
             lastName=lastName,
