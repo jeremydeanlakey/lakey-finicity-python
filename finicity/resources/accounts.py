@@ -12,23 +12,23 @@ class Accounts(object):
 
     # https://community.finicity.com/s/article/Get-Customer-Accounts
     # GET /aggregation/v1/customers/{customerId}/accounts
-    def get_customer_accounts(self, customer_id: str, status: Optional[str] = None) -> List[Account]:
+    def get_by_customer_id(self, customer_id: int, include_pending: bool = False) -> List[Account]:
         """
         Get details for all accounts owned by the specified customer.
 
         :param customer_id: The ID of the customer whose accounts are to be retrieved
-        :param status: append, ?status=pending, to return accounts in active and pending status. Pending accounts were discovered but not activated and will not have transactions or have balance updates
+        :param include_pending: if true, returns accounts in active and pending status. Pending accounts were discovered but not activated and will not have transactions or have balance updates
         :return:
         """
         path = f"/aggregation/v1/customers/{customer_id}/accounts"
-        params = {'status': status} if status else {}
+        params = {'status': 'pending'} if include_pending else {}
         response = self.__http_client.get(path, params=params)
         response_dict = response.json()
         return AccountsResponse.from_dict(response_dict).accounts
 
     # https://community.finicity.com/s/article/202460255-Customer-Accounts
     # GET /aggregation/v1/customers/{customerId}/institutions/{institutionId}/accounts
-    def get_by_institution(self, customer_id: str, institution_id: str) -> List[Account]:
+    def get_by_institution_id(self, customer_id: id, institution_id: str) -> List[Account]:
         """
         Get details for all active accounts owned by the specified customer at the specified institution.
 
@@ -43,7 +43,7 @@ class Accounts(object):
 
     # https://community.finicity.com/s/article/202460255-Customer-Accounts
     # GET /aggregation/v1/customers/{customerId}/accounts/{accountId}
-    def get(self, customer_id: str, account_id: str) -> Account:
+    def get(self, customer_id: int, account_id: str) -> Account:
         """
         Get details for the specified account.
 
@@ -58,7 +58,7 @@ class Accounts(object):
 
     # https://community.finicity.com/s/article/202460255-Customer-Accounts
     # PUT /aggregation/v1/customers/{customerId}/accounts/{accountId}
-    def modify(self, customer_id: str, account_id: str, number: Optional[str], name: Optional[str]):
+    def modify(self, customer_id: int, account_id: str, number: Optional[str], name: Optional[str]):
         """
         :param customer_id: The ID of the customer who owns the account
         :param account_id: The Finicity ID of the account to be modified
@@ -76,7 +76,7 @@ class Accounts(object):
 
     # https://community.finicity.com/s/article/202460255-Customer-Accounts
     # DELETE /aggregation/v1/customers/{customerId}/accounts/{accountId}
-    def delete(self, customer_id: str, account_id: str):
+    def delete(self, customer_id: int, account_id: str):
         """
         Remove the specified account from the Finicity system.
 
@@ -92,7 +92,7 @@ class Accounts(object):
 
     # https://community.finicity.com/s/article/Get-Institution-Login-Accounts
     # GET /aggregation/v1/customers/{customerId}/institutionLogins/{institutionLoginId}/accounts
-    def get_accounts(self, customer_id: str, institution_login_id: str) -> List[Account]:
+    def get_by_institution_login_id(self, customer_id: int, institution_login_id: str) -> List[Account]:
         """
         Get details for all accounts associated with the given institution login. All accounts returned are accessible by a single set of credentials on a single institution.
 
@@ -110,7 +110,7 @@ class Accounts(object):
     # https://community.finicity.com/s/article/Get-Customer-Account-Details
     # https://community.finicity.com/s/article/211260386-ACH-Account-Verification#get_customer_account_details
     # GET /aggregation/v1/customers/{customerId}/accounts/{accountId}/details
-    def get_details(self, customer_id: str, account_id: str) -> AccountDetailResponse:
+    def get_details(self, customer_id: int, account_id: str) -> AccountDetailResponse:
         """
         Connect to the account's financial institution and retrieve the ACH data for the indicated account. This may be an interactive refresh, so MFA challenges may be required.
         This service is supported only for accounts with type checking, savings, or moneyMarket. Calling this service for other account types will return HTTP 400 (Bad Request).
@@ -131,7 +131,7 @@ class Accounts(object):
 
     # https://community.finicity.com/s/article/211260386-ACH-Account-Verification#get_customer_account_details_mfa
     # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/details/mfa
-    def get_details_with_mfa_answers(self, customer_id: str, account_id: str, questions: List[AnsweredMfaQuestion]) -> AccountDetailResponse:
+    def get_details_with_mfa_answers(self, customer_id: int, account_id: str, questions: List[AnsweredMfaQuestion]) -> AccountDetailResponse:
         """
         Send MFA answers for an earlier challenge while getting account details.
         HTTP status of 200 means both realAccountNumber and routingNumber were returned successfully in the body of the responses.
@@ -164,7 +164,7 @@ class Accounts(object):
     # https://community.finicity.com/s/article/Get-Account-Owner
     # https://community.finicity.com/s/article/Account-Owner-Verification#get_account_owner
     # GET /aggregation/v1/customers/{customerId}/accounts/{accountId}/owner
-    def get_owner(self, customer_id: str, account_id: str) -> AccountOwner:
+    def get_owner(self, customer_id: int, account_id: str) -> AccountOwner:
         """
         Return the account owner's name and address. This may require connecting to the institution, so MFA challenges may be required.
         This is a premium service. The billing rate is the variable rate for Account Owner under the current subscription plan. The billable event is a successful call to this service.
@@ -184,7 +184,7 @@ class Accounts(object):
         # TODO 203 means MFA needed
 
     # https://community.finicity.com/s/article/Account-Owner-Verification#get_account_owner_mfa
-    def get_owner_with_mfa_answers(self, customer_id: str, account_id: str, questions: List[AnsweredMfaQuestion]):
+    def get_owner_with_mfa_answers(self, customer_id: int, account_id: str, questions: List[AnsweredMfaQuestion]):
         """
         Send MFA answers for an earlier challenge while getting an account statement.
         HTTP status of 200 means the account owner's name and address were retrieved successfully.
@@ -217,19 +217,19 @@ class Accounts(object):
 
     # Get Customer Account Statement
     # /aggregation/v1/customers/{customerId}/accounts/{accountId}/statement GET
-    def get_statement(self, customer_id: str, account_id: str):
+    def get_statement(self, customer_id: int, account_id: str) -> bytes:
         path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/statement"
         response = self.__http_client.get(path)
-        return response.content # TODO what does this function actually return?
+        return response.content
 
     # Get Customer Account Statement (with MFA Answers)
     # /aggregation/v1/customers/{customerId}/accounts/{accountId}/statement/mfa POST
-    def get_statement_with_mfa_answers(self, customer_id: str, account_id: str, questions: List[AnsweredMfaQuestion]):
+    def get_statement_with_mfa_answers(self, customer_id: int, account_id: str, questions: List[AnsweredMfaQuestion]) -> bytes:
         data = {
             'questions': [q.to_dict() for q in questions],
         }
         path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/details/mfa"
         response = self.__http_client.post(path, data)
         response_dict = response.json()
-        return response.content # TODO what does this function actually return?
+        return response.content
         # TODO must copy MFA-Session from other call

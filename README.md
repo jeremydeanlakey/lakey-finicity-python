@@ -4,7 +4,7 @@ This library was not made by Finicity.  It is not yet ready for use as some of t
 
 # Client
 
-The Client class handles authentication, endpoints, and mapping json responses to models.
+The Client class handles authentication, endpoints, retries, headers, formatting, and mapping json responses to models.
 
 ```python
 finicity = Client(PARTNER_ID, PARTNER_SECRET, APP_KEY)
@@ -88,7 +88,76 @@ connect_link: str = finicity.connect.generate_aggregation_link(
 
 # Accounts
 
-TODO
+```python
+accounts: List[Account]: = finicity.accounts.get_by_customer_id(
+    customer_id=new_customer_id,
+    include_pending=True,
+)
+
+accounts: List[Account] = finicity.accounts.get_by_institution_id(
+    customer_id=customer_id,
+    institution_id=institution_id,
+)
+
+account: Account = finicity.accounts.get(
+    customer_id=customer_id,
+    account_id: str
+)
+
+finicity.accounts.modify(
+    customer_id=customer_id,
+    account_id=account_id,
+    number="123456,
+    name="main account",
+)
+
+finicity.accounts.delete(customer_id=customer_id, account_id=account_id):
+
+accounts: List[Account] = finicity.accounts.get_by_institution_login_id(
+    customer_id=customer_id,
+    institution_login_id=institution_login_id,
+)
+
+details: AccountDetailResponse = finicity.accounts.get_details(
+    customer_id=customer_id,
+    account_id=account_id,
+)
+
+answered_mfa_questions: List[AnsweredMfaQuestion] = [
+    AnsweredMfaQuestion(
+        text="what street did you grow up on?",
+        answer="main",
+    )
+]
+
+details: AccountDetailResponse = finicity.accounts.get_details_with_mfa_answers(
+    customer_id=customer_id,
+    account_id=account_id,
+    questions=questions,
+)
+
+owner: AccountOwner = finicity.accounts.get_owner(
+    customer_id=customer_id,
+    account_id=account_id,
+)
+
+owner: AccountOwner = finicity.accounts.get_owner_with_mfa_answers(
+    customer_id=customer_id,
+    account_id=account_id,
+    questions=questions,
+)
+
+pdf: bytes = finicity.accounts.get_statement(
+    customer_id=customer_id,
+    account_id=account_id,
+)
+
+pdf: bytes = finicity.accounts.get_statement_with_mfa_answers(
+    customer_id=customer_id,
+    account_id=account_id,
+    questions=questions,
+)
+```
 
 # Transactions
 

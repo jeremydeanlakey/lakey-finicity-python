@@ -39,7 +39,7 @@ class Testing(object):
 
     # https://community.finicity.com/s/article/Add-Transaction-for-Testing-Account
     # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/transactions
-    def add_transaction(self, customer_id: str, account_id: str, amount: float, description: str, status: TransactionStatus = TransactionStatus.active, posted_date: Optional[int] = None, transaction_date: Optional[int] = None) -> int:
+    def add_transaction(self, customer_id: int, account_id: str, amount: float, description: str, status: TransactionStatus = TransactionStatus.active, posted_date: Optional[int] = None, transaction_date: Optional[int] = None) -> int:
         """
         Inject a transaction into the transaction list for a testing account. This allows an app to trigger TxPUSH notifications for the account in order to test the app’s TxPUSH Listener service. This causes the platform to send one transaction event and one account event (showing that the account balance has changed). This service is only supported for testing accounts (accounts on institution 101732).
 

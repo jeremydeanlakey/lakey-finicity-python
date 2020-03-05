@@ -9,7 +9,7 @@ class Customers(object):
     def __init__(self, http_client: ApiHttpClient):
         self.__http_client = http_client
 
-    def get(self, customer_id: str) -> Customer:
+    def get(self, customer_id: int) -> Customer:
         """
         :param customer_id: ID of the customer
         :return:
@@ -48,7 +48,7 @@ class Customers(object):
         return CreateCustomerResponse.from_dict(response_dict).id
 
     # https://community.finicity.com/s/article/Modify-Customer
-    def modify(self, customer_id: str, first_name: Optional[str], last_name: Optional[str]):
+    def modify(self, customer_id: int, first_name: Optional[str], last_name: Optional[str]):
         """
         Modify the details for an enrolled customer. You must specify either the first name, the last name, or both in the request.
         If the service is successful, HTTP 204 (No Content) will be returned.
@@ -67,7 +67,7 @@ class Customers(object):
         self.__http_client.put(path, data=data)
 
     # https://community.finicity.com/s/article/Delete-Customer
-    def delete(self, customer_id: str):
+    def delete(self, customer_id: int):
         """
         Completely remove a customer from the system. This will remove the customer and all associated accounts and transactions.
         (Note that the request and responses is the same for JSON or XML clients.)

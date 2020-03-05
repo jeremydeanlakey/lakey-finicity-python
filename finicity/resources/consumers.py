@@ -9,7 +9,7 @@ class Consumers(object):
 
     # https://community.finicity.com/s/article/Create-Consumer
     # POST /decisioning/v1/customers/{customerId}/consumer
-    def create(self, customer_id: str, firstName: str, lastName: str, address: str, city: str, state: str, zip: str, phone: str, ssn: str, birthday: BirthDate, email: str) -> str:
+    def create(self, customer_id: int, firstName: str, lastName: str, address: str, city: str, state: str, zip: str, phone: str, ssn: str, birthday: BirthDate, email: str) -> str:
         """
         Create a consumer record associated with the given customer. A consumer persists as the owner of any reports that are generated, even after the original customer is deleted from the system. A consumer must be created for the given customer before calling any of the Generate Report services.
         If a consumer already exists for this customer, this service will return HTTP 409 (Conflict).
@@ -46,7 +46,7 @@ class Consumers(object):
 
     # https://community.finicity.com/s/article/Report-Consumers#get_consumer_for_customer
     # GET /decisioning/v1/customers/{customerId}/consumer
-    def get_for_customer(self, customer_id: str) -> Consumer:
+    def get_for_customer(self, customer_id: int) -> Consumer:
         """
         Get the details of a consumer record.
         If a consumer has not been created for this customer, the service will return HTTP 404 (Not Found)
@@ -61,14 +61,14 @@ class Consumers(object):
 
     # https://community.finicity.com/s/article/Report-Consumers#get_consumer
     # GET /decisioning/v1/consumers/{consumerId}
-    def get(self, customer_id: str) -> Consumer:
+    def get(self, consumer_id: str) -> Consumer:
         """
         Get the details of a consumer record.
 
-        :param customer_id: 	ID of the consumer (UUID with max length 32 characters)
+        :param consumer_id: ID of the consumer (UUID with max length 32 characters)
         :return:
         """
-        path = f"/decisioning/v1/consumers/{customer_id}"
+        path = f"/decisioning/v1/consumers/{consumer_id}"
         response = self.__http_client.get(path)
         response_dict = response.json()
         return Consumer.from_dict(response_dict)

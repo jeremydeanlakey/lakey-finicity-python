@@ -33,7 +33,7 @@ class Transactions(object):
 
     # https://community.finicity.com/s/article/Enable-TxPUSH-Notifications
     # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/txpush
-    def enable_push_notifications(self, customer_id: str, account_id: str, callback_url: str):
+    def enable_push_notifications(self, customer_id: int, account_id: str, callback_url: str):
         """
         TxPUSH services allow an app to register a TxPUSH Listener service to receive notifications whenever a new transaction appears on an account.
 
@@ -51,7 +51,7 @@ class Transactions(object):
 
     # https://community.finicity.com/s/article/Disable-TxPUSH-Notifications
     # DELETE /aggregation/v1/customers/{customerId}/accounts/{accountId}/txpush
-    def disable_push_notifications(self, customer_id: str, account_id: str):
+    def disable_push_notifications(self, customer_id: int, account_id: str):
         """
         Disable all TxPUSH notifications for the indicated account. No more notifications will be sent for account or transaction events.
 
@@ -65,7 +65,7 @@ class Transactions(object):
 
     # https://community.finicity.com/s/article/Delete-TxPUSH-Subscription
     # DELETE /aggregation/v1/customers/{customerId}/subscriptions/{subscriptionId}
-    def delete_push_subscription(self, customer_id: str, subscription_id: str):
+    def delete_push_subscription(self, customer_id: int, subscription_id: str):
         """
         Delete a specific subscription for a class of events (account or transaction events) related to an account. No more notifications will be sent for these events.
 
@@ -80,7 +80,7 @@ class Transactions(object):
 
     # https://community.finicity.com/s/article/Load-Historic-Transactions-for-Account
     # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/transactions/historic
-    def load_historic_transactions_for_account(self, customer_id: str, account_id: str):
+    def load_historic_transactions_for_account(self, customer_id: int, account_id: str):
         """
         Connect to the account's financial institution and load up to twelve months of historic transactions for the account. For some institutions, up to two years of history may be available.
         This is a premium service. The billing rate is the variable rate for Cash Flow Verification under the current subscription plan. The billable event is a call to this service specifying a customerId that has not been seen before by this service. (If this service is called multiple times with the same customerId, to load transactions from multiple accounts, only one billable event has occurred.)
@@ -115,7 +115,7 @@ class Transactions(object):
 
     # https://community.finicity.com/s/article/Refresh-Customer-Accounts-non-interactive
     # POST /aggregation/v1/customers/{customerId}/accounts
-    def refresh_customer_accounts(self, customer_id: str):
+    def refresh_customer_accounts(self, customer_id: int):
         """
         Connect to all of the customer's financial institutions and refresh the transaction data for all of the customer's accounts. This is a non-interactive refresh, so any MFA challenge will cause the account to fail with an aggregationStatusCode value of 185 or 187.
         To recover an account that has state 185 or 187, call Refresh Institution Login Accounts during an interactive session with the customer, prompt the customer with the MFA challenge that is returned from that call, and then send that responses to Refresh Institution Login Accounts (with MFA Answers).
@@ -137,7 +137,7 @@ class Transactions(object):
 
     # https://community.finicity.com/s/article/Refresh-Institution-Login-Accounts-Non-Interactive
     # POST /aggregation/v1/customers/{customerId}/institutionLogins/{institutionLoginId}/accounts
-    def refresh_institution_login_accounts(self, customer_id: str, institution_login_id: str):
+    def refresh_institution_login_accounts(self, customer_id: int, institution_login_id: str):
         """
         Connect to a financial institution and refresh transaction data for all accounts associated with a given institutionLoginId.
         Client apps are not permitted to automate calls to the Refresh services. Active accounts are automatically refreshed by Finicity once per day. Apps may call Refresh services for a specific customer when the customer opens the app, or when the customer directly invokes a Refreshaction from the app.

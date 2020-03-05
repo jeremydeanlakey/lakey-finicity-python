@@ -13,7 +13,7 @@ class Connections(object):
 
     # https://community.finicity.com/s/article/Generate-Finicity-Connect-URL
     def generate_voa_link(self,
-                          customer_id: str,
+                          customer_id: int,
                           consumer_id: str,
                           content_type: ContentType = ContentType.JSON,
                           from_date: Optional[int] = None,
@@ -44,7 +44,7 @@ class Connections(object):
 
     # https://community.finicity.com/s/article/Generate-Finicity-Connect-URL
     def generate_aggregation_link(self,
-                          customer_id: str,
+                          customer_id: int,
                           consumer_id: str,
                           content_type: ContentType = ContentType.JSON,
                           webhook: Optional[str] = None,
