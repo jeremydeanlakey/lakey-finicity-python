@@ -123,17 +123,12 @@ details: AccountDetailResponse = finicity.accounts.get_details(
     account_id=account_id,
 )
 
-answered_mfa_questions: List[AnsweredMfaQuestion] = [
-    AnsweredMfaQuestion(
-        text="what street did you grow up on?",
-        answer="main",
-    )
-]
+answered_mfa_questions: List[AnsweredMfaQuestion] = [q.answer('bob') for q in questions]
 
 details: AccountDetailResponse = finicity.accounts.get_details_with_mfa_answers(
     customer_id=customer_id,
     account_id=account_id,
-    questions=questions,
+    questions=answered_mfa_questions,
 )
 
 owner: AccountOwner = finicity.accounts.get_owner(
@@ -161,7 +156,57 @@ pdf: bytes = finicity.accounts.get_statement_with_mfa_answers(
 
 # Transactions
 
-TODO
+```python
+query = finicity.transactions.query(
+    customer_id=customer_id,
+    from_date=1494449017,
+    to_date=1494449017,
+    sort=SortOrder.asc,
+    include_pending=True,
+    account_id=account_id,
+)
+
+for transaction in query.iter():
+    print(transaction.description)
+
+for transaction_list in query.batches():
+    pass
+
+subscriptions: List[SubscriptionRecord] = finicity.transactions.enable_push_notifications(
+    customer_id=customer_id,
+    account_id=account_id,
+    callback_url='https://yoursite.example.com/webhooks/transactions',
+)
+
+finicity.transactions.disable_push_notifications(
+    customer_id=customer_id,
+    account_id=account_id,
+)
+
+finicity.transactions.delete_push_subscription(
+    customer_id=customer_id,
+    subscription_id=subscription_id,
+)
+
+finicity.transactions.load_historic_transactions_for_account(
+    customer_id=customer_id,
+    account_id=account_id,
+)
+
+finicity.transactions.load_historic_transactions_for_account_with_mfa_answers(
+    mfaSession=mfaSession,
+    customer_id=customer_id,
+    account_id=account_id,
+    questions=answered_mfa_questions,
+)
+
+finicity.transactions.refresh_customer_accounts(customer_id)
+
+finicity.transactions.refresh_institution_login_accounts(
+    customer_id=customer_id,
+    institution_login_id=institution_login_id,
+)
+```
 
 # Reports
 
