@@ -1,8 +1,11 @@
-from typing import Generator, List
+from typing import Generator, List, Optional
 
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import Customer
 from finicity.responses import CustomersListResponse
+
+
+DEFAULT_BATCH_SIZE = 25
 
 
 class CustomersQuery(object):
@@ -11,7 +14,11 @@ class CustomersQuery(object):
         self.__search_term = search_term
         self.__username = username
 
-    def batches(self, batch_size: int = 25) -> Generator[List[Customer], None, None]:
+    def count(self) -> int:
+        batch = self.__fetch(start=1, limit=1)
+        return batch.found
+
+    def batches(self, batch_size: int = DEFAULT_BATCH_SIZE) -> Generator[List[Customer], None, None]:
         i = 1
         while 1:
             batch = self.__fetch(start=i, limit=batch_size)
@@ -20,10 +27,14 @@ class CustomersQuery(object):
             if not batch.moreAvailable:
                 break
 
-    def iter(self) -> Generator[Customer, None, None]:
-        for batch in self.batches():
+    def iter(self, batch_size: int = DEFAULT_BATCH_SIZE) -> Generator[Customer, None, None]:
+        for batch in self.batches(batch_size):
             for item in batch:
                 yield item
+
+    def first_or_none(self) -> Optional[Customer]:
+        batch = self.__fetch(start=1, limit=1)
+        return batch.customers[0] if batch.customers else None
 
     # https://community.finicity.com/s/article/Get-Customers
     # GET /aggregation/v1/customers?search=[text]&start=[index]&limit=[count]&type=[type]&username=[username]

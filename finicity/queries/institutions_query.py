@@ -5,12 +5,19 @@ from finicity.models import Institution
 from finicity.responses import InstitutionsListResponse
 
 
+DEFAULT_BATCH_SIZE = 25
+
+
 class InstitutionsQuery(object):
     def __init__(self, http_client: ApiHttpClient, search_term: Optional[str] = None):
         self.__http_client = http_client
         self.__search_term = search_term
 
-    def batches(self, batch_size: int = 25) -> Generator[List[Institution], None, None]:
+    def count(self) -> int:
+        batch = self.__fetch(start=1, limit=1)
+        return batch.found
+
+    def batches(self, batch_size: int = DEFAULT_BATCH_SIZE) -> Generator[List[Institution], None, None]:
         i = 1
         while 1:
             batch = self.__fetch(start=i, limit=batch_size)
@@ -19,10 +26,14 @@ class InstitutionsQuery(object):
             if not batch.moreAvailable:
                 break
 
-    def iter(self) -> Generator[Institution, None, None]:
-        for batch in self.batches():
+    def iter(self, batch_size: int = DEFAULT_BATCH_SIZE) -> Generator[Institution, None, None]:
+        for batch in self.batches(batch_size):
             for item in batch:
                 yield item
+
+    def first_or_none(self) -> Optional[Institution]:
+        batch = self.__fetch(start=1, limit=1)
+        return batch.institutions[0] if batch.institutions else None
 
     def __fetch(self, start: int = 1, limit: int = 25) -> InstitutionsListResponse:
         """Use this call to search all Financial Institutions (FI) the Finicity has connections with and supports.
