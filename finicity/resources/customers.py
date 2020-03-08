@@ -78,4 +78,3 @@ class Customers(object):
         """
         path = f"/aggregation/v1/customers/{customer_id}"
         self.__http_client.delete(path)
-

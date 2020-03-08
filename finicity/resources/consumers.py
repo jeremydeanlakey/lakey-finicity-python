@@ -9,14 +9,14 @@ class Consumers(object):
 
     # https://community.finicity.com/s/article/Create-Consumer
     # POST /decisioning/v1/customers/{customerId}/consumer
-    def create(self, customer_id: int, firstName: str, lastName: str, address: str, city: str, state: str, zip: str, phone: str, ssn: str, birthday: BirthDate, email: str) -> str:
+    def create(self, customer_id: int, first_name: str, last_name: str, address: str, city: str, state: str, zip: str, phone: str, ssn: str, birthday: BirthDate, email: str) -> str:
         """
         Create a consumer record associated with the given customer. A consumer persists as the owner of any reports that are generated, even after the original customer is deleted from the system. A consumer must be created for the given customer before calling any of the Generate Report services.
         If a consumer already exists for this customer, this service will return HTTP 409 (Conflict).
 
         :param customer_id: ID of the customer
-        :param firstName: The consumer's first name(s) / given name(s)
-        :param lastName: The consumer's last name(s) / surname(s)
+        :param first_name: The consumer's first name(s) / given name(s)
+        :param last_name: The consumer's last name(s) / surname(s)
         :param address: The consumer's street address
         :param city: The consumer's city
         :param state: The consumer's state
@@ -28,8 +28,8 @@ class Consumers(object):
         :return:
         """
         data = {
-            "firstName": firstName,
-            "lastName": lastName,
+            "firstName": first_name,
+            "lastName": last_name,
             "address": address,
             "city": city,
             "state": state,
@@ -75,13 +75,13 @@ class Consumers(object):
 
     # https://community.finicity.com/s/article/Report-Consumers#modify_consumer
     # PUT /decisioning/v1/consumers/{consumerId}
-    def modify(self, consumer_id: str, firstName: str, lastName: str, address: str, city: str, state: str, zip: str, phone: str, ssn: str, birthday: BirthDate, year: str):
+    def modify(self, consumer_id: str, first_name: str, last_name: str, address: str, city: str, state: str, zip: str, phone: str, ssn: str, birthday: BirthDate, year: str):
         """
         Modify the details for an existing consumer. All fields are required for a consumer record, but individual fields for this call are optional because fields that are not specified will be left unchanged.
 
         :param consumer_id: ID of the consumer (UUID with max length 32 characters)
-        :param firstName: The consumer's first name(s) / given name(s)
-        :param lastName: The consumer's last name(s) / surname(s)
+        :param first_name: The consumer's first name(s) / given name(s)
+        :param last_name: The consumer's last name(s) / surname(s)
         :param address: The consumer's street address
         :param city: The consumer's city
         :param state: The consumer's state
@@ -94,8 +94,8 @@ class Consumers(object):
         """
         path = f"/decisioning/v1/consumers/{consumer_id}"
         data = {
-            "firstName": firstName,
-            "lastName": lastName,
+            "firstName": first_name,
+            "lastName": last_name,
             "address": address,
             "city": city,
             "state": state,
@@ -106,4 +106,3 @@ class Consumers(object):
             "year": year,
         }
         self.__http_client.put(path, data=data)
-

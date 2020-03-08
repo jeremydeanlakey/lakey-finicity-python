@@ -71,4 +71,3 @@ class Testing(object):
         response = self.__http_client.post(path, data)
         response_dict = response.json()
         return CreateTransactionResponse.from_dict(response_dict).id
-
