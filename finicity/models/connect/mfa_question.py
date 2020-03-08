@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 
 # https://community.finicity.com/s/article/207505363-Multi-Factor-Authentication-MFA
-from finicity.models import AnsweredMfaQuestion
+from .answered_mfa_question import AnsweredMfaQuestion
 
 
 @dataclass
