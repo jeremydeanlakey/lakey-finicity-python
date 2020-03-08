@@ -21,6 +21,7 @@ class Connections(object):
                           webhook_data: Optional[Mapping[str, str]] = None,
                           analytics: Optional[str] = None,
                           ) -> str:
+        self.__http_client.authenticate()  # maximize the expiration for the link, which is based on that of the token
         data = {
             'partnerId': self.__partner_id,
             'customerId': customer_id,
@@ -43,20 +44,22 @@ class Connections(object):
         return GenerateLinkResponse.from_dict(response_dict).link
 
     # https://community.finicity.com/s/article/Generate-Finicity-Connect-URL
-    def generate_aggregation_link(self,
-                          customer_id: int,
-                          consumer_id: str,
-                          content_type: ContentType = ContentType.JSON,
-                          webhook: Optional[str] = None,
-                          webhook_data: Optional[Mapping[str, str]] = None,
-                          analytics: Optional[str] = None,
-                          ) -> str:
+    def generate_link(self,
+                      customer_id: int,
+                      consumer_id: str,
+                      link_type: ConnectType,
+                      content_type: ContentType = ContentType.JSON,
+                      webhook: Optional[str] = None,
+                      webhook_data: Optional[Mapping[str, str]] = None,
+                      analytics: Optional[str] = None,
+                      ) -> str:
+        self.__http_client.authenticate()  # maximize the expiration for the link, which is based on that of the token
         data = {
             'partnerId': self.__partner_id,
             'customerId': customer_id,
             'consumerId': consumer_id,
             'redirectUrl': consumer_id,
-            'type': ConnectType.aggregation.value,
+            'type': link_type.value,
             'ContentType': content_type.value,
         }
         if webhook:
@@ -69,5 +72,3 @@ class Connections(object):
         response = self.__http_client.post(path, data)
         response_dict = response.json()
         return GenerateLinkResponse.from_dict(response_dict).link
-
-    # TODO note: from_date only for VOA

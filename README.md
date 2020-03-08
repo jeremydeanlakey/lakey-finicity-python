@@ -4,7 +4,7 @@ This library was not made by Finicity.  It is not yet ready for use as some of t
 
 # Client
 
-The Client class handles authentication, endpoints, retries, headers, formatting, and mapping json responses to models.
+The Client class handles authentication and token expiration, endpoints, retries, headers, formatting, and mapping json responses to models.
 
 ```python
 finicity = Client(PARTNER_ID, PARTNER_SECRET, APP_KEY)
@@ -76,9 +76,10 @@ for institution_list in query.batches():
 # Connect
 
 ```python
-connect_link: str = finicity.connect.generate_aggregation_link(
+connect_link: str = finicity.connect.generate_link(
     customer_id=new_customer_id,
     consumer_id=consumer_id_for_new_customer,
+    link_type=ConnectType.aggregation,
     content_type=ContentType.JSON,
     webhook='https://yoursite.example.com/webhooks/finicity_connect',
     webhook_data={'value1': 'a', 'value2': 'b'},
