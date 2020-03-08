@@ -17,6 +17,16 @@ new_customer_id: int = finicity.customers.add(username='jane_doe', first_name='J
 
 new_customer: Customer = finicity.customers.get(new_customer_id)
 
+new_customer = finicity.customers.get_by_username(new_customer.username)
+
+qry = finicity.customers.query("john")
+new_customer = qry.first_or_none()
+
+for customer in customer.qry:
+    pass
+
+customer_count_with_name_john = qry.count()
+
 finicity.customers.modify(new_customer_id, first_name="John", last_name="Smith")
 
 finicity.customers.delete(new_customer_id)

@@ -2,6 +2,7 @@ from typing import Optional
 
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import Customer
+from finicity.queries.customers_query import CustomersQuery
 from finicity.responses.create_customer_response import CreateCustomerResponse
 
 
@@ -18,6 +19,19 @@ class Customers(object):
         response = self.__http_client.get(path)
         response_dict = response.json()
         return Customer.from_dict(response_dict)
+
+    def get_by_username(self, username: str) -> Optional[Customer]:
+        qry = CustomersQuery(self.__http_client, username=username)
+        return qry.first_or_none()
+
+    def query(self, search_term: Optional[str] = None) -> CustomersQuery:
+        """
+        Find all customers enrolled by the current partner, where the search text is found in the customer's username or any combination of firstName and lastName fields. If no search text is provided, return all customers.
+
+        :param search_term: Text to match, or leave empty to return all customers.
+        :return:
+        """
+        return CustomersQuery(self.__http_client, search_term=search_term)
 
     # https://community.finicity.com/s/article/Add-Customer
     def add(self, username: str, first_name: str, last_name: str) -> int:
