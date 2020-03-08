@@ -27,8 +27,8 @@ finicity.customers.delete(new_customer_id)
 ```python
 consumer_id_for_new_customer: str = finicity.consumers.create(
     customer_id=new_customer_id,
-    firstName="John",
-    lastName="Doe",
+    first_name="John",
+    last_name="Doe",
     address="123 Main St",
     city="Salt Lake City",
     state="Utah",
@@ -47,8 +47,8 @@ finicity.consumer.get_for_customer(new_customer_id)
 
 finicity.consumers.modify(
     consumer_id=consumer_id_for_new_customer,
-    firstName="John",
-    lastName="Doe",
+    first_name="John",
+    last_name="Doe",
     address="123 Main St",
     city="Salt Lake City",
     state="Utah",
