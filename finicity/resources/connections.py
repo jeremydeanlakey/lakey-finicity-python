@@ -48,7 +48,7 @@ class Connections(object):
                       customer_id: int,
                       consumer_id: str,
                       link_type: ConnectType,
-                      content_type: ContentType = ContentType.JSON,
+                      webhook_content_type: ContentType = ContentType.JSON,
                       webhook: Optional[str] = None,
                       webhook_data: Optional[Mapping[str, str]] = None,
                       analytics: Optional[str] = None,
@@ -60,10 +60,10 @@ class Connections(object):
             'consumerId': consumer_id,
             'redirectUrl': consumer_id,
             'type': link_type.value,
-            'ContentType': content_type.value,
         }
         if webhook:
             data['webhook'] = webhook
+            data['webhookContentType'] = webhook_content_type.value
         if webhook_data:
             data['webhookData'] = webhook_data
         if analytics:
