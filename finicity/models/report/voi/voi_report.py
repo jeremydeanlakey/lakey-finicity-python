@@ -10,7 +10,7 @@ from finicity.models.report.voi.voi_institution_record import VoiInstitutionReco
 
 @dataclass
 class VoiReport(object):
-    id: str  # ID of the report (UUID with max length 32 characters).  VOI report ID will have “-voi” appended to the end of it to denote the report type.
+    id: str  # ID of the report (UUID with max length 32 characters).
     portfolioId: str
     requestId: str  # unique requestId for this specific call request
     title: str
@@ -33,6 +33,8 @@ class VoiReport(object):
     def from_dict(data: dict):
         data = dict(data)  # don't mutate the original
         id = data.pop('id')
+        if id[-4:] == '-voi':
+            id = id[:-4]
         requestId = data.pop('requestId')
         portfolioId = data.pop('portfolioId')
         title = data.pop('title')
