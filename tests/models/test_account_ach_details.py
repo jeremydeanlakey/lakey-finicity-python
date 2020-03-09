@@ -12,7 +12,7 @@ EXAMPLE_ACCOUNT_DETAIL_RESPONSE = '''
 '''
 
 
-class TestAccountDetailResponse(unittest.TestCase):
+class TestAccountAchDetails(unittest.TestCase):
     def test_account_detail_response(self):
         response_dict = json.loads(EXAMPLE_ACCOUNT_DETAIL_RESPONSE)
         response = AccountAchDetails.from_dict(response_dict)
