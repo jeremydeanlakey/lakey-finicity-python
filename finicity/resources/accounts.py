@@ -180,7 +180,7 @@ class Accounts(object):
         path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/owner"
         response = self.__http_client.get(path)
         response_dict = response.json()
-        return AccountOwner.from_dict(response_dict).accounts
+        return AccountOwner.from_dict(response_dict)
         # TODO 203 means MFA needed
 
     # https://community.finicity.com/s/article/Account-Owner-Verification#get_account_owner_mfa
