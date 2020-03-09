@@ -22,7 +22,7 @@ new_customer = finicity.customers.get_by_username(new_customer.username)
 qry = finicity.customers.query("john")
 new_customer = qry.first_or_none()
 
-for customer in customer.qry:
+for customer in qry.iter():
     pass
 
 customer_count_with_name_john = qry.count()
