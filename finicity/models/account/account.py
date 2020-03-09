@@ -96,5 +96,5 @@ def account_detail_from_dict(account_type: AccountType, data: dict) -> Optional[
         else:
             return None
     except Exception as e:
-        print(e)
+        print(f"{e}: account_type: {account_type}, data: {data}")
         return None
