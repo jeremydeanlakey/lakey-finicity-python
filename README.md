@@ -7,7 +7,7 @@ This library was not made by Finicity.  It is not yet ready for use as some of t
 The Client class handles authentication and token expiration, endpoints, retries, headers, formatting, and mapping json responses to models.
 
 ```python
-finicity = Client(PARTNER_ID, PARTNER_SECRET, APP_KEY)
+finicity = FinicityClient(PARTNER_ID, PARTNER_SECRET, APP_KEY)
 ```
 
 # Customers
@@ -100,7 +100,7 @@ connect_link: str = finicity.connect.generate_link(
 # Accounts
 
 ```python
-accounts: List[Account]: = finicity.accounts.get_by_customer_id(
+accounts: List[Account] = finicity.accounts.get_by_customer_id(
     customer_id=new_customer_id,
     include_pending=True,
 )

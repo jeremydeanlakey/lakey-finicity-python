@@ -9,7 +9,7 @@ from finicity.resources.testing import Testing
 from finicity.resources.transactions import Transactions
 
 
-class Client(object):
+class FinicityClient(object):
     def __init__(self, partner_id: str, partner_secret: str, app_key: str):
         """
 
