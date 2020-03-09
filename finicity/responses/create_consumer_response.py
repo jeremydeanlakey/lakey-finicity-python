@@ -5,6 +5,7 @@ from dataclasses import dataclass
 class CreateConsumerResponse(object):
     id: str
     createdDate: int
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -14,10 +15,6 @@ class CreateConsumerResponse(object):
         return CreateConsumerResponse(
             id=id,
             createdDate=createdDate,
+            _unused_fields=data,
         )
 
-# example responses:
-# {
-#   "id": "0h7h3r301md83",
-#   "createdDate": 1472342400
-# }
