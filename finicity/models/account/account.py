@@ -32,6 +32,8 @@ class Account(object):
     # not always included:
     lastUpdatedDate: Optional[str]
     detail: Optional[AccountDetail]
+    currency: Optional[str]
+    displayPosition: Optional[int]
     _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
@@ -56,6 +58,8 @@ class Account(object):
         lastUpdatedDate = data.pop('lastUpdatedDate', None)
         detail_dict = data.pop('detail', None)
         detail = account_detail_from_dict(type, detail_dict) if detail_dict else None
+        currency = data.pop('currency', None)
+        displayPosition = data.pop('displayPosition', None)
         return Account(
             id=id,
             number=number,
@@ -73,6 +77,8 @@ class Account(object):
             institutionLoginId=institutionLoginId,
             lastUpdatedDate=lastUpdatedDate,
             detail=detail,
+            currency=currency,
+            displayPosition=displayPosition,
             _unused_fields=data,
         )
 
