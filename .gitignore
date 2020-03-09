@@ -3,3 +3,4 @@ htmlcov/
 .coverage
 .idea/*
 **/__pycache__/*
+TODO.txt
