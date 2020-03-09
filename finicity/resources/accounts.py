@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import Account, AnsweredMfaQuestion, AccountOwner
-from finicity.responses.account_detail_response import AccountDetailResponse
+from finicity.models.account.account_ach_details import AccountAchDetails
 from finicity.responses.accounts_response import AccountsResponse
 
 
@@ -110,7 +110,7 @@ class Accounts(object):
     # https://community.finicity.com/s/article/Get-Customer-Account-Details
     # https://community.finicity.com/s/article/211260386-ACH-Account-Verification#get_customer_account_details
     # GET /aggregation/v1/customers/{customerId}/accounts/{accountId}/details
-    def get_details(self, customer_id: int, account_id: str) -> AccountDetailResponse:
+    def get_details(self, customer_id: int, account_id: str) -> AccountAchDetails:
         """
         Connect to the account's financial institution and retrieve the ACH data for the indicated account. This may be an interactive refresh, so MFA challenges may be required.
         This service is supported only for accounts with type checking, savings, or moneyMarket. Calling this service for other account types will return HTTP 400 (Bad Request).
@@ -127,11 +127,11 @@ class Accounts(object):
         path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/details"
         response = self.__http_client.get(path)
         response_dict = response.json()
-        return AccountDetailResponse.from_dict(response_dict).accounts
+        return AccountAchDetails.from_dict(response_dict)
 
     # https://community.finicity.com/s/article/211260386-ACH-Account-Verification#get_customer_account_details_mfa
     # POST /aggregation/v1/customers/{customerId}/accounts/{accountId}/details/mfa
-    def get_details_with_mfa_answers(self, customer_id: int, account_id: str, questions: List[AnsweredMfaQuestion]) -> AccountDetailResponse:
+    def get_details_with_mfa_answers(self, customer_id: int, account_id: str, questions: List[AnsweredMfaQuestion]) -> AccountAchDetails:
         """
         Send MFA answers for an earlier challenge while getting account details.
         HTTP status of 200 means both realAccountNumber and routingNumber were returned successfully in the body of the responses.
@@ -157,7 +157,7 @@ class Accounts(object):
         path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/details/mfa"
         response = self.__http_client.post(path, data)
         response_dict = response.json()
-        return AccountDetailResponse.from_dict(response_dict)
+        return AccountAchDetails.from_dict(response_dict)
 
     # Account Owner Verification
 
