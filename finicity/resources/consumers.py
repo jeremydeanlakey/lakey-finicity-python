@@ -54,7 +54,7 @@ class Consumers(object):
         :param customer_id:
         :return:
         """
-        path = f"decisioning/v1/customers/{customer_id}/consumer"
+        path = f"/decisioning/v1/customers/{customer_id}/consumer"
         response = self.__http_client.get(path)
         response_dict = response.json()
         return Consumer.from_dict(response_dict)

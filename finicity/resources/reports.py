@@ -143,7 +143,7 @@ class Reports(object):
         :param customer_id: ID of the customer
         :return:
         """
-        path = f"decisioning/v1/customers/{customer_id}/consumer"
+        path = f"/decisioning/v1/customers/{customer_id}/consumer"
         response = self.__http_client.get(path)
         response_dict = response.json()
         return ReportsResponse.from_dict(response_dict).reports
