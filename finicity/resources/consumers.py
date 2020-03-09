@@ -36,7 +36,7 @@ class Consumers(object):
             "zip": zip,
             "phone": phone,
             "ssn": ssn,
-            "birthday": birthday.to_dict(),
+            "birthday": birthday.to_padded_string_dict(),
             "email": email,
         }
         path = f"/decisioning/v1/customers/{customer_id}/consumer"
@@ -102,7 +102,7 @@ class Consumers(object):
             "zip": zip,
             "phone": phone,
             "ssn": ssn,
-            "birthday": birthday.to_dict(),
+            "birthday": birthday.to_padded_string_dict(),
             "year": year,
         }
         self.__http_client.put(path, data=data)

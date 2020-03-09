@@ -31,7 +31,8 @@ class Consumer(object):
         zip = data.pop('zip')
         phone = data.pop('phone')
         ssn = data.pop('ssn')
-        birthday = data.pop('birthday')
+        birthday_dict = data.pop('birthday')
+        birthday = BirthDate.from_dict(birthday_dict)
         email = data.pop('email')
         createdDate = data.pop('createdDate')
         return Consumer(
