@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class IncomeEstimate(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     netAnnual: float  # Sum of all values in netMonthlyIncome over the previous 12 months
     projectedNetAnnual: float  # Projected net income over the next 12 months, across all income streams, based on netAnnualIncome
     estimatedGrossAnnual: float  # Before-tax gross annual income (estimated from netAnnual) across all income stream in the past 12 months
@@ -21,5 +21,5 @@ class IncomeEstimate(object):
             projectedNetAnnual=projectedNetAnnual,
             estimatedGrossAnnual=estimatedGrossAnnual,
             projectedGrossAnnual=projectedGrossAnnual,
-            unused_fields=data,
+            _unused_fields=data,
         )

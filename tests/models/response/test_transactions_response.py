@@ -58,7 +58,7 @@ class TestTransactionsResponse(unittest.TestCase):
     def test_transactions_response(self):
         response_dict = json.loads(EXAMPLE_TRANSACTIONS_RESPONSE)
         response = TransactionsListResponse.from_dict(response_dict)
-        self.assertEqual({}, response.unused_fields)
+        self.assertEqual({}, response._unused_fields)
         for transaction in response.transactions:
-            self.assertEqual({}, transaction.unused_fields)
-            self.assertEqual({}, transaction.categorization.unused_fields)
+            self.assertEqual({}, transaction._unused_fields)
+            self.assertEqual({}, transaction.categorization._unused_fields)

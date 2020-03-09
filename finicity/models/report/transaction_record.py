@@ -6,7 +6,7 @@ from finicity.models import TransactionType
 
 @dataclass
 class TransactionRecord(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     id: int  # Finicity transaction ID
     amount: float  # The total amount of this transactions. Transactions for deposits are positive values; withdrawals and debits are negative values.
     postedDate: int  # A timestamp showing when the transaction was posted or cleared by the institution
@@ -49,5 +49,5 @@ class TransactionRecord(object):
             type=type,
             securityType=securityType,
             symbol=symbol,
-            unused_fields=data,
+            _unused_fields=data,
         )

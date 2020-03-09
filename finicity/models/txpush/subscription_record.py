@@ -11,7 +11,7 @@ class SubscriptionRecord(object):
     type: SubscriptionType
     callbackUrl: str  # The TxPUSH Listener URL where event notifications will be sent
     signingKey: str  # A signing key that will be used to validate the signature of events received for this subscription
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -28,5 +28,5 @@ class SubscriptionRecord(object):
             type=type,
             callbackUrl=callbackUrl,
             signingKey=signingKey,
-            unused_fields=data,
+            _unused_fields=data,
         )

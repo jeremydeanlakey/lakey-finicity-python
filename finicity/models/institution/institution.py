@@ -22,7 +22,7 @@ class Institution(object):
     email: str  # The institution's primary contact email
     currency: str  # The institution's primary currency
     oauthInstitutionId: Optional[int]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -57,7 +57,7 @@ class Institution(object):
             phone=phone,
             email=email,
             currency=currency,
-            unused_fields=data,
+            _unused_fields=data,
             institution_class=institution_class,
             oauthInstitutionId=oauthInstitutionId,
             urlForgotPassword=urlForgotPassword,

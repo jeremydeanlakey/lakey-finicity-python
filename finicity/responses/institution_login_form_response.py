@@ -7,7 +7,7 @@ from finicity.models.institution.login_field import LoginField
 @dataclass
 class InstitutionLoginFormResponse(object):
     loginForm: List[LoginField]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -16,5 +16,5 @@ class InstitutionLoginFormResponse(object):
         loginForm = [LoginField.from_dict(d) for d in loginForm_raw]
         return InstitutionLoginFormResponse(
             loginForm=loginForm,
-            unused_fields=data,
+            _unused_fields=data,
         )

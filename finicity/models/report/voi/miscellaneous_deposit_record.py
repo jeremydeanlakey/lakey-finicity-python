@@ -7,7 +7,7 @@ from finicity.models import TransactionType
 # https://community.finicity.com/s/article/VOI-Report
 @dataclass
 class MiscellaneousDepositRecord(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     id: str  # Finicity transaction ID
     amount: float  # The total amount of this transactions. Transactions for deposits are positive values; withdrawals and debits are negative values.
     postedDate: int  # A timestamp showing when the transaction was posted or cleared by the institution
@@ -44,5 +44,5 @@ class MiscellaneousDepositRecord(object):
             category=category,
             bestRepresentation=bestRepresentation,
             type=type,
-            unused_fields=data,
+            _unused_fields=data,
         )

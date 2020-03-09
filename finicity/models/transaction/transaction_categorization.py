@@ -11,7 +11,7 @@ class TransactionCategorization(object):
     country: str  # Country where the transaction occurred
     state: Optional[str]  # State of transaction (if available)
     city: Optional[str]  # City of transaction (if available)
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -29,5 +29,5 @@ class TransactionCategorization(object):
             country=country,
             state=state,
             city=city,
-            unused_fields=data,
+            _unused_fields=data,
         )

@@ -8,7 +8,7 @@ from finicity.models.report.voi.net_monthly import NetMonthly
 
 @dataclass
 class IncomeRecord(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     confidenceType: ConfidenceType  # Level of confidence of income stream (low, moderate, high)
     netMonthly: List[NetMonthly]  # A list of net monthly records. One instance for each complete calendar month in the report
     incomeEstimate: IncomeEstimate
@@ -26,5 +26,5 @@ class IncomeRecord(object):
             confidenceType=confidenceType,
             netMonthly=netMonthly,
             incomeEstimate=incomeEstimate,
-            unused_fields=data,
+            _unused_fields=data,
         )

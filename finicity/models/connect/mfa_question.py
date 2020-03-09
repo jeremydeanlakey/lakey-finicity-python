@@ -8,10 +8,10 @@ from .answered_mfa_question import AnsweredMfaQuestion
 @dataclass
 class MfaQuestion(object):
     text: str
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     def answer(self, answer: str) -> AnsweredMfaQuestion:
-        return AnsweredMfaQuestion(text=self.text, answer=answer, unused_fields=self.unused_fields)
+        return AnsweredMfaQuestion(text=self.text, answer=answer, _unused_fields=self._unused_fields)
 
     @staticmethod
     def from_dict(data: dict):
@@ -19,5 +19,5 @@ class MfaQuestion(object):
         text = data.pop('text')
         return MfaQuestion(
             text=text,
-            unused_fields=data,
+            _unused_fields=data,
         )

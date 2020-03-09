@@ -6,7 +6,7 @@ from dataclasses import dataclass
 class AccountAchDetails(object):
     routingNumber: str  # The account's 9-digit Routing Transit Number
     realAccountNumber: str  # The full account number, assigned by the institution
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -16,5 +16,5 @@ class AccountAchDetails(object):
         return AccountAchDetails(
             routingNumber=routingNumber,
             realAccountNumber=realAccountNumber,
-            unused_fields=data,
+            _unused_fields=data,
         )

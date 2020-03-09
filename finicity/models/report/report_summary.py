@@ -19,7 +19,7 @@ class ReportSummary(object):
     createdDate: int  # The date the report was generated
     customerId: str  # set to 0
     institutions: Optional[List[VoiInstitutionRecord]]  # empty array
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -47,5 +47,5 @@ class ReportSummary(object):
             createdDate=createdDate,
             customerId=customerId,
             institutions=institutions,
-            unused_fields=data,
+            _unused_fields=data,
         )

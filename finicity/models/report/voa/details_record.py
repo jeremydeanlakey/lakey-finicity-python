@@ -7,7 +7,7 @@ from typing import Optional
 
 @dataclass
 class DetailsRecord(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     interestMarginBalance: Optional[float]  # Only available for investment accounts. Net interest earned after deducting interest paid out
     availableCashBalance: Optional[float]  # Only available for investment accounts. Amount available for cash withdrawal
     vestedBalance: Optional[float]  # Only available for investment accounts. Vested amount in account
@@ -28,5 +28,5 @@ class DetailsRecord(object):
             vestedBalance=vestedBalance,
             currentLoanBalance=currentLoanBalance,
             availableBalanceAmount=availableBalanceAmount,
-            unused_fields=data,
+            _unused_fields=data,
         )

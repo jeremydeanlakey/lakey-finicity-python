@@ -10,7 +10,7 @@ class InstitutionAddress(object):
     state: str
     postalCode: str
     country: str
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -28,5 +28,5 @@ class InstitutionAddress(object):
             state=state,
             postalCode=postalCode,
             country=country,
-            unused_fields=data,
+            _unused_fields=data,
         )

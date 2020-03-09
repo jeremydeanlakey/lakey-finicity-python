@@ -6,7 +6,7 @@ from finicity.models.report.voa.voa_account_record import VoaAccountRecord
 
 @dataclass
 class VoaInstitutionRecord(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     id: int
     name: str
     accounts: List[VoaAccountRecord]
@@ -22,5 +22,5 @@ class VoaInstitutionRecord(object):
             id=id,
             name=name,
             accounts=accounts,
-            unused_fields=data,
+            _unused_fields=data,
         )

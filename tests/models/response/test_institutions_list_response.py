@@ -620,7 +620,7 @@ class TestInstitutionsListResponse(unittest.TestCase):
     def test_institutions_response(self):
         response_dict = json.loads(EXAMPLE_INSTITUTIONS_RESPONSE)
         response = InstitutionsListResponse.from_dict(response_dict)
-        self.assertEqual({}, response.unused_fields)
+        self.assertEqual({}, response._unused_fields)
         for institution in response.institutions:
-            self.assertEqual({}, institution.unused_fields)
-            self.assertEqual({}, institution.address.unused_fields)
+            self.assertEqual({}, institution._unused_fields)
+            self.assertEqual({}, institution.address._unused_fields)

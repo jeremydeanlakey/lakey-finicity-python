@@ -6,7 +6,7 @@ from finicity.models import AccountType
 
 @dataclass
 class AccountAssetRecord(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     type: AccountType  # VOA: checking / savings / moneyMarket / cd / investment*
     currentBalance: float  # Current balance of the account
     availableBalance: Optional[float]  #
@@ -31,5 +31,5 @@ class AccountAssetRecord(object):
             twoMonthAverage=twoMonthAverage,
             sixMonthAverage=sixMonthAverage,
             beginningBalance=beginningBalance,
-            unused_fields=data,
+            _unused_fields=data,
         )

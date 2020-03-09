@@ -17,7 +17,7 @@ class NewReportResponse(object):
     constraints: Optional[ReportConstraints]  # specifies use of accountIds included in the call
     status: ReportStatus  # inProgress or success or failure
     institutions: Optional[List[VoiInstitutionRecord]]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -41,5 +41,5 @@ class NewReportResponse(object):
             type=type,
             status=status,
             institutions=institutions,
-            unused_fields=data,
+            _unused_fields=data,
         )

@@ -30,7 +30,7 @@ class Transaction(object):
     unitQuantity: Optional[int]  # The number of units (e.g. individual shares) in the transaction, if available
     unitValue: Optional[float]  # The value of each unit in the transaction, if available
     categorization: Optional[TransactionCategorization]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -78,5 +78,5 @@ class Transaction(object):
             unitQuantity=unitQuantity,
             unitValue=unitValue,
             categorization=categorization,
-            unused_fields=data,
+            _unused_fields=data,
         )

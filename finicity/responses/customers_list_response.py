@@ -11,7 +11,7 @@ class CustomersListResponse(object):
     displaying: int  # Number of records in this responses
     moreAvailable: bool  # True if this responses does not contain the last record in the result set
     customers: List[Customer]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -26,5 +26,5 @@ class CustomersListResponse(object):
             displaying=displaying,
             moreAvailable=moreAvailable,
             customers=customers,
-            unused_fields=data,
+            _unused_fields=data,
         )

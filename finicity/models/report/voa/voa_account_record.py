@@ -23,7 +23,7 @@ class VoaAccountRecord(object):
     balance: float  # The cleared balance of the account as-of balanceDate
     balanceDate: int  # A timestamp showing when the balance was captured
     averageMonthlyBalance: float  # The average monthly balance of this account
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -62,5 +62,5 @@ class VoaAccountRecord(object):
             balance=balance,
             balanceDate=balanceDate,
             averageMonthlyBalance=averageMonthlyBalance,
-            unused_fields=data,
+            _unused_fields=data,
         )

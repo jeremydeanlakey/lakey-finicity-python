@@ -12,7 +12,7 @@ class Customer(object):
     lastName: Optional[str]
     type: str
     createdDate: int
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -30,5 +30,5 @@ class Customer(object):
             lastName=lastName,
             type=type,
             createdDate=createdDate,
-            unused_fields=data,
+            _unused_fields=data,
         )

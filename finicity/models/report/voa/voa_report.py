@@ -27,7 +27,7 @@ class VoaReport(object):
     seasoned: bool
     institutions: Optional[List[VoaInstitutionRecord]]
     assets: AssetRecord
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -70,5 +70,5 @@ class VoaReport(object):
             seasoned=seasoned,
             institutions=institutions,
             assets=assets,
-            unused_fields=data,
+            _unused_fields=data,
         )

@@ -34,6 +34,6 @@ class TestCustomersResponse(unittest.TestCase):
     def test_account_detail_response(self):
         response_dict = json.loads(EXAMPLE_CUSTOMERS_RESPONSE)
         response = CustomersListResponse.from_dict(response_dict)
-        self.assertEqual({}, response.unused_fields)
+        self.assertEqual({}, response._unused_fields)
         for customer in response.customers:
-            self.assertEqual({}, customer.unused_fields)
+            self.assertEqual({}, customer._unused_fields)

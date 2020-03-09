@@ -6,7 +6,7 @@ from finicity.models.report.voi.voi_account_record import VoiAccountRecord
 
 @dataclass
 class VoiInstitutionRecord(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     id: int
     name: str
     urlHomeApp: Optional[str]  # voa only
@@ -25,5 +25,5 @@ class VoiInstitutionRecord(object):
             name=name,
             urlHomeApp=urlHomeApp,
             accounts=accounts,
-            unused_fields=data,
+            _unused_fields=data,
         )

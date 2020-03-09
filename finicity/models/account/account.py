@@ -32,7 +32,7 @@ class Account(object):
     # not always included:
     lastUpdatedDate: Optional[str]
     detail: Optional[AccountDetail]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -73,7 +73,7 @@ class Account(object):
             institutionLoginId=institutionLoginId,
             lastUpdatedDate=lastUpdatedDate,
             detail=detail,
-            unused_fields=data,
+            _unused_fields=data,
         )
 
 

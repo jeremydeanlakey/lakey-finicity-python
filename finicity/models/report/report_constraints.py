@@ -7,7 +7,7 @@ from finicity.models.report.report_custom_field import ReportCustomField
 # https://community.finicity.com/s/article/VOA-Report
 @dataclass
 class ReportConstraints(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     accountIds: Optional[List[str]]
     fromDate: Optional[int]
     reportCustomFields: List[ReportCustomField]
@@ -23,5 +23,5 @@ class ReportConstraints(object):
             accountIds=accountIds,
             fromDate=fromDate,
             reportCustomFields=reportCustomFields,
-            unused_fields=data,
+            _unused_fields=data,
         )

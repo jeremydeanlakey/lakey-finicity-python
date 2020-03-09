@@ -7,7 +7,7 @@ class Cadence(object):
     startDate: int  # postedDate of the first deposit transaction
     stopDate: Optional[int]  # postedDate of the final deposit transaction (omitted if status is active)
     days: int  # Number of days between the recurring deposits
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -19,5 +19,5 @@ class Cadence(object):
             startDate=startDate,
             stopDate=stopDate,
             days=days,
-            unused_fields=data,
+            _unused_fields=data,
         )

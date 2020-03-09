@@ -6,7 +6,7 @@ from dataclasses import dataclass
 class AccountOwner(object):
     ownerName: str
     ownerAddress: str
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -16,5 +16,5 @@ class AccountOwner(object):
         return AccountOwner(
             ownerName=ownerName,
             ownerAddress=ownerAddress,
-            unused_fields=data,
+            _unused_fields=data,
         )

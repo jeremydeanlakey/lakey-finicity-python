@@ -27,7 +27,7 @@ class VoiReport(object):
     seasoned: bool
     institutions: Optional[List[VoiInstitutionRecord]]
     income: List[IncomeRecord]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -72,7 +72,7 @@ class VoiReport(object):
             seasoned=seasoned,
             institutions=institutions,
             income=income,
-            unused_fields=data,
+            _unused_fields=data,
         )
 
     #
@@ -86,7 +86,7 @@ class VoiReport(object):
     # constraints: Optional[ReportConstraints]
     # type: ReportType  # voa or voi
     # status: ReportStatus  # inProgress or success or failure
-    # unused_fields: dict  # this is for forward compatibility and should be empty
+    # _unused_fields: dict  # this is for forward compatibility and should be empty
     # institutions: Optional[List[InstitutionRecord]]
     #
     # customerId: Optional[str]
@@ -107,7 +107,7 @@ class VoiReport(object):
 #     requesterName: str
 #     constraints: Optional[ReportConstraints]
 #     status: ReportStatus  # inProgress or success or failure
-#     unused_fields: dict  # this is for forward compatibility and should be empty
+#     _unused_fields: dict  # this is for forward compatibility and should be empty
 #     institutions: Optional[List[InstitutionRecord]]
 #
 #     customerId: Optional[str]
@@ -142,7 +142,7 @@ class VoiReport(object):
 #             constraints=constraints,
 #             status=status,
 #             institutions=institutions,
-#             unused_fields=data,
+#             _unused_fields=data,
 #         )
 #
 #
@@ -156,7 +156,7 @@ class VoiReport(object):
 #     constraints: Optional[ReportConstraints]
 #     type: ReportType  # voa or voi
 #     status: ReportStatus  # inProgress or success or failure
-#     unused_fields: dict  # this is for forward compatibility and should be empty
+#     _unused_fields: dict  # this is for forward compatibility and should be empty
 #     institutions: Optional[List[InstitutionRecord]]
 #
 #     customerId: Optional[str]
@@ -169,7 +169,7 @@ class VoiReport(object):
 #
 # @dataclass
 # class VoiReport(Report):
-#     unused_fields: dict  # this is for forward compatibility and should be empty
+#     _unused_fields: dict  # this is for forward compatibility and should be empty
 #     pass
 #     # income
 #
@@ -181,6 +181,6 @@ class VoiReport(object):
 #     def from_dict(data: dict):
 #         return VoiReport(
 #             data = dict(data)  # don't mutate the original
-#             unused_fields=data,
+#             _unused_fields=data,
 #
 #         )

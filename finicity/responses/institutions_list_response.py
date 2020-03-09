@@ -12,7 +12,7 @@ class InstitutionsListResponse(object):
     moreAvailable: bool  # True if this responses does not contain the last record in the result set
     createdDate: int  # Date this list was generated
     institutions: List[Institution]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -29,5 +29,5 @@ class InstitutionsListResponse(object):
             moreAvailable=moreAvailable,
             createdDate=createdDate,
             institutions=institutions,
-            unused_fields=data,
+            _unused_fields=data,
         )

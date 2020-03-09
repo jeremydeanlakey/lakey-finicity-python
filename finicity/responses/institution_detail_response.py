@@ -6,7 +6,7 @@ from finicity.models import Institution
 @dataclass
 class InstitutionDetailResponse(object):
     institution: Institution
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -15,5 +15,5 @@ class InstitutionDetailResponse(object):
         institution = Institution.from_dict(institution_raw)
         return InstitutionDetailResponse(
             institution=institution,
-            unused_fields=data,
+            _unused_fields=data,
         )

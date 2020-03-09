@@ -19,7 +19,7 @@ class VoiAccountRecord(object):
     transactions: List[TransactionRecord]  # A list of all transaction records for this account during the report period (VOI report includes deposit transactions only)
     miscDeposits: List[MiscellaneousDepositRecord]  # A list of miscellaneous deposit records
     incomeStreams: List[IncomeStreamRecord]  # A list of income stream records
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -50,5 +50,5 @@ class VoiAccountRecord(object):
             transactions=transactions,
             miscDeposits=miscDeposits,
             incomeStreams=incomeStreams,
-            unused_fields=data,
+            _unused_fields=data,
         )

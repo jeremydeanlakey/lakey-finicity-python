@@ -4,7 +4,7 @@ from dataclasses import dataclass
 @dataclass
 class GenerateLinkResponse(object):
     link: str
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -12,5 +12,5 @@ class GenerateLinkResponse(object):
         link: str = data.pop('link')
         return GenerateLinkResponse(
             link=link,
-            unused_fields=data,
+            _unused_fields=data,
         )

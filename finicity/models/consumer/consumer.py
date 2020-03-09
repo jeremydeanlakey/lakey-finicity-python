@@ -17,7 +17,7 @@ class Consumer(object):
     birthday: BirthDate  # The consumer's birth date
     email: str  # The consumer's email address
     createdDate: int  # A timestamp of when the consumer was created
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -47,5 +47,5 @@ class Consumer(object):
             birthday=birthday,
             email=email,
             createdDate=createdDate,
-            unused_fields=data,
+            _unused_fields=data,
         )

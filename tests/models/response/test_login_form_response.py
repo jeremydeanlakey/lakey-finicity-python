@@ -36,6 +36,6 @@ class TestReportResponse(unittest.TestCase):
     def test_voi_short(self):
         response_dict = json.loads(EXAMPLE_LOGIN_FORM_RESPONSE)
         response = InstitutionLoginFormResponse.from_dict(response_dict)
-        self.assertEqual({}, response.unused_fields)
+        self.assertEqual({}, response._unused_fields)
         for field in response.loginForm:
-            self.assertEqual({}, field.unused_fields)
+            self.assertEqual({}, field._unused_fields)

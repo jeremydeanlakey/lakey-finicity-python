@@ -4,7 +4,7 @@ from typing import Optional
 
 @dataclass
 class AssetRecord(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     currentBalance: float  # Current balance of the account
     availableBalance: Optional[float]  #
     twoMonthAverage: float  # Two month average daily balance of the account
@@ -25,5 +25,5 @@ class AssetRecord(object):
             twoMonthAverage=twoMonthAverage,
             sixMonthAverage=sixMonthAverage,
             beginningBalance=beginningBalance,
-            unused_fields=data,
+            _unused_fields=data,
         )

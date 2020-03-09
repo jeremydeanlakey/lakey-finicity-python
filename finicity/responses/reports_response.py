@@ -7,7 +7,7 @@ from finicity.models.report.report_summary import ReportSummary
 @dataclass
 class ReportsResponse(object):
     reports: List[ReportSummary]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -16,5 +16,5 @@ class ReportsResponse(object):
         reports = [ReportSummary.from_dict(d) for d in reports_raw]
         return ReportsResponse(
             reports=reports,
-            unused_fields=data,
+            _unused_fields=data,
         )

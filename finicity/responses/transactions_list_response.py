@@ -14,7 +14,7 @@ class TransactionsListResponse(object):
     toDate: int  # Value of the toDate request parameter that generated this responses
     sort: SortOrder  # Value of the sort request parameter that generated this responses
     transactions: List[Transaction]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -35,5 +35,5 @@ class TransactionsListResponse(object):
             toDate=toDate,
             sort=sort,
             transactions=transactions,
-            unused_fields=data,
+            _unused_fields=data,
         )

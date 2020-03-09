@@ -7,7 +7,7 @@ from finicity.models.account.account_detail import AccountDetail
 # https://community.finicity.com/s/article/Account-Details-Credit-Card-Line-of-Credit
 @dataclass
 class CreditLineAccountDetail(AccountDetail):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     interestMarginBalance: Optional[Any] = field(default=None)  # Net interest earned after deducting interest paid out
     shortBalance: Optional[Any] = field(default=None)  # Sum of short balance
     availableCashBalance: Optional[Any] = field(default=None)  # Amount available for cash withdrawal
@@ -79,5 +79,5 @@ class CreditLineAccountDetail(AccountDetail):
             loanRate=loanRate,
             buyPower=buyPower,
             rolloverLtd=rolloverLtd,
-            unused_fields=data,
+            _unused_fields=data,
         )

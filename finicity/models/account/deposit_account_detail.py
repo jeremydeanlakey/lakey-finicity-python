@@ -7,7 +7,7 @@ from finicity.models.account.account_detail import AccountDetail
 # https://community.finicity.com/s/article/Account-Details-Checking-Savings-CD-Money-Market
 @dataclass
 class DepositAccountDetail(AccountDetail):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     createdDate: Any  # A timestamp showing when the account was added to the Finicity system(see Handling Dates and Times)
     availableBalanceAmount: Any  # The available balance (typically the current balance with adjustments for any pending transactions)
     openDate: Optional[Any] = field(default=None)  # Date when account was opened
@@ -49,5 +49,5 @@ class DepositAccountDetail(AccountDetail):
             interestPriorYtdAmount=interestPriorYtdAmount,
             maturityDate=maturityDate,
             postedDate=postedDate,
-            unused_fields=data,
+            _unused_fields=data,
         )

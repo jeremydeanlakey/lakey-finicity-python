@@ -7,7 +7,7 @@ from finicity.models.account.account_detail import AccountDetail
 # https://community.finicity.com/s/article/Account-Details-Mortgage-Loan
 @dataclass
 class LoanAccountDetail(AccountDetail):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     postedDate: Optional[Any] = field(default=None)  # Most recent date of the following information
     termOfMl: Optional[Any] = field(default=None)  # Length of loan in months
     mlHolderName: Optional[Any] = field(default=None)  # Holder of the mortgage or loan
@@ -163,5 +163,5 @@ class LoanAccountDetail(AccountDetail):
             interestRateType=interestRateType,
             loanPaymentType=loanPaymentType,
             paymentsRemaining=paymentsRemaining,
-            unused_fields=data,
+            _unused_fields=data,
         )

@@ -5,7 +5,7 @@ from typing import Optional
 # https://community.finicity.com/s/article/202460265-Institutions#loginfield_record
 @dataclass
 class LoginField(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     id: str  # The ID of this field
     name:  str  # The system name for this field
     value: str  # A default value for this field, if found (always blank for masked fields)
@@ -41,5 +41,5 @@ class LoginField(object):
             instructions=instructions,
             valueLengthMin=valueLengthMin,
             valueLengthMax=valueLengthMax,
-            unused_fields=data,
+            _unused_fields=data,
         )

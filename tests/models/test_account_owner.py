@@ -17,4 +17,4 @@ class TestAccountOwner(unittest.TestCase):
     def test_account_detail_response(self):
         response_dict = json.loads(EXAMPLE_ACCOUNT_OWNER)
         response = AccountOwner.from_dict(response_dict)
-        self.assertEqual({}, response.unused_fields)
+        self.assertEqual({}, response._unused_fields)

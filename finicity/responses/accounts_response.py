@@ -8,7 +8,7 @@ from finicity.models import Account
 @dataclass
 class AccountsResponse(object):
     accounts: List[Account]
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
@@ -17,5 +17,5 @@ class AccountsResponse(object):
         accounts = [Account.from_dict(d) for d in accounts_raw]
         return AccountsResponse(
             accounts=accounts,
-            unused_fields=data,
+            _unused_fields=data,
         )

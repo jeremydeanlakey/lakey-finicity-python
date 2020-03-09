@@ -6,7 +6,7 @@ from dataclasses import dataclass
 class AnsweredMfaQuestion(object):
     text: str
     answer: str  # Added by the partner for calls to the "MFA Answers" services
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
 
     def to_dict(self) -> dict:
         return {
@@ -22,5 +22,5 @@ class AnsweredMfaQuestion(object):
         return AnsweredMfaQuestion(
             text=text,
             answer=answer,
-            unused_fields=data,
+            _unused_fields=data,
         )

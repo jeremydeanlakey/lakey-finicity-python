@@ -10,7 +10,7 @@ from finicity.models.report.voi.net_monthly import NetMonthly
 
 @dataclass
 class IncomeStreamRecord(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     id: str  # Finicity’s income stream ID
     name: str  # A human-readable name based on the normalizedPayee name of the transactions for this income stream
     status: IncomeStreamStatus  # active or inactive (“active” means that the most-recent deposit occurred as expected by the cadence and the next expected date is still in the future.)
@@ -60,5 +60,5 @@ class IncomeStreamRecord(object):
             projectedGrossAnnual=projectedGrossAnnual,
             averageMonthlyIncomeNet=averageMonthlyIncomeNet,
             transactions=transactions,
-            unused_fields=data,
+            _unused_fields=data,
         )

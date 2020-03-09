@@ -4,7 +4,7 @@ from dataclasses import dataclass
 # https://community.finicity.com/s/article/VOA-Report
 @dataclass
 class ReportCustomField(object):
-    unused_fields: dict  # this is for forward compatibility and should be empty
+    _unused_fields: dict  # this is for forward compatibility and should be empty
     label: str
     value: str
     shown: bool
@@ -19,5 +19,5 @@ class ReportCustomField(object):
             label=label,
             value=value,
             shown=shown,
-            unused_fields=data,
+            _unused_fields=data,
         )
