@@ -42,15 +42,109 @@ EXAMPLE_REFRESH_ACCOUNTS_RESPONSE = '''
 }
 '''
 
-EXAMPLE_REFRESH_ACCOUNTS_RESPONSE = """
-{"accounts":[{"id":"1007547418","number":"111111","name":"Checking","balance":9357.24,"type":"checking","status":"active","customerId":"1002191232","institutionId":"102105","balanceDate":1583716651,"createdDate":1583716651,"lastUpdatedDate":1583716663,"currency":"USD","institutionLoginId":1002841562,"displayPosition":1},{"id":"1007547419","number":"222222","name":"Savings","balance":22327.30,"type":"savings","status":"active","customerId":"1002191232","institutionId":"102105","balanceDate":1583716651,"createdDate":1583716651,"lastUpdatedDate":1583716663,"currency":"USD","institutionLoginId":1002841562,"displayPosition":2},{"id":"1007547420","number":"101010","name":"Personal Investments","balance":100000.00,"type":"investment","status":"active","customerId":"1002191232","institutionId":"102105","balanceDate":1583716651,"createdDate":1583716651,"lastUpdatedDate":1583716663,"currency":"USD","institutionLoginId":1002841562,"detail":{},"displayPosition":3},{"id":"1007547421","number":"121212","name":"My 401k","balance":265000.00,"type":"investmentTaxDeferred","status":"active","customerId":"1002191232","institutionId":"102105","balanceDate":1583716651,"createdDate":1583716651,"lastUpdatedDate":1583716663,"currency":"USD","institutionLoginId":1002841562,"detail":{},"displayPosition":4},{"id":"1007547422","number":"232323","name":"ROTH","balance":11001.00,"type":"roth","status":"active","customerId":"1002191232","institutionId":"102105","balanceDate":1583716651,"createdDate":1583716651,"lastUpdatedDate":1583716663,"currency":"USD","institutionLoginId":1002841562,"detail":{},"displayPosition":5}]}
+EXAMPLE_ACCOUNTS_RESPONSE = """
+{
+  "accounts": [
+    {
+      "id": "1007547418",
+      "number": "111111",
+      "name": "Checking",
+      "balance": 9357.24,
+      "type": "checking",
+      "status": "active",
+      "customerId": "1002191232",
+      "institutionId": "102105",
+      "balanceDate": 1583716651,
+      "aggregationAttemptDate": 1583723079,
+      "createdDate": 1583716651,
+      "lastUpdatedDate": 1583716663,
+      "currency": "USD",
+      "institutionLoginId": 1002841562,
+      "detail": {
+        "availableBalanceAmount": 0
+      },
+      "displayPosition": 1
+    },
+    {
+      "id": "1007547419",
+      "number": "222222",
+      "name": "Savings",
+      "balance": 22327.3,
+      "type": "savings",
+      "status": "active",
+      "customerId": "1002191232",
+      "institutionId": "102105",
+      "balanceDate": 1583716651,
+      "aggregationAttemptDate": 1583723079,
+      "createdDate": 1583716651,
+      "lastUpdatedDate": 1583716663,
+      "currency": "USD",
+      "institutionLoginId": 1002841562,
+      "displayPosition": 2
+    },
+    {
+      "id": "1007547420",
+      "number": "101010",
+      "name": "Personal Investments",
+      "balance": 100000,
+      "type": "investment",
+      "status": "active",
+      "customerId": "1002191232",
+      "institutionId": "102105",
+      "balanceDate": 1583716651,
+      "aggregationAttemptDate": 1583723079,
+      "createdDate": 1583716651,
+      "lastUpdatedDate": 1583716663,
+      "currency": "USD",
+      "institutionLoginId": 1002841562,
+      "detail": {},
+      "displayPosition": 3
+    },
+    {
+      "id": "1007547421",
+      "number": "121212",
+      "name": "My 401k",
+      "balance": 265000,
+      "type": "investmentTaxDeferred",
+      "status": "active",
+      "customerId": "1002191232",
+      "institutionId": "102105",
+      "balanceDate": 1583716651,
+      "aggregationAttemptDate": 1583723079,
+      "createdDate": 1583716651,
+      "lastUpdatedDate": 1583716663,
+      "currency": "USD",
+      "institutionLoginId": 1002841562,
+      "detail": {},
+      "displayPosition": 4
+    },
+    {
+      "id": "1007547422",
+      "number": "232323",
+      "name": "ROTH",
+      "balance": 11001,
+      "type": "roth",
+      "status": "active",
+      "customerId": "1002191232",
+      "institutionId": "102105",
+      "balanceDate": 1583716651,
+      "aggregationAttemptDate": 1583723079,
+      "createdDate": 1583716651,
+      "lastUpdatedDate": 1583716663,
+      "currency": "USD",
+      "institutionLoginId": 1002841562,
+      "detail": {},
+      "displayPosition": 5
+    }
+  ]
+}
 """
 
 
 class TestAccountsListResponse(unittest.TestCase):
 
     def test_accounts_response(self):
-        response_dict = json.loads(EXAMPLE_REFRESH_ACCOUNTS_RESPONSE)
+        response_dict = json.loads(EXAMPLE_ACCOUNTS_RESPONSE)
         response = AccountsResponse.from_dict(response_dict)
         self.assertEqual({}, response._unused_fields)
         for account in response.accounts:
