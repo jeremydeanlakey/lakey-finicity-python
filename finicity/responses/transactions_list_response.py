@@ -19,12 +19,13 @@ class TransactionsListResponse(object):
     @staticmethod
     def from_dict(data: dict):
         data = dict(data)  # don't mutate the original
-        found = data.pop('found')
-        displaying = data.pop('displaying')
-        moreAvailable = data.pop('moreAvailable')
-        fromDate = data.pop('fromDate')
-        toDate = data.pop('toDate')
-        sort = data.pop('sort')
+        found = data.pop('found', 0)
+        displaying = data.pop('displaying', 0)
+        moreAvailable = data.pop('moreAvailable', False)
+        fromDate = data.pop('fromDate', 0)
+        toDate = data.pop('toDate', 0)
+        sort_str = data.pop('sort', 'asc')
+        sort = SortOrder(sort_str) if sort_str else SortOrder.asc
         transactions_raw = data.pop('transactions')
         transactions = [Transaction.from_dict(d) for d in transactions_raw]
         return TransactionsListResponse(
