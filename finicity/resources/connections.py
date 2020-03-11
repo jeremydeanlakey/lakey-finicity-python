@@ -24,7 +24,7 @@ class Connections(object):
         self.__http_client.authenticate()  # maximize the expiration for the link, which is based on that of the token
         data = {
             'partnerId': self.__partner_id,
-            'customerId': customer_id,
+            'customerId': str(customer_id),
             'consumerId': consumer_id,
             'redirectUrl': consumer_id,
             'type': ConnectType.voa.value,
@@ -56,7 +56,7 @@ class Connections(object):
         self.__http_client.authenticate()  # maximize the expiration for the link, which is based on that of the token
         data = {
             'partnerId': self.__partner_id,
-            'customerId': customer_id,
+            'customerId': str(customer_id),
             'consumerId': consumer_id,
             'redirectUrl': consumer_id,
             'type': link_type.value,
