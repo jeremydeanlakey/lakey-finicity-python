@@ -17,7 +17,7 @@ class FinicityClient(object):
         :param partner_id: Partner ID from Developer Portal
         :param partner_secret: Current value of Partner Secret from Developer Portal
         """
-        self._http_client = client = ApiHttpClient(app_key=app_key, partner_id=partner_id, partner_secret=partner_secret)
+        self.http_client = client = ApiHttpClient(app_key=app_key, partner_id=partner_id, partner_secret=partner_secret)
         self.institutions = Institutions(client)
         self.customers = Customers(client)
         self.testing = Testing(client)
@@ -28,4 +28,4 @@ class FinicityClient(object):
         self.connect = Connections(client, partner_id)
 
     def authenticate(self):
-        self._http_client.authenticate()
+        self.http_client.authenticate()

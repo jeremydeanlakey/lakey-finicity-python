@@ -18,7 +18,7 @@ last_name = 'Doe'
 def save_last_response(path: str):
     path = 'test_resources/' + path
     with open(path, 'wb') as output:
-        output.write(finicity._http_client.last_response.content)
+        output.write(finicity.http_client.last_response.content)
 
 
 # CUSTOMERS
