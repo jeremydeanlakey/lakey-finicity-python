@@ -106,7 +106,7 @@ accounts: List[Account] = finicity.accounts.get_by_customer_id(
     include_pending=True,
 )
 
-accounts: List[Account] = finicity.accounts.get_by_institution_id(
+accounts: List[Account] = finicity.accounts.get_by_customer_id_and_institution_id(
     customer_id=customer_id,
     institution_id=institution_id,
 )

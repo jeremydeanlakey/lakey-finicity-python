@@ -28,7 +28,7 @@ class Accounts(object):
 
     # https://community.finicity.com/s/article/202460255-Customer-Accounts
     # GET /aggregation/v1/customers/{customerId}/institutions/{institutionId}/accounts
-    def get_by_institution_id(self, customer_id: id, institution_id: str) -> List[Account]:
+    def get_by_customer_id_and_institution_id(self, customer_id: id, institution_id: str) -> List[Account]:
         """
         Get details for all active accounts owned by the specified customer at the specified institution.
 
