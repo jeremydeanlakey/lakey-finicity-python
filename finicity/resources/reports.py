@@ -15,7 +15,7 @@ class Reports(object):
 
     # https://community.finicity.com/s/article/Generate-VOA-Report
     # POST /decisioning/v1/customers/{customerId}/voa
-    def generate_voa_report(self, customer_id: int, callback_url: str, from_date: Optional[int] = None, accountIds: Optional[List[str]] = None) -> List[str]:
+    def generate_voa_report(self, customer_id: int, callback_url: Optional[str] = None, from_date: Optional[int] = None, accountIds: Optional[List[str]] = None) -> List[str]:
         """
         Generate a Verification of Assets (VOA) report for all checking, savings, money market, and investment accounts for the given customer. This service retrieves up to six months of transaction history for each account and uses this information to generate the VOA report.
         This is a premium service. The billing rate is the variable rate for Verification of Assets under the current subscription plan. The billable event is the successful generation of a VOA report.
@@ -35,10 +35,11 @@ class Reports(object):
         data = {
             'accountIds': accountIds,
         }
-        headers = {
-            "callbackUrl": callback_url,
-            "fromDate": from_date,
-        }
+        headers = {}
+        if callback_url:
+            headers["callbackUrl"] = callback_url
+        if from_date:
+            headers["fromDate"] = from_date
         path = f"/decisioning/v1/customers/{customer_id}/voa"
         response = self.__http_client.post(path, extra_headers=headers, data=data)
         response_dict = response.json()
