@@ -51,7 +51,7 @@ class TransactionsQuery(object):
             "fromDate": self.__from_date,
             "toDate": self.__to_date,
             "includePending": self.__include_pending,
-            "sort": self.__sort,
+            "sort": self.__sort.value,
         }
         response = self.__http_client.get(path, params=params)
         response_dict = response.json()
