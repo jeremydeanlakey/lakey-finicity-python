@@ -4,3 +4,4 @@ htmlcov/
 .idea/*
 **/__pycache__/*
 TODO.txt
+test_resources/*
