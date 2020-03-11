@@ -30,6 +30,7 @@ class Transaction(object):
     unitQuantity: Optional[int]  # The number of units (e.g. individual shares) in the transaction, if available
     unitValue: Optional[float]  # The value of each unit in the transaction, if available
     categorization: Optional[TransactionCategorization]
+    lastUpdatedDate: Optional[int]
     _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
@@ -52,10 +53,11 @@ class Transaction(object):
         principalAmount = data.pop('principalAmount', None)
         transactionDate = data.pop('transactionDate', None)
         type_str = data.pop('type', None)
-        type = TransactionType.from_description(type_str)
+        type = TransactionType.from_description(type_str) if type_str else None
         unitQuantity = data.pop('unitQuantity', None)
         unitValue = data.pop('unitValue', None)
         categorization_raw = data.pop('categorization', None)
+        last_updated_date = data.pop('lastUpdatedDate', None)
         categorization = TransactionCategorization.from_dict(categorization_raw) if categorization_raw else None
         return Transaction(
             accountId=accountId,
@@ -78,5 +80,6 @@ class Transaction(object):
             unitQuantity=unitQuantity,
             unitValue=unitValue,
             categorization=categorization,
+            lastUpdatedDate=last_updated_date,
             _unused_fields=data,
         )

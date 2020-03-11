@@ -53,8 +53,8 @@ class Testing(object):
         :return:
         """
         status = status or TransactionStatus.active
-        transaction_date = transaction_date or time.time()
-        posted_date = posted_date or time.time()
+        transaction_date = transaction_date or int(time.time())
+        posted_date = posted_date or int(time.time())
         # success = 201 created with
         # {
         #   "id": 712054,
@@ -64,8 +64,8 @@ class Testing(object):
             'amount': amount,
             'description': description,
             'status': status.value,
-            'transaction_date': transaction_date,
-            'posted_date': posted_date,
+            'transactionDate': transaction_date,
+            'postedDate': posted_date,
         }
         path = f"/aggregation/v1/customers/{customer_id}/accounts/{account_id}/transactions"
         response = self.__http_client.post(path, data)
