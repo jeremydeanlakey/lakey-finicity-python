@@ -66,6 +66,7 @@ finicity.consumers.modify(
     phone="8012345678",
     ssn="521-43-6987",
     birthday=BirthDate(year=1980, month=1, day_of_month=10),
+    email="johndoe@example.com",
 )
 ```
 
