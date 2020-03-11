@@ -3,6 +3,7 @@ from typing import Optional, List
 from finicity.api_http_client import ApiHttpClient
 from finicity.models import SortOrder, AnsweredMfaQuestion
 from finicity.queries.transaction_query import TransactionsQuery
+from finicity.responses.accounts_response import AccountsResponse
 
 
 class Transactions(object):
@@ -129,11 +130,12 @@ class Transactions(object):
         :return:
         """
         headers = {
-            'Content-Length': 0,
+            'Content-Length': '0',
         }
         path = f"/aggregation/v1/customers/{customer_id}/accounts"
-        self.__http_client.post(path, None, extra_headers=headers)
-    #     self._post()  # requires Content-Length = 0 and no Content-Type header
+        response = self.__http_client.post(path, None, extra_headers=headers)
+        response_dict = response.json()
+        return AccountsResponse.from_dict(response_dict).accounts
 
     # https://community.finicity.com/s/article/Refresh-Institution-Login-Accounts-Non-Interactive
     # POST /aggregation/v1/customers/{customerId}/institutionLogins/{institutionLoginId}/accounts
@@ -149,8 +151,9 @@ class Transactions(object):
         :return:
         """
         headers = {
-            'Content-Length': 0,
+            'Content-Length': '0',
         }
         path = f"/aggregation/v1/customers/{customer_id}/institutionLogins/{institution_login_id}/accounts"
-        self.__http_client.post(path, None, extra_headers=headers)
-        # NEEDS SPECIAL HEADERS
+        response = self.__http_client.post(path, None, extra_headers=headers)
+        response_dict = response.json()
+        return AccountsResponse.from_dict(response_dict).accounts
