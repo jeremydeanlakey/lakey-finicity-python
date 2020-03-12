@@ -10,7 +10,7 @@ from lakey_finicity.utils import validate_secret
 
 
 # https://docs.finicity.com/guide-to-partner-authentication-and-integration/
-_FINICITY_URL_BASE = "https://api.lakey_finicity.com"
+_FINICITY_URL_BASE = "https://api.finicity.com"
 _TWO_HOURS_S = 60 * 60
 
 

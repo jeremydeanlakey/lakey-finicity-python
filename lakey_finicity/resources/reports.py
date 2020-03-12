@@ -21,7 +21,7 @@ class Reports(object):
         A report consumer must be created for the given customer before calling Generate VOA Report (see Report Consumers).
         After making this call, the client app may wait for a notification to be sent to the Report Listener Service, or it may enter a loop, which should wait 20 seconds and then call the service Get Report to see if the report is finished. While the report is being generated, Get Report will return a minimal report with status inProgress. The loop should repeat every 20 seconds until Get Report returns a different status.
         If using the listener service, the following format must be followed and the webhook must respond to the Finicity API with a 200 series code:
-        https://api.lakey_finicity.com/decisioning/v1/customers/[customerId]/voa?callbackUrl=[webhookUrl]
+        https://api.finicity.com/decisioning/v1/customers/[customerId]/voa?callbackUrl=[webhookUrl]
         HTTP status of 202 (Accepted) means the report is being generated. When the report is finished, a notification will be sent to the specified report callback URL, if specified.
         If no account of type of checking, savings, money market, or investment is found, the service will return HTTP 400 (Bad Request).
 
@@ -57,7 +57,7 @@ class Reports(object):
         A report consumer must be created for the given customer before calling Generate VOI Report (see Report Consumers).
         After making this call, the client app may wait for a notification to be sent to the Report Listener Service, or it may enter a loop, which should wait 20 seconds and then call the service Get Report to see if the report is finished. While the report is being generated, Get Report will return a minimal report with status inProgress. The loop should repeat every 20 seconds until Get Report returns a different status.
         If using the listener service, the following format must be followed and the webhook must respond to the Finicity API with a 200 series code:
-        https://api.lakey_finicity.com/decisioning/v1/customers/[customerId]/voi?callbackUrl=[webhookUrl]
+        https://api.finicity.com/decisioning/v1/customers/[customerId]/voi?callbackUrl=[webhookUrl]
         HTTP status of 202 (Accepted) means the report is being generated. When the report is finished, a notification will be sent to the specified report callback URL, if specified.
         If no account of type of checking, savings, or money market is found, the service will return HTTP 400 (Bad Request).
 
