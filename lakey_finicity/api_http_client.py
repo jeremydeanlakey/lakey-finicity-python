@@ -59,7 +59,7 @@ class ApiHttpClient(object):
         if self.last_response.ok:
             return self.last_response
         else:
-            raise Exception(self.last_response.content)
+            raise Exception(str(self.last_response.content) + ", see https://community.finicity.com/s/article/201750879-Error-and-Aggregation-Status-Codes")
 
     def post(self, path: str, data: Optional[dict], extra_headers: Optional[dict] = None) -> Response:
         url = _FINICITY_URL_BASE + path
@@ -76,7 +76,7 @@ class ApiHttpClient(object):
         if self.last_response.ok:
             return self.last_response
         else:
-            raise Exception(self.last_response.content)
+            raise Exception(str(self.last_response.content) + ", see https://community.finicity.com/s/article/201750879-Error-and-Aggregation-Status-Codes")
 
     def put(self, path: str, data: dict, extra_headers: Optional[dict] = None) -> Response:
         url = _FINICITY_URL_BASE + path
@@ -92,7 +92,7 @@ class ApiHttpClient(object):
         if self.last_response.ok:
             return self.last_response
         else:
-            raise Exception(self.last_response.content)
+            raise Exception(str(self.last_response.content) + ", see https://community.finicity.com/s/article/201750879-Error-and-Aggregation-Status-Codes")
 
     def delete(self, path: str, extra_headers: Optional[dict] = None) -> Response:
         url = _FINICITY_URL_BASE + path
@@ -108,7 +108,7 @@ class ApiHttpClient(object):
         if self.last_response.ok:
             return self.last_response
         else:
-            raise Exception(self.last_response.content)
+            raise Exception(str(self.last_response.content) + ", see https://community.finicity.com/s/article/201750879-Error-and-Aggregation-Status-Codes")
 
     def __get_token(self) -> str:
         if not self.__token or time.time() >= self.__token_expiration:
