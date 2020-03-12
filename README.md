@@ -4,17 +4,29 @@ This library was made by a third party, not Finicity.  It is still being polishe
 
 # Quickstart
 
+First, get your partner-id, partner-secret, and app-key from https://developer.finicity.com/ .
+
+Next, install the library:
+
+```
+pip3 install lakey-finicity
+```
+
+Then in python, do imports, create a client, and create a test customer and consumer:
+
 ```python
 from lakey_finicity.models.birth_date import BirthDate
 from lakey_finicity.models.connect.connect_type import ConnectType
 from lakey_finicity.finicity_client import FinicityClient
 
 
-# get your id, secret, and token at https://developer.finicity.com/
+PARTNER_ID = 'xxxxxx'  # see https://developer.finicity.com/
+PARTNER_SECRET = 'xxxxxx'  # see https://developer.finicity.com/
+APP_KEY = 'xxxxxx'  # see https://developer.finicity.com/
+
 finicity = FinicityClient(PARTNER_ID, PARTNER_SECRET, APP_KEY)
 
 
-# create a test customer
 customer_id = finicity.testing.add_customer(
     username='jane_doe',
     first_name='John',
@@ -22,7 +34,6 @@ customer_id = finicity.testing.add_customer(
 )
 
 
-# create a consumer for the test customer
 consumer_id = finicity.consumers.create(
     customer_id=customer_id,
     first_name="John",
@@ -37,44 +48,56 @@ consumer_id = finicity.consumers.create(
     email="johndoe@example.com",
 )
 
-
-# connect account(s):
 connect_link: str = finicity.connect.generate_link(
     customer_id=customer_id,
     consumer_id=consumer_id,
     link_type=ConnectType.aggregation,
+)
 
 print(connect_link)
+```
 
-# - open link
-# - accept terms
-# - search for "FinBank"
-# - select "Finbank Profiles - A (102105)"
-# - username: Any, password: profile_02
+Now connect accounts with Finicity Connect:
+- open that link
+- accept terms
+- search for & select "Finbank Profiles - A"
+- username: Any, password: profile_02
 
 
-# create a test transaction
+Now you can create test transactions and query transactions:
+
+```python
 accounts = finicity.accounts.get_by_customer_id(customer_id)
-test_transaction_id: int = finicity.testing.add_transaction(
+
+test_transaction_id = finicity.testing.add_transaction(
     customer_id=customer_id,
     account_id=accounts[0].id,
     amount=5.23,
     description="test tx",
-    posted_date=1460621294,  # epoch seconds
-    transaction_date=1460621294,  # epoch seconds
+    posted_date=1584006412,  # epoch seconds
+    transaction_date=1584006412,  # epoch seconds
 )
 
 
-# query transactions:
-qry = finicity.transactions.query()
-query = finicity.transactions.query(
+qry = finicity.transactions.query(
     customer_id=customer_id,
     from_date=1460621294,  # epoch seconds
-    to_date=1494449017,  # epoch seconds
+    to_date=1584006413,  # epoch seconds
 )
+
+print(f"Found {qry.count()} transactions.")
+
 for transaction in qry.iter():
-    pass
+    print(transaction)
 ```
+
+...and clean up.
+
+```python
+finicity.customers.delete(customer_id)
+```
+
+And that's it.  See below for more capabilities.
 
 # Client
 
