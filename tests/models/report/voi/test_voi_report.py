@@ -185,8 +185,9 @@ class TestVoiReport(unittest.TestCase):
                     self.assertEqual({}, account._unused_fields)
                     for transaction in account.transactions:
                         self.assertEqual({}, transaction._unused_fields)
-                    for deposit in account.miscDeposits:
-                        self.assertEqual({}, deposit._unused_fields)
+                    if account.miscDeposits:
+                        for deposit in account.miscDeposits:
+                            self.assertEqual({}, deposit._unused_fields)
                     for income in account.incomeStreams:
                         self.assertEqual({}, income._unused_fields)
                         for net in income.netMonthly:
