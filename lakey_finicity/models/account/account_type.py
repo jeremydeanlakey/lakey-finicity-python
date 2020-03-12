@@ -22,16 +22,16 @@ class AccountType(enum.Enum):
     investmentTaxDeferred = "investmentTaxDeferred"  # Generic tax-advantaged investment (no details)
     employeeStockPurchasePlan = "employeeStockPurchasePlan"  # ESPP, Employee Stock Ownership Plans (ESOP), Stock Purchase Plans
     ira = "ira"  # Individual Retirement Account (not Rollover or Roth)
-    acct_401k = "acct_401k"  # 401K Plan
+    acct_401k = "401k"  # 401K Plan
     roth = "roth"  # Roth IRA, Roth 401K
-    acct_403b = "acct_403b"  # 403B Plan
-    acct_529 = "acct_529"  # 529 Plan
+    acct_403b = "403b"  # 403B Plan
+    acct_529 = "529"  # 529 Plan
     rollover = "rollover"  # Rollover IRA
     ugma = "ugma"  # Uniform Gifts to Minors Act
     utma = "utma"  # Uniform Transfers to Minors Act
     keogh = "keogh"  # Keogh Plan
-    acct_457 = "acct_457"  # 457 Plan
-    acct_401a = "acct_401a"  # 401A Plan
+    acct_457 = "457"  # 457 Plan
+    acct_401a = "401a"  # 401A Plan
     mortgage = "mortgage"  # Standard Mortgages
     loan = "loan"  # Auto loans, equity loans, other loans
 
