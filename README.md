@@ -1,15 +1,18 @@
 # Disclaimer
 
-This library was not made by Finicity.  It is not yet ready for use as some of this functionality is not yet fully implemented.
+This library was made by a third party, not Finicity.  It is still being polished up before being production-ready but is ready to toy with.
 
 # Quickstart
 
 ```python
+from lakey_finicity.models.birth_date import BirthDate
 from lakey_finicity.models.connect.connect_type import ConnectType
 from lakey_finicity.finicity_client import FinicityClient
 
+
 # get your id, secret, and token at https://developer.finicity.com/
 finicity = FinicityClient(PARTNER_ID, PARTNER_SECRET, APP_KEY)
+
 
 # create a test customer
 customer_id = finicity.testing.add_customer(
@@ -17,6 +20,7 @@ customer_id = finicity.testing.add_customer(
     first_name='John',
     last_name='Doe'
 )
+
 
 # create a consumer for the test customer
 consumer_id = finicity.consumers.create(
@@ -33,6 +37,7 @@ consumer_id = finicity.consumers.create(
     email="johndoe@example.com",
 )
 
+
 # connect account(s):
 connect_link: str = finicity.connect.generate_link(
     customer_id=customer_id,
@@ -47,6 +52,7 @@ print(connect_link)
 # - select "Finbank Profiles - A (102105)"
 # - username: Any, password: profile_02
 
+
 # create a test transaction
 accounts = finicity.accounts.get_by_customer_id(customer_id)
 test_transaction_id: int = finicity.testing.add_transaction(
@@ -57,6 +63,7 @@ test_transaction_id: int = finicity.testing.add_transaction(
     posted_date=1460621294,  # epoch seconds
     transaction_date=1460621294,  # epoch seconds
 )
+
 
 # query transactions:
 qry = finicity.transactions.query()

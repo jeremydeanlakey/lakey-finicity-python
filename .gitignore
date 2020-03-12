@@ -5,3 +5,6 @@ htmlcov/
 **/__pycache__/*
 TODO.txt
 test_resources/*
+build*
+dist*
+*.egg-info
