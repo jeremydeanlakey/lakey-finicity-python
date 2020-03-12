@@ -4,7 +4,7 @@ This library was made by a third party, not Finicity.  It is still being polishe
 
 # Quickstart
 
-First, sign up for a free / test account at https://developer.finicity.com/ to get your partner-id, partner-secret, and app-key.
+First, sign up for a free/testing account at https://developer.finicity.com/ to get your partner-id, partner-secret, and app-key.
 
 Next, install the library:
 
