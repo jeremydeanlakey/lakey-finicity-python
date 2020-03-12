@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Optional
 
 from finicity.models.report.transaction_record import TransactionRecord
 from finicity.models.report.voi.income_stream_record import IncomeStreamRecord
@@ -16,9 +16,9 @@ class VoiAccountRecord(object):
     type: str  # VOI: checking / savings / moneyMarket
     aggregationStatusCode: int  # Finicity aggregation status of the most recent aggregation attempt for this account (non-zero means the account was not accessed successfully for this report, and additional fields for this account may not be reliable)
     # institutionLoginId: str  # The institutionLoginId (represents one set of credentials at a particular institution, together with all accounts accessible using those credentials at that institution)
-    transactions: List[TransactionRecord]  # A list of all transaction records for this account during the report period (VOI report includes deposit transactions only)
-    miscDeposits: List[MiscellaneousDepositRecord]  # A list of miscellaneous deposit records
-    incomeStreams: List[IncomeStreamRecord]  # A list of income stream records
+    transactions: Optional[List[TransactionRecord]]  # A list of all transaction records for this account during the report period (VOI report includes deposit transactions only)
+    miscDeposits: Optional[List[MiscellaneousDepositRecord]]  # A list of miscellaneous deposit records
+    incomeStreams: Optional[List[IncomeStreamRecord]]  # A list of income stream records
     _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
@@ -34,10 +34,10 @@ class VoiAccountRecord(object):
         # institutionLoginId = data.pop('institutionLoginId')
         transactions_raw = data.pop('transactions')
         transactions = [TransactionRecord.from_dict(d) for d in transactions_raw]
-        miscDeposits_raw = data.pop('miscDeposits')
-        miscDeposits = [MiscellaneousDepositRecord.from_dict(d) for d in miscDeposits_raw]
-        incomeStreams_raw = data.pop('incomeStreams')
-        incomeStreams = [IncomeStreamRecord.from_dict(d) for d in incomeStreams_raw]
+        miscDeposits_raw = data.pop('miscDeposits', None)
+        miscDeposits = [MiscellaneousDepositRecord.from_dict(d) for d in miscDeposits_raw] if miscDeposits_raw else None
+        incomeStreams_raw = data.pop('incomeStreams', None)
+        incomeStreams = [IncomeStreamRecord.from_dict(d) for d in incomeStreams_raw] if incomeStreams_raw else None
         return VoiAccountRecord(
             id=id,
             number=number,

@@ -1,6 +1,6 @@
 import time
 
-from finicity.models import BirthDate, TransactionStatus
+from finicity.models import BirthDate, TransactionStatus, PermissiblePurpose
 from finicity.models.connect.connect_type import ConnectType
 from finicity.models.content_type import ContentType
 from finicity.finicity_client import FinicityClient
@@ -106,15 +106,19 @@ connect_link: str = finicity.connect.generate_link(
     # webhook_data={'value1': 'a', 'value2': 'b'},
     # analytics='google:UA-123456789-1',
 )
+save_last_response('generate_link_response_1.json')
 print(connect_link)
 # see https://community.finicity.com/s/article/Finbank-Profiles-A-102105
 # Finbank Profiles - A (102105)
 # username = Any
 # password = profile_03
 
-# TODO
-# connect_link: str = finicity.connect.generate_voa_link(
-# )
+connect_link: str = finicity.connect.generate_voa_link(
+    customer_id=new_customer_id,
+    consumer_id=consumer_id,
+    from_date=int(time.time()),
+)
+save_last_response('generate_link_response_2.json')
 
 
 # ACCOUNTS
@@ -165,14 +169,17 @@ assert(len(accounts_by_customer_id) - 1 == len(accounts_after_delete))
 
 # REPORTS
 
-# TODO
-# finicity.reports.generate_voa_report()
-# finicity.reports.generate_voi_report()
-# finicity.reports.get_report_by_consumer()
-# finicity.reports.get_report_by_consumer()
-# finicity.reports.get_reports_for_consumer()
-# finicity.reports.get_reports_for_consumer()
-
+report = finicity.reports.generate_voa_report(new_customer_id)
+save_last_response('report_summary_voa.json')
+finicity.reports.generate_voi_report(new_customer_id)
+save_last_response('report_summary_voi.json')
+reports = finicity.reports.get_reports_for_consumer(consumer_id)
+finicity.reports.get_reports_for_customer(new_customer_id)
+save_last_response('report_list_response.json')
+report = reports[0]
+report = finicity.reports.get_report_by_consumer(consumer_id, report.id, PermissiblePurpose.CODE_0A)
+save_last_response('report_voa_full.json')
+finicity.reports.get_report_by_consumer(consumer_id, report.id, PermissiblePurpose.CODE_0A)
 
 # TRANSACTIONS
 

@@ -21,12 +21,14 @@ class VoiReport(object):
     type: ReportType  # voa or voi
     status: ReportStatus  # inProgress or success or failure
     createdDate: int
-    startDate: int
-    endDate: int
-    days: int
-    seasoned: bool
+    startDate: Optional[int]
+    endDate: Optional[int]
+    days: Optional[int]
+    seasoned: Optional[bool]
     institutions: Optional[List[VoiInstitutionRecord]]
-    income: List[IncomeRecord]
+    income: Optional[List[IncomeRecord]]
+    customerId: Optional[str]  # TODO see if this is really optional
+    customerType: Optional[str]  # TODO see if this is really optional
     _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
@@ -46,14 +48,16 @@ class VoiReport(object):
         constraints = ReportConstraints.from_dict(constraints_raw) if constraints_raw else None
         status = data.pop('status')
         createdDate = data.pop('createdDate')
-        startDate = data.pop('startDate')
-        endDate = data.pop('endDate')
-        days = data.pop('days')
-        seasoned = data.pop('seasoned')
+        startDate = data.pop('startDate', None)
+        endDate = data.pop('endDate', None)
+        days = data.pop('days', None)
+        seasoned = data.pop('seasoned', None)
         institutions_raw = data.pop('institutions', None)
         institutions = [VoiInstitutionRecord.from_dict(d) for d in institutions_raw] if institutions_raw else None
-        income_raw = data.pop('income')
-        income = [IncomeRecord.from_dict(d) for d in income_raw]
+        income_raw = data.pop('income', None)
+        income = [IncomeRecord.from_dict(d) for d in income_raw] if income_raw else None
+        customer_id = data.pop('customerId', None)
+        customer_type = data.pop('customerType', None)
         return VoiReport(
             id=id,
             portfolioId=portfolioId,
@@ -72,6 +76,8 @@ class VoiReport(object):
             seasoned=seasoned,
             institutions=institutions,
             income=income,
+            customerId=customer_id,
+            customerType=customer_type,
             _unused_fields=data,
         )
 
