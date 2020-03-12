@@ -2,6 +2,73 @@
 
 This library was not made by Finicity.  It is not yet ready for use as some of this functionality is not yet fully implemented.
 
+# Quickstart
+
+```python
+from lakey_finicity.models.connect.connect_type import ConnectType
+from lakey_finicity.finicity_client import FinicityClient
+
+# get your id, secret, and token at https://developer.finicity.com/
+finicity = FinicityClient(PARTNER_ID, PARTNER_SECRET, APP_KEY)
+
+# create a test customer
+customer_id = finicity.testing.add_customer(
+    username='jane_doe',
+    first_name='John',
+    last_name='Doe'
+)
+
+# create a consumer for the test customer
+consumer_id = finicity.consumers.create(
+    customer_id=customer_id,
+    first_name="John",
+    last_name="Doe",
+    address="123 Main St",
+    city="Salt Lake City",
+    state="Utah",
+    zip="84000",
+    phone="8012345678",
+    ssn="521-43-6987",
+    birthday=BirthDate(year=1980, month=1, day_of_month=10),
+    email="johndoe@example.com",
+)
+
+# connect account(s):
+connect_link: str = finicity.connect.generate_link(
+    customer_id=customer_id,
+    consumer_id=consumer_id,
+    link_type=ConnectType.aggregation,
+
+print(connect_link)
+
+# - open link
+# - accept terms
+# - search for "FinBank"
+# - select "Finbank Profiles - A (102105)"
+# - username: Any, password: profile_02
+
+# create a test transaction
+accounts = finicity.accounts.get_by_customer_id(customer_id)
+test_transaction_id: int = finicity.testing.add_transaction(
+    customer_id=customer_id,
+    account_id=accounts[0].id,
+    amount=5.23,
+    description="test tx",
+    posted_date=1460621294,  # epoch seconds
+    transaction_date=1460621294,  # epoch seconds
+)
+
+# query transactions:
+qry = finicity.transactions.query()
+query = finicity.transactions.query(
+    customer_id=customer_id,
+    from_date=1460621294,  # epoch seconds
+    to_date=1494449017,  # epoch seconds
+)
+for transaction in qry.iter():
+    pass
+```
+
 # Client
 
 The Client class handles authentication and token expiration, endpoints, retries, headers, formatting, and mapping json responses to models.
