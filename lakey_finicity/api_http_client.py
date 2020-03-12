@@ -56,7 +56,10 @@ class ApiHttpClient(object):
             headers.update(extra_headers)
         params = params or {}
         self.last_response = _retry_session().get(url, headers=headers, params=params)
-        return self.last_response
+        if self.last_response.ok:
+            return self.last_response
+        else:
+            raise Exception(self.last_response.content)
 
     def post(self, path: str, data: Optional[dict], extra_headers: Optional[dict] = None) -> Response:
         url = _FINICITY_URL_BASE + path
@@ -70,7 +73,10 @@ class ApiHttpClient(object):
         if extra_headers:
             headers.update(extra_headers)
         self.last_response = _retry_session().post(url, data=json.dumps(data), headers=headers)
-        return self.last_response
+        if self.last_response.ok:
+            return self.last_response
+        else:
+            raise Exception(self.last_response.content)
 
     def put(self, path: str, data: dict, extra_headers: Optional[dict] = None) -> Response:
         url = _FINICITY_URL_BASE + path
@@ -83,7 +89,10 @@ class ApiHttpClient(object):
         if extra_headers:
             headers.update(extra_headers)
         self.last_response = _retry_session().put(url, data=json.dumps(data), headers=headers)
-        return self.last_response
+        if self.last_response.ok:
+            return self.last_response
+        else:
+            raise Exception(self.last_response.content)
 
     def delete(self, path: str, extra_headers: Optional[dict] = None) -> Response:
         url = _FINICITY_URL_BASE + path
@@ -96,7 +105,10 @@ class ApiHttpClient(object):
         if extra_headers:
             headers.update(extra_headers)
         self.last_response = _retry_session().delete(url, headers=headers)
-        return self.last_response
+        if self.last_response.ok:
+            return self.last_response
+        else:
+            raise Exception(self.last_response.content)
 
     def __get_token(self) -> str:
         if not self.__token or time.time() >= self.__token_expiration:
