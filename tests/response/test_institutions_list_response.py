@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.responses import InstitutionsListResponse
+from lakey_finicity.responses import InstitutionsListResponse
 
 EXAMPLE_INSTITUTIONS_RESPONSE = '''
 {
@@ -92,7 +92,7 @@ EXAMPLE_INSTITUTIONS_RESPONSE = '''
 "accountTypeDescription":"Credit Cards/Accounts",
 "phone":"1-800-653-6289",
 "urlHomeApp":"http://www.oldnavy.com",
-"urlLogonApp":"https://finicity.rfecom.com/eSecurity/Login/login.action?clientId=oldnavy&accountType=generic&langId=en",
+"urlLogonApp":"https://lakey_finicity.rfecom.com/eSecurity/Login/login.action?clientId=oldnavy&accountType=generic&langId=en",
 "oauthEnabled":false,
 "urlForgotPassword":"",
 "urlOnlineRegistration":"",

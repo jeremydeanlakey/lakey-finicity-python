@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.responses.accounts_response import AccountsResponse
+from lakey_finicity.responses.accounts_response import AccountsResponse
 
 
 # DOCS_EXAMPLE_REFRESH_ACCOUNTS_RESPONSE = '''

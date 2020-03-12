@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.models.report.voa.voa_report import VoaReport
+from lakey_finicity.models.report.voa.voa_report import VoaReport
 
 
 # https://community.finicity.com/s/article/VOA-Report

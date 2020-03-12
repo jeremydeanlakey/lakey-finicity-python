@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.responses.new_report_response import NewReportResponse
+from lakey_finicity.responses.new_report_response import NewReportResponse
 
 # https://community.finicity.com/s/article/Credit-Decisioning
 EXAMPLE_START_VOI_RESPONSE = '''

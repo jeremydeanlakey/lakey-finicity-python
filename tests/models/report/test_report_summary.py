@@ -1,8 +1,8 @@
 import json
 import unittest
 
-from finicity.models.report.report_summary import ReportSummary
-from finicity.models.report.voi.voi_report import VoiReport
+from lakey_finicity.models.report.report_summary import ReportSummary
+from lakey_finicity.models.report.voi.voi_report import VoiReport
 
 TEST_EXAMPLE_REPORT_SUMMARY_VOI = """
 {"id":"4zn3mkdah9pj","portfolioId":"bvhus4usg894-4-port","customerType":"testing","customerId":1002249444,"requestId":"bkx7h7e43g","requesterName":"Purple Leaf Software LLC","createdDate":1583965854,"title":"Finicity Verification of Assets","consumerId":"dfe74fd96d34f68a9c6c19d430093a70","consumerSsn":"6987","constraints":{},"type":"voa","status":"inProgress"}

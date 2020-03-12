@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.models.report.voi.voi_report import VoiReport
+from lakey_finicity.models.report.voi.voi_report import VoiReport
 
 
 # https://community.finicity.com/s/article/VOI-Report
@@ -38,7 +38,7 @@ DOCS_EXAMPLE_VOI_FULL = '''
                     "incomeStreams": [
                         {
                             "id": "hacj9vn105ne-voi1",
-                            "name": "finicity",
+                            "name": "lakey_finicity",
                             "status": "ACTIVE",
                             "estimateInclusion": "MODERATE",
                             "confidence": 59,

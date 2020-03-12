@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.responses import CustomersListResponse
+from lakey_finicity.responses import CustomersListResponse
 
 EXAMPLE_CUSTOMERS_RESPONSE = '''
 {

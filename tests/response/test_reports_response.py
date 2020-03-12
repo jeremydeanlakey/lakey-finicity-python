@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.responses.reports_response import ReportsResponse
+from lakey_finicity.responses.reports_response import ReportsResponse
 
 
 # https://community.finicity.com/s/article/Credit-Decisioning

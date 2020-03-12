@@ -1,9 +1,9 @@
 import time
 
-from finicity.models import BirthDate, TransactionStatus, PermissiblePurpose
-from finicity.models.connect.connect_type import ConnectType
-from finicity.models.content_type import ContentType
-from finicity.finicity_client import FinicityClient
+from lakey_finicity.models import BirthDate, TransactionStatus, PermissiblePurpose
+from lakey_finicity.models.connect.connect_type import ConnectType
+from lakey_finicity.models.content_type import ContentType
+from lakey_finicity.finicity_client import FinicityClient
 
 APP_KEY = 'xxxxxxxxxxxxx'
 PARTNER_ID = 'xxxxxxxxxxxxx'
@@ -140,18 +140,18 @@ assert(len(accounts_by_institution_login_id) == len(accounts_by_customer_id))
 account_details = finicity.accounts.get_details(new_customer_id, account.id)
 save_last_response('account_ach_details.json')
 
-# TODO finicity.accounts.get_details_with_mfa_answers()
+# TODO lakey_finicity.accounts.get_details_with_mfa_answers()
 
 account_owner = finicity.accounts.get_owner(new_customer_id, account.id)
 save_last_response('account_owner.json')
 
-# TODO finicity.accounts.get_owner_with_mfa_answers()
+# TODO lakey_finicity.accounts.get_owner_with_mfa_answers()
 
 statement = finicity.accounts.get_statement(new_customer_id, account.id)
 # with open('test.pdf', 'wb') as output:
 #     output.write(statement)
 
-# TODO finicity.accounts.get_statement_with_mfa_answers()
+# TODO lakey_finicity.accounts.get_statement_with_mfa_answers()
 
 new_account_name = 'test checking'
 finicity.accounts.modify(
@@ -207,7 +207,7 @@ transactions_qry.first_or_none()
 save_last_response('transactions_list_test.json')
 
 finicity.transactions.load_historic_transactions_for_account(new_customer_id, account.id)
-# TODO finicity.transactions.load_historic_transactions_for_account_with_mfa_answers()
+# TODO lakey_finicity.transactions.load_historic_transactions_for_account_with_mfa_answers()
 
 account = finicity.accounts.get_by_customer_id(new_customer_id)[0]
 accounts = finicity.transactions.refresh_institution_login_accounts(
@@ -219,6 +219,6 @@ save_last_response('accounts_list_response_2.json')
 finicity.transactions.refresh_customer_accounts(new_customer_id)
 save_last_response('accounts_list_response_3.json')
 
-# TODO finicity.transactions.enable_push_notifications()
-# TODO finicity.transactions.disable_push_notifications()
-# TODO finicity.transactions.delete_push_subscription()
+# TODO lakey_finicity.transactions.enable_push_notifications()
+# TODO lakey_finicity.transactions.disable_push_notifications()
+# TODO lakey_finicity.transactions.delete_push_subscription()

@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.models import BirthDate
+from lakey_finicity.models import BirthDate
 
 
 EXAMPLE_BIRTH_DATE_PADDED = '''

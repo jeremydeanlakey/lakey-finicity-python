@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.models import AccountOwner
+from lakey_finicity.models import AccountOwner
 
 
 # # https://community.finicity.com/s/article/Get-Account-Owner

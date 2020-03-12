@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.models import Customer
+from lakey_finicity.models import Customer
 
 
 EXAMPLE_CUSTOMER = '''

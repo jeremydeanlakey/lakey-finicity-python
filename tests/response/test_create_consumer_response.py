@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.responses.create_consumer_response import CreateConsumerResponse
+from lakey_finicity.responses.create_consumer_response import CreateConsumerResponse
 
 
 DOCS_EXAMPLE_CREATE_CONSUMER_RESPONSE = """

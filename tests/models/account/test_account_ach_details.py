@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.models.account.account_ach_details import AccountAchDetails
+from lakey_finicity.models.account.account_ach_details import AccountAchDetails
 
 
 EXAMPLE_ACCOUNT_DETAIL_RESPONSE = '''

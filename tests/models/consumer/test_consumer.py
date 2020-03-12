@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.models import Consumer
+from lakey_finicity.models import Consumer
 
 # https://community.finicity.com/s/article/Report-Consumers
 EXAMPLE_CONSUMER_PROPOSED = '''

@@ -1,7 +1,7 @@
 import json
 import unittest
 
-from finicity.responses.create_customer_response import CreateCustomerResponse
+from lakey_finicity.responses.create_customer_response import CreateCustomerResponse
 
 
 # https://community.finicity.com/s/article/201703219-Customers#add_customer
