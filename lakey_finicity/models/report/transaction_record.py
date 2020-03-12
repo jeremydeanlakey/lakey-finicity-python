@@ -9,7 +9,7 @@ class TransactionRecord(object):
     _unused_fields: dict  # this is for forward compatibility and should be empty
     id: int  # Finicity transaction ID
     amount: float  # The total amount of this transactions. Transactions for deposits are positive values; withdrawals and debits are negative values.
-    postedDate: int  # A timestamp showing when the transaction was posted or cleared by the institution
+    postedDate: Optional[int]  # A timestamp showing when the transaction was posted or cleared by the institution
     description: Optional[str]  # The description of the transaction, as provided by the institution (often known as payee)
     memo: Optional[str]  # The memo field of the transaction, as provided by the institution
     normalizedPayee: Optional[str]  # A cleaned-up, standardized version of the description
@@ -25,7 +25,7 @@ class TransactionRecord(object):
         data = dict(data)  # don't mutate the original
         id = data.pop('id')
         amount = data.pop('amount')
-        postedDate = data.pop('postedDate')
+        postedDate = data.pop('postedDate', None)
         description = data.pop('description', None)
         memo = data.pop('memo', None)
         bestRepresentation = data.pop('bestRepresentation', None)

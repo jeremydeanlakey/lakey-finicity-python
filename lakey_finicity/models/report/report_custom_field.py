@@ -2,11 +2,14 @@ from dataclasses import dataclass
 
 
 # https://community.finicity.com/s/article/VOA-Report
+from typing import Optional
+
+
 @dataclass
 class ReportCustomField(object):
     _unused_fields: dict  # this is for forward compatibility and should be empty
-    label: str
-    value: str
+    label: Optional[str]
+    value: Optional[str]
     shown: bool
 
     @staticmethod

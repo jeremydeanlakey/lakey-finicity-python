@@ -7,8 +7,8 @@ from typing import Optional
 class LoginField(object):
     _unused_fields: dict  # this is for forward compatibility and should be empty
     id: str  # The ID of this field
-    name:  str  # The system name for this field
-    value: str  # A default value for this field, if found (always blank for masked fields)
+    name: Optional[str]  # The system name for this field
+    value: Optional[str]  # A default value for this field, if found (always blank for masked fields)
     displayOrder: Optional[int]  # An ordinal number to facilitate sorting fields for display
     mask: Optional[bool]  # true if the contents of this field should NOT be displayed on the screen (for password-style fields)
     description: Optional[str]  # The displayable name for this field
@@ -20,8 +20,8 @@ class LoginField(object):
     def from_dict(data: dict):
         data = dict(data)  # don't mutate the original
         id = data.pop('id')
-        name = data.pop('name')
-        value = data.pop('value')
+        name = data.pop('name', None)
+        value = data.pop('value', None)
         displayOrder = data.pop('displayOrder', None)
         mask_str = data.pop('mask', None)
         mask = bool(mask_str) if mask_str else None

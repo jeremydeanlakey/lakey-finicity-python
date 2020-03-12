@@ -10,15 +10,15 @@ class ReportConstraints(object):
     _unused_fields: dict  # this is for forward compatibility and should be empty
     accountIds: Optional[List[str]]
     fromDate: Optional[int]
-    reportCustomFields: List[ReportCustomField]
+    reportCustomFields: Optional[List[ReportCustomField]]
 
     @staticmethod
     def from_dict(data: dict):
         data = dict(data)  # don't mutate the original
         accountIds = data.pop("accountIds", None)
         fromDate = data.pop("fromDate", None)
-        reportCustomFields_raw = data.pop("reportCustomFields")
-        reportCustomFields = [ReportCustomField.from_dict(d) for d in reportCustomFields_raw]
+        reportCustomFields_raw = data.pop("reportCustomFields", None)
+        reportCustomFields = [ReportCustomField.from_dict(d) for d in reportCustomFields_raw] if reportCustomFields_raw else None
         return ReportConstraints(
             accountIds=accountIds,
             fromDate=fromDate,

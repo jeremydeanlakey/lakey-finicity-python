@@ -1,4 +1,6 @@
 from dataclasses import dataclass
+from typing import Optional
+
 from lakey_finicity.models.birth_date import BirthDate
 
 
@@ -6,35 +8,35 @@ from lakey_finicity.models.birth_date import BirthDate
 @dataclass
 class Consumer(object):
     id: str  # ID of the consumer (UUID with max length 32 characters)
-    firstName: str  # The consumer's first name(s) / given name(s)
-    lastName: str  # The consumer's last name(s) / surname(s)
-    address: str  # The consumer's street address
-    city: str  # The consumer's city
-    state: str  # The consumer's state
-    zip: str  # The consumer's ZIP code
-    phone: str  # The consumer's phone number
-    ssn: str  # Last 4 digits of the consumer's Social Security number
-    birthday: BirthDate  # The consumer's birth date
-    email: str  # The consumer's email address
-    createdDate: int  # A timestamp of when the consumer was created
+    firstName: Optional[str]  # The consumer's first name(s) / given name(s)
+    lastName: Optional[str]  # The consumer's last name(s) / surname(s)
+    address: Optional[str]  # The consumer's street address
+    city: Optional[str]  # The consumer's city
+    state: Optional[str]  # The consumer's state
+    zip: Optional[str]  # The consumer's ZIP code
+    phone: Optional[str]  # The consumer's phone number
+    ssn: Optional[str]  # Last 4 digits of the consumer's Social Security number
+    birthday: Optional[BirthDate]  # The consumer's birth date
+    email: Optional[str]  # The consumer's email address
+    createdDate: Optional[int]  # A timestamp of when the consumer was created
     _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
     def from_dict(data: dict):
         data = dict(data)  # don't mutate the original
         id = data.pop('id')
-        firstName = data.pop('firstName')
-        lastName = data.pop('lastName')
-        address = data.pop('address')
-        city = data.pop('city')
-        state = data.pop('state')
-        zip = data.pop('zip')
-        phone = data.pop('phone')
-        ssn = data.pop('ssn')
-        birthday_dict = data.pop('birthday')
-        birthday = BirthDate.from_dict(birthday_dict)
-        email = data.pop('email')
-        createdDate = data.pop('createdDate')
+        firstName = data.pop('firstName', None)
+        lastName = data.pop('lastName', None)
+        address = data.pop('address', None)
+        city = data.pop('city', None)
+        state = data.pop('state', None)
+        zip = data.pop('zip', None)
+        phone = data.pop('phone', None)
+        ssn = data.pop('ssn', None)
+        birthday_dict = data.pop('birthday', None)
+        birthday = BirthDate.from_dict(birthday_dict) if birthday_dict else None
+        email = data.pop('email', None)
+        createdDate = data.pop('createdDate', None)
         return Consumer(
             id=id,
             firstName=firstName,

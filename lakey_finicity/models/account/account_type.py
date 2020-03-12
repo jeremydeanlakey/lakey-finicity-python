@@ -34,6 +34,14 @@ class AccountType(enum.Enum):
     acct_401a = "401a"  # 401A Plan
     mortgage = "mortgage"  # Standard Mortgages
     loan = "loan"  # Auto loans, equity loans, other loans
+    not_in_enum = "not_in_enum"
+
+    @staticmethod
+    def from_description(description: str):
+        try:
+            return AccountType(description)
+        except:
+            return None
 
 
 DEPOSIT_ACCOUNT_TYPES = {

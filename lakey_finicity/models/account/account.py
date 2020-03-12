@@ -11,15 +11,14 @@ from lakey_finicity.models.account.aggregation_status_code import AggregationSta
 from lakey_finicity.models.account.investment_account_detail import InvestmentAccountDetail
 
 
-# https://community.finicity.com/s/article/202460255-Customer-Accounts#customer_account_record
 @dataclass
 class Account(object):
     id: str
     number: Optional[str]
     name: Optional[str]
-    type: AccountType
+    type: Optional[AccountType]
     status: str
-    balance: str
+    balance: Optional[str]
     # won't be in partial account records:
     aggregationStatusCode:  Optional[AggregationStatusCode]  # doesn't exist in example
     aggregationSuccessDate: Optional[int]  # doesn't exist in example
@@ -42,10 +41,10 @@ class Account(object):
         id = data.pop('id')
         number = data.pop('number', None)
         name = data.pop('name', None)
-        type_str: dict = data.pop('type')
-        type = AccountType(type_str)
+        type_str: str = data.pop('type', None)
+        type = AccountType.from_description(type_str) if type_str else None
         status = data.pop('status')
-        balance = data.pop('balance')
+        balance = data.pop('balance', None)
         aggregationStatusCode_str = data.pop('aggregationStatusCode', None)
         aggregationStatusCode = AggregationStatusCode(aggregationStatusCode_str) if aggregationStatusCode_str else None
         aggregationSuccessDate = data.pop('aggregationSuccessDate', None)

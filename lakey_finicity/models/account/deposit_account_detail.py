@@ -9,7 +9,7 @@ from lakey_finicity.models.account.account_detail import AccountDetail
 class DepositAccountDetail(AccountDetail):
     _unused_fields: dict  # this is for forward compatibility and should be empty
     createdDate: Optional[Any]  # A timestamp showing when the account was added to the Finicity system(see Handling Dates and Times)
-    availableBalanceAmount: Any  # The available balance (typically the current balance with adjustments for any pending transactions)
+    availableBalanceAmount: [Any]  # The available balance (typically the current balance with adjustments for any pending transactions)
     openDate: Optional[Any] = field(default=None)  # Date when account was opened
     periodStartDate: Optional[Any] = field(default=None)  # Start date of period
     periodEndDate: Optional[Any] = field(default=None)  # End date of period
@@ -25,7 +25,7 @@ class DepositAccountDetail(AccountDetail):
     def from_dict(data: dict):
         data = dict(data)  # don't mutate the original
         createdDate = data.pop('createdDate', None)
-        availableBalanceAmount = data.pop('availableBalanceAmount')
+        availableBalanceAmount = data.pop('availableBalanceAmount', None)
         openDate = data.pop('openDate', None)
         periodStartDate = data.pop('periodStartDate', None)
         periodEndDate = data.pop('periodEndDate', None)

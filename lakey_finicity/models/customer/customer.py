@@ -7,10 +7,10 @@ from typing import Optional
 @dataclass
 class Customer(object):
     id: int
-    username: str
+    username: Optional[str]
     firstName: Optional[str]
     lastName: Optional[str]
-    type: str
+    type: Optional[str]
     createdDate: int
     _unused_fields: dict  # this is for forward compatibility and should be empty
 
@@ -18,10 +18,10 @@ class Customer(object):
     def from_dict(data: dict):
         data = dict(data)  # don't mutate the original
         id = data.pop('id')
-        username = data.pop('username')
+        username = data.pop('username', None)
         firstName = data.pop('firstName', None)
         lastName = data.pop('lastName', None)
-        type = data.pop('type')
+        type = data.pop('type', None)
         createdDate = data.pop('createdDate')
         return Customer(
             id=id,
