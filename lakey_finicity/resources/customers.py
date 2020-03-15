@@ -4,6 +4,7 @@ from lakey_finicity.api_http_client import ApiHttpClient
 from lakey_finicity.models import Customer
 from lakey_finicity.queries.customers_query import CustomersQuery
 from lakey_finicity.responses.create_customer_response import CreateCustomerResponse
+from lakey_finicity.utils import validate_username
 
 
 class Customers(object):
@@ -50,7 +51,7 @@ class Customers(object):
         :param last_name: The customer's last name(s) / surname(s) (optional)
         :return:
         """
-        # TODO explicitly validate username
+        validate_username(username)
         data = {
             'username': username,
             'firstName': first_name,
