@@ -16,8 +16,8 @@ class VoaInstitutionRecord(object):
         data = dict(data)  # don't mutate the original
         id = data.pop('id')
         name = data.pop('name')
-        accounts_raw = data.pop('accounts')
-        accounts = [VoaAccountRecord.from_dict(d) for d in accounts_raw]
+        accounts_raw = data.pop('accounts', None)
+        accounts = [VoaAccountRecord.from_dict(d) for d in accounts_raw] if accounts_raw else []
         return VoaInstitutionRecord(
             id=id,
             name=name,

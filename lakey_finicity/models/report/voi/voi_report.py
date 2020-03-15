@@ -27,8 +27,8 @@ class VoiReport(object):
     seasoned: Optional[bool]
     institutions: Optional[List[VoiInstitutionRecord]]
     income: Optional[List[IncomeRecord]]
-    customerId: Optional[str]  # TODO see if this is really optional
-    customerType: Optional[str]  # TODO see if this is really optional
+    customerId: Optional[str]
+    customerType: Optional[str]
     _unused_fields: dict  # this is for forward compatibility and should be empty
 
     @staticmethod
